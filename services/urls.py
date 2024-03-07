@@ -15,3 +15,6 @@
 #     path('like_service/<int:pk>', views.LikeServiceAPIView.as_view(), name='like-user'),
 #     path('filter-service', views.FilterServiceList.as_view(), name='filter_service'),
 # ]
+
+
+urlpatterns=[]
