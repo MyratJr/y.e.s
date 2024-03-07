@@ -18,4 +18,4 @@
 #     path('get-my-like/', LikeOfUserView.as_view(), name='get_my_like'),
 # ]
 
-urlpatters = []
+urlpatterns = []
