@@ -17,3 +17,5 @@
 #     path('get-objects/', LikeToUserView.as_view(), name='get_objects'),
 #     path('get-my-like/', LikeOfUserView.as_view(), name='get_my_like'),
 # ]
+
+urlpatters = []
