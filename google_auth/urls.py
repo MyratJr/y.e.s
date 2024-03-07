@@ -1,4 +1,4 @@
-from .views import GoogleSocialAuthView
+# from .views import GoogleSocialAuthView
 from django.urls import path
 
 
