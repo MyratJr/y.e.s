@@ -29,7 +29,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    # 'users',
+    'users',
     'otp',
     'places',
     'services',
@@ -64,7 +64,7 @@ SIMPLE_JWT = {
 
 
 
-# AUTH_USER_MODEL = 'users.User'
+AUTH_USER_MODEL = 'users.User'
 
 
 ROOT_URLCONF = 'ehyzmat.urls'
