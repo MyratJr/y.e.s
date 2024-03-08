@@ -45,4 +45,4 @@ class RateUserView(mixins.CreateModelMixin, generics.GenericAPIView):
             description=serializer.validated_data.get('description'),
             image=serializer.validated_data.get('image')
         )
-        return Response("success", status=status.HTTP_201_CREATED)
+        return Response("Rate created successfully", status=status.HTTP_201_CREATED)
