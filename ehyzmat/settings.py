@@ -122,14 +122,21 @@ SWAGGER_SETTINGS = {
  }
 
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'yourendlessservice',
+#         'USER': 'yesuser',
+#         'PASSWORD': '63365663',
+#         'HOST': 'localhost',
+#         'PORT': '',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'yourendlessservice',
-        'USER': 'yesuser',
-        'PASSWORD': '63365663',
-        'HOST': 'localhost',
-        'PORT': '',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
