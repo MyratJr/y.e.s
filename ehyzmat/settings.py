@@ -29,16 +29,16 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'users',
-    'otp',
-    'places',
-    'services',
-    'advertisement',
-    'ratings',
-    "google_auth",
+    # 'users',
+    # 'otp',
+    # 'places',
+    # 'services',
+    # 'advertisement',
+    # 'ratings',
+    # "google_auth",
     'drf_yasg',
     'django_filters',
-    'rest_framework_simplejwt',
+    # 'rest_framework_simplejwt',
     # 'rest_framework_simplejwt.token_blacklist',
 ]
 
@@ -64,7 +64,7 @@ SIMPLE_JWT = {
 
 
 
-AUTH_USER_MODEL = 'users.User'
+# AUTH_USER_MODEL = 'users.User'
 
 
 ROOT_URLCONF = 'ehyzmat.urls'
