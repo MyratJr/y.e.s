@@ -29,7 +29,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'users',
+    # 'users',
     'otp',
     'places',
     'services',
@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'drf_yasg',
     'django_filters',
     'rest_framework_simplejwt',
-    'rest_framework_simplejwt.token_blacklist',
+    # 'rest_framework_simplejwt.token_blacklist',
 ]
 
 
