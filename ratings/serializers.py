@@ -27,7 +27,7 @@ class RatedUserSerializer(serializers.ModelSerializer):
 
 
 class Rate_User_Serializer(serializers.ModelSerializer):
-    rating_user = serializers.IntegerField(read_only=True)
+    # rating_user = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = Rate_User
