@@ -3,6 +3,6 @@ from django.urls import path
 
 
 urlpatterns = [
-    path('user_ratings/<int:pk>', views.User_CommentsAPIView().as_view(), name='user_rates'),
-    path('user_ratings', views.Leave_CommentAPIView().as_view(), name='leave_comment'),
+    path('from_rates/<int:pk>', views.RatesFromView().as_view(), name='from-rates'),
+    path('rate_user', views.RateUserView().as_view(), name='rate-user'),
 ]

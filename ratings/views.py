@@ -6,9 +6,9 @@ from users.models import User
 from django.http import Http404
 from rest_framework import mixins, generics, permissions, status
 from rest_framework.parsers import MultiPartParser, FormParser
+from django.shortcuts import get_object_or_404
 
-
-class User_CommentsAPIView(APIView):
+class RatesFromView(APIView):
     permission_classes = [permissions.AllowAny]
     
     def get(self, request, pk, format=None):
@@ -16,23 +16,24 @@ class User_CommentsAPIView(APIView):
             user = User.objects.get(pk=pk)
         except User.DoesNotExist:
             raise Http404()
-        snippets = Rate_User.objects.filter(rated_user=user)
-        serializer = User_CommentsSerializer(snippets, many=True)
-        user_serializer = User_data_Serializer(user)
-        return Response([user_serializer.data, serializer.data])
+        rates = Rate_User.objects.filter(rated_user=user)
+        rates_serialized = FromRateSerializer(rates, many=True)
+        rated_user_serialized = RatedUserSerializer(user)
+        return Response([rated_user_serialized.data, rates_serialized.data])
 
 
-class Leave_CommentAPIView(mixins.CreateModelMixin, generics.GenericAPIView):
+class RateUserView(mixins.CreateModelMixin, generics.GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]
-    queryset = Rate_User.objects.all()
-    serializer_class = Leave_Comment_Serializer
+    serializer_class = Rate_User_Serializer
     parser_classes = [MultiPartParser, FormParser]
 
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        rated_user_id = serializer.validated_data.get('rated_user')
-        user = User.objects.get(pk=rated_user_id.id)
+        rated_user = serializer.validated_data.get('rated_user')
+        print("salam1")
+        user = get_object_or_404(User, pk=rated_user.id)
+        print("salam2")
         user.point_counter += 1
         user.rate_point_total += serializer.validated_data.get('rate_number')
         user.rate_point = user.rate_point_total / user.point_counter

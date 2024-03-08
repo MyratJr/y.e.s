@@ -29,7 +29,7 @@ urlpatterns = [
     path('ratings/', include('ratings.urls')),
     path('otp/', include('otp.urls')),
     # path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain'),
+    # path('api/token/', TokenObtainPairView.as_view(), name='token_obtain'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     # path('api/token/blacklist/', TokenBlacklistView.as_view(), name='token_blacklist'),
     path('google_oauth2/', include('google_auth.urls')),
