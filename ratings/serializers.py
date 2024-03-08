@@ -29,4 +29,4 @@ class RatedUserSerializer(serializers.ModelSerializer):
 class Rate_User_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Rate_User
-        fields = "__all__"
+        fields = ["rated_user", "rate_number", "description", "image"]
