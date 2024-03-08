@@ -32,10 +32,16 @@ class RateUserView(mixins.CreateModelMixin, generics.GenericAPIView):
         serializer.is_valid(raise_exception=True)
         rated_user = serializer.validated_data.get('rated_user')
         rated_user = get_object_or_404(User, pk=rated_user.id)
-        rating_user = request.user
         rated_user.point_counter += 1
-        rated_user.rate_point_total += serializer.validated_data.get('rate_number')
+        rate_number = serializer.validated_data.get('rate_number')
+        rated_user.rate_point_total += rate_number
         rated_user.rate_point = rated_user.rate_point_total / rated_user.point_counter
         rated_user.save()
-        serializer.save(serializer, rating_user=rating_user)
+        Rate_User.objects.create(
+            rating_user=request.user,
+            rated_user=rated_user,
+            rate_number=rate_number,
+            description=serializer.validated_data.get('description'),
+            image=serializer.validated_data.get('image')
+        )
         return Response(serializer.data, status=status.HTTP_201_CREATED)
