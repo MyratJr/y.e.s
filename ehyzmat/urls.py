@@ -18,6 +18,8 @@ schema_view = get_schema_view(
     permission_classes=(permissions.AllowAny,),
 )
 
+from django.conf.urls.static import static
+
 
 urlpatterns = [
     path('api/swagger', schema_view.with_ui('swagger', cache_timeout=0),
@@ -32,7 +34,5 @@ urlpatterns = [
     # path('api/token/', TokenObtainPairView.as_view(), name='token_obtain'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     # path('api/token/blacklist/', TokenBlacklistView.as_view(), name='token_blacklist'),
-    path('google_oauth2/', include('google_auth.urls')),
-    re_path(f'^{settings.MEDIA_URL.lstrip("/")}(?P<path>.*)$',
-            mediaserve, {'document_root': settings.MEDIA_ROOT})
-]
+    path('google_oauth2/', include('google_auth.urls'))
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
