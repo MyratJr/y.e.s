@@ -36,3 +36,5 @@ urlpatterns = [
     # path('api/token/blacklist/', TokenBlacklistView.as_view(), name='token_blacklist'),
     path('google_oauth2/', include('google_auth.urls'))
 ]
+
+print("salam")
