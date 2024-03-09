@@ -37,4 +37,5 @@ urlpatterns = [
     path('google_oauth2/', include('google_auth.urls'))
 ]
 
-print(12)
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
