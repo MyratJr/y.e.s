@@ -32,10 +32,6 @@ class Service(models.Model):
         elif not self.vip_is_active and self.vip_date:
             raise ValidationError('Can not save "vip_date" field with selected date while "vip_is_active" field is False.')
         return super().clean()
-    
-    def create(self, request, *args, **kwargs):
-        kwargs['user'] = request.user
-        return super().create(*args, **kwargs)
 
     def __str__(self):
         return self.name
