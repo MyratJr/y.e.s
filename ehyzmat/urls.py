@@ -22,7 +22,7 @@ from django.conf.urls.static import static
 
 
 urlpatterns = [
-    path('api/swagger', schema_view.with_ui('swagger', cache_timeout=0),
+    path('api/swaggersalam', schema_view.with_ui('swagger', cache_timeout=0),
          name='schema-swagger-ui'),
     path('admin/', admin.site.urls),
     path('user/', include('users.urls')),
