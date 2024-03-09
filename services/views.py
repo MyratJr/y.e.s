@@ -28,6 +28,15 @@ class ServicesListAPIView(viewsets.ModelViewSet):
                 instance.view_counter = instance.view_counter + 1
                 instance.save()
         return Response(serializer.data)
+    
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset().select_related('user'))
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
 
 class Service_Gallery_ImagesAPIView(mixins.ListModelMixin,mixins.CreateModelMixin,generics.GenericAPIView):
