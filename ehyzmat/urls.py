@@ -35,4 +35,4 @@ urlpatterns = [
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     # path('api/token/blacklist/', TokenBlacklistView.as_view(), name='token_blacklist'),
     path('google_oauth2/', include('google_auth.urls'))
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+]
