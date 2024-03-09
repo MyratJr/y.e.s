@@ -12,7 +12,6 @@ class ServiceGalleryImageSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
-    rate_point = serializers.DecimalField(source='user.rate_point', read_only=True, max_digits=3, decimal_places=2)
 
     class Meta:
         model = User
@@ -46,7 +45,6 @@ class ServicesSerializers(serializers.ModelSerializer):
                   "description", 
                   "primary_image", 
                   "uploaded_images",
-                  "rate_point",
                   "view_counter",
                   "like_counter",
                 ]
