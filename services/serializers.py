@@ -27,8 +27,8 @@ class ServicesSerializers(serializers.ModelSerializer):
         return View_Service.objects.filter(service=instance).count()
     
     @staticmethod
-    def get_rate_point(request):
-        return User.objects.get(pk=request.user).rate_point
+    def get_rate_point(instance, request):
+        return User.objects.get(pk=request.user.pk).rate_point
     
     class Meta:
         model = Service
