@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
 ]
-SECURE_CROSS_ORIGIN_OPENER_POLICY = None
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
