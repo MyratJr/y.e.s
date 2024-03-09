@@ -15,7 +15,7 @@ class ServicesSerializers(serializers.ModelSerializer):
     uploaded_images = serializers.ListField(write_only=True)
     like_counter = serializers.SerializerMethodField(read_only=True)
     view_counter = serializers.SerializerMethodField(read_only=True)
-    rate_point = serializers.DecimalField(source='user.rate_point', read_only=True)
+    rate_point = serializers.DecimalField(source='user.rate_point', read_only=True,  max_digits=3, decimal_places=2)
 
     @staticmethod
     def get_like_counter(instance):
