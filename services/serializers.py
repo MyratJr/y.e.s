@@ -16,7 +16,7 @@ class ServicesSerializers(serializers.ModelSerializer):
     like_counter = serializers.SerializerMethodField(read_only=True)
     view_counter = serializers.SerializerMethodField(read_only=True)
     rate_point = serializers.DecimalField(source='user.rate_point', read_only=True,  max_digits=3, decimal_places=2)
-    user = serializers.IntegerField(read_only=True)
+    user__id = serializers.IntegerField(read_only=True)
 
     @staticmethod
     def get_like_counter(instance):
