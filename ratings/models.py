@@ -18,9 +18,11 @@ class Like_User(models.Model):
     favorited_user = models.ForeignKey("users.User", on_delete=models.CASCADE, related_name="favorited_user")
     date_created = models.DateTimeField(default=timezone.now)
 
+
 class View_User(models.Model):
     viewing_user = models.ForeignKey("users.User", on_delete=models.CASCADE, related_name="viewing_user")
     viewed_user = models.ForeignKey("users.User", on_delete=models.CASCADE, related_name="viewed_user")
+
 
 class Rate_User(models.Model):
     rating_user = models.ForeignKey("users.User", on_delete=models.CASCADE, related_name="rating_user")

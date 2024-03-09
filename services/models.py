@@ -8,7 +8,7 @@ class Service_Category(models.Model):
     image = models.ImageField(upload_to='categories/%Y/%m/%d/', max_length=255)
 
     def __str__(self):
-        return str(self.id)
+        return str(self.name)
 
 
 class Service(models.Model):
@@ -33,7 +33,7 @@ class Service(models.Model):
         return super().clean()
 
     def __str__(self):
-        return str(self.id)
+        return self.name
     
 
 class ServiceGalleryImage(models.Model):
@@ -42,6 +42,6 @@ class ServiceGalleryImage(models.Model):
 
     def __str__(self):
         try:
-            return f"{self.id}'s gallery images"
+            return f"{self.name}'s gallery images"
         except:
             return "Not related image"

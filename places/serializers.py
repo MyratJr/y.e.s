@@ -7,6 +7,7 @@ class DistrictsSerializer(serializers.ModelSerializer):
         model = Districts
         fields = '__all__'
 
+
 class RegionsSerializer(serializers.ModelSerializer):
     region_district = DistrictsSerializer(many=True)
 
