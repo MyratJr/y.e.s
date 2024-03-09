@@ -3,7 +3,6 @@ from .models import Service, ServiceGalleryImage, Service_Category
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.parsers import MultiPartParser, FormParser
 from django_filters.rest_framework import DjangoFilterBackend
-from advertisement.views import check_advertisement_time
 from ratings.models import View_Service, Like_Service
 from rest_framework import viewsets, mixins, generics
 from advertisement.models import Advertisement
@@ -11,12 +10,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
-from django.db.models import F
 from .serializers import *
-
-# Weighted sum: (16 * 5) + (11 * 4) + (40 * 3) + (10 * 2) + (10 * 1) = 286
-# Total likes: 16 + 11 + 40 + 10 + 10 = 87
-# Star level: 286 / 87 ≈ 3.29
 
 
 class ServicesListAPIView(viewsets.ModelViewSet):
@@ -36,9 +30,7 @@ class ServicesListAPIView(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 
-class Service_Gallery_ImagesAPIView(mixins.ListModelMixin,
-                  mixins.CreateModelMixin,
-                  generics.GenericAPIView):
+class Service_Gallery_ImagesAPIView(mixins.ListModelMixin,mixins.CreateModelMixin,generics.GenericAPIView):
     permission_classes = [IsAuthenticated]
     parser_classes = [MultiPartParser,FormParser]
     queryset = ServiceGalleryImage.objects.all()
@@ -49,6 +41,7 @@ class Service_Gallery_ImagesAPIView(mixins.ListModelMixin,
 
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
+
 
 class HomeDataView(APIView):
     permission_classes= [AllowAny]

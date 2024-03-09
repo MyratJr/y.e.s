@@ -24,6 +24,7 @@ class Service(models.Model):
     primary_image = models.ImageField(upload_to='service/service_images/%Y/%m/', max_length=255)
     view_counter = models.IntegerField(default=0)
     like_counter = models.IntegerField(default=0)
+    date_created = models.DateTimeField(auto_now_add=True)
 
     def clean(self):
         if not self.vip_date and self.vip_is_active:
@@ -31,6 +32,10 @@ class Service(models.Model):
         elif not self.vip_is_active and self.vip_date:
             raise ValidationError('Can not save "vip_date" field with selected date while "vip_is_active" field is False.')
         return super().clean()
+    
+    def create(self, request, *args, **kwargs):
+        kwargs['user'] = request.user
+        return super().create(*args, **kwargs)
 
     def __str__(self):
         return self.name
