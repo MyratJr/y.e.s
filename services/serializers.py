@@ -28,7 +28,7 @@ class ServicesSerializers(serializers.ModelSerializer):
     
     @staticmethod
     def get_rate_point(request):
-        return User.objects.get(pk=request.user.id).rate_point
+        return User.objects.get(pk=request.user).rate_point
     
     class Meta:
         model = Service
