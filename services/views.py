@@ -53,7 +53,6 @@ class HomeDataView(APIView):
         services_serializer = HomeServicesSerializers(services, many=True, context={'request': request})
         categories_serializer = HomeCategoriesSerializers(categories, many=True, context={'request': request})
         advertisement_serializer = HomeAdvertisementsSerializers(advertisements, many=True, context={'request': request})
-        print(advertisement_serializer.data, "jhhkjh")
         data = [advertisement_serializer.data, categories_serializer.data, services_serializer.data]
         return Response(data, status=status.HTTP_200_OK)
     
