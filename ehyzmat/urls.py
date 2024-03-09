@@ -38,3 +38,4 @@ urlpatterns = [
 ]
 
 print("salam")
+print(43142)
