@@ -16,7 +16,6 @@ class ServicesSerializers(serializers.ModelSerializer):
     like_counter = serializers.SerializerMethodField(read_only=True)
     view_counter = serializers.SerializerMethodField(read_only=True)
     rate_point = serializers.SerializerMethodField(read_only=True)
-    user = serializers.IntegerField(read_only=True)
 
     @staticmethod
     def get_like_counter(instance):
@@ -28,8 +27,6 @@ class ServicesSerializers(serializers.ModelSerializer):
     
     @staticmethod
     def get_rate_point(instance):
-        print(instance)
-        print(instance.request)
         return User.objects.get(pk=1).rate_point
     
     class Meta:
