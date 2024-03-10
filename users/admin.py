@@ -33,5 +33,5 @@ class UserAdmin(BaseUserAdmin):
                 "fields": ("username", "password1", "password2"),
             },
         ),
-        (("Personal info"), {"fields": ("email", "phone_number")}),
+        (("Personal info"), {"fields": ("email", "phone")}),
     )
