@@ -25,8 +25,7 @@ class RegisterAPI(generics.GenericAPIView):
         otp = str(serializer.validated_data["otp"])
         temporary_otp = redis_cache.get(phone)
         if temporary_otp and temporary_otp.decode() == otp:
-            temporary_otp.is_verified = True
-            temporary_otp.save()
+            redis_cache.delete(phone)
             user = serializer.save()
             refresh = RefreshToken.for_user(User.objects.get(id=user.id))
             return Response({
