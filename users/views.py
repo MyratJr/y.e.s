@@ -66,7 +66,7 @@ class ChangeForgotPassword(mixins.UpdateModelMixin, viewsets.GenericViewSet):
     parser_classes = [MultiPartParser]
     queryset = User.objects.all()
 
-    def partial_update(self, request, pk, *args, **kwargs):
+    def partial_update(self, request, *args, **kwargs):
         kwargs['partial'] = True
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -77,7 +77,7 @@ class ChangeForgotPassword(mixins.UpdateModelMixin, viewsets.GenericViewSet):
         temporary_otp = redis_cache.get(phone)
         if temporary_otp and temporary_otp.decode() == otp:
             redis_cache.delete(phone)
-            user_change_password = User.objects.get(pk=pk)
+            user_change_password = User.objects.get(phone=phone)
             user_change_password.set_password(password)
             user_change_password.save()
             return Response({"success"})

@@ -33,9 +33,9 @@ class ForgotPasswordView(mixins.CreateModelMixin, generics.GenericAPIView):
         serializer.is_valid(raise_exception=True)
         phone = serializer.validated_data['phone']
         try: 
-            user_with_given_phone = User.objects.get(phone=phone)
+            User.objects.get(phone=phone)
         except:
-            return Response({"No user found with this phone number"})
+            return Response({"No user found with this phone!"})
         otp = randint(1000,9999)
         redis_cache.set(phone, otp, ex=300)
-        return Response({"user_id":user_with_given_phone.id, "phone":phone, "otp":otp}, status=status.HTTP_201_CREATED)
+        return Response({"phone":phone, "otp":otp}, status=status.HTTP_201_CREATED)
