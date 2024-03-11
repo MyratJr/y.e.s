@@ -49,7 +49,6 @@ class ServicesListAPIView(viewsets.ModelViewSet):
         serializer.save(user=self.request.user)
 
 
-
 class Service_Gallery_ImagesAPIView(mixins.ListModelMixin,mixins.CreateModelMixin,generics.GenericAPIView):
     permission_classes = [IsAuthenticated]
     parser_classes = [MultiPartParser,FormParser]
