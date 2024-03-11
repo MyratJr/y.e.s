@@ -33,7 +33,7 @@ class RegisterAPI(generics.GenericAPIView):
                 'refresh': str(refresh),
                 'access': str(refresh.access_token)
             })
-        return Response(f"{temporary_otp.decode()} and {otp}", status=status.HTTP_400_BAD_REQUEST)
+        return Response(f"{type(temporary_otp.decode())} and {type(otp)}", status=status.HTTP_400_BAD_REQUEST)
 
 
 class ChangePasswordView(generics.UpdateAPIView):
