@@ -22,7 +22,7 @@ class RegisterAPI(generics.GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         phone = serializer.validated_data["phone"]
-        otp = serializer.validated_data["otp"]
+        otp = str(serializer.validated_data["otp"])
         temporary_otp = redis_cache.get(phone)
         if temporary_otp and temporary_otp.decode() == otp:
             temporary_otp.is_verified = True
@@ -33,7 +33,7 @@ class RegisterAPI(generics.GenericAPIView):
                 'refresh': str(refresh),
                 'access': str(refresh.access_token)
             })
-        return Response(f"{type(temporary_otp.decode())} and {type(otp)}", status=status.HTTP_400_BAD_REQUEST)
+        return Response("OTP is wrong or has expired", status=status.HTTP_400_BAD_REQUEST)
 
 
 class ChangePasswordView(generics.UpdateAPIView):
