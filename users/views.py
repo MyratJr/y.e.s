@@ -61,7 +61,7 @@ class ChangePasswordView(generics.UpdateAPIView):
 
 
 class ChangeForgotPassword(mixins.UpdateModelMixin, viewsets.GenericViewSet):
-    serializer_class = ChangePasswordSerializer
+    serializer_class = ChangeForgotPasswordSerializer
     permission_classes = [permissions.AllowAny]
     parser_classes = [MultiPartParser]
     queryset = User.objects.all()

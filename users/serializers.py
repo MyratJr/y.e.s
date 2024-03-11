@@ -40,7 +40,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         return user
 
 
-class ChangePasswordSerializer(serializers.ModelSerializer):
+class ChangeForgotPasswordSerializer(serializers.ModelSerializer):
     otp = serializers.IntegerField(write_only=True)
     class Meta:
         model = User
