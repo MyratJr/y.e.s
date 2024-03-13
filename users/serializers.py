@@ -163,7 +163,7 @@ class LikeToServiceSerializer(serializers.ModelSerializer):
 
 
 class LikedServiceSerializer(serializers.ModelSerializer):
-    user = LikeToUserSerializer()
+    service__user = LikeToUserSerializer()
     service = LikeToServiceSerializer()
 
     class Meta:
