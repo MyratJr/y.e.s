@@ -167,7 +167,7 @@ class LikesFromUsersView(APIView):
 
     def get(self, request):
         liked_users = Like_User.objects.filter(favorited_user=request.user)
-        liked_serializer = LikedUsersSerializer(liked_users, many=True)
+        liked_serializer = LikesFromUsersSerializer(liked_users, many=True)
         return Response(liked_serializer.data, status=status.HTTP_200_OK)
     
 

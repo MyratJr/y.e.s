@@ -113,12 +113,6 @@ class AuthTokenSerializer(serializers.Serializer):
 
         attrs['user'] = user
         return attrs
-    
-
-class LikeFromUserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ('first_name', 'avatar')
 
 
 class LikeToUserSerializer(serializers.ModelSerializer):
@@ -126,17 +120,25 @@ class LikeToUserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('username', 'avatar',)
 
-class LikedUsersSerializer(serializers.ModelSerializer):
+class LikesFromUsersSerializer(serializers.ModelSerializer):
+    favoriting_user = LikeToUserSerializer()
+    
+    class Meta:
+        model = Like_User
+        fields = ["id", "favoriting_user", "date_created"]
+        # depth = 1
+
+
+class LikesFromUsersSerializer(serializers.ModelSerializer):
     favorited_user = LikeToUserSerializer()
     
     class Meta:
         model = Like_User
         fields = ["id", "favorited_user", "date_created"]
-        # depth = 1
 
 
 class RateSerializer(serializers.ModelSerializer):
-    rating_user = LikeFromUserSerializer()
+    rating_user = LikeToUserSerializer()
     rated_user = LikeToUserSerializer()
 
     class Meta:
