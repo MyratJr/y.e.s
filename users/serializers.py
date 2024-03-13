@@ -169,7 +169,7 @@ class LikedServiceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Like_Service
         fields = '__all__'
-        depth = 1
+        # depth = 1
 
 
 class ChangePasswordSerializer(serializers.Serializer):
