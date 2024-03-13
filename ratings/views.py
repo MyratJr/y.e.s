@@ -23,6 +23,7 @@ class RateUserView(mixins.CreateModelMixin, generics.GenericAPIView):
         rated_user.rate_point = rated_user.rate_point_total / rated_user.point_counter
         rated_user.save()
         self.perform_create(serializer)
+        return Response("Rate created successfully", status=status.HTTP_201_CREATED)
 
     def perform_create(self, serializer):
         serializer.save(rating_user=self.request.user)
@@ -34,4 +35,3 @@ class RateUserView(mixins.CreateModelMixin, generics.GenericAPIView):
         #     description=serializer.validated_data.get('description'),
         #     image=serializer.validated_data.get('image')
         # )
-        return Response("Rate created successfully", status=status.HTTP_201_CREATED)
