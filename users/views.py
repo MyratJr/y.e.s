@@ -185,7 +185,7 @@ class RatesFromUsersView(APIView):
 
     def get(self, request):
         rated_users = Rate_User.objects.filter(rated_user=request.user)
-        rated_serializer = RateSerializer(rated_users, many=True)
+        rated_serializer = RatesFromUsersSerializer(rated_users, many=True)
         return Response(rated_serializer.data, status=status.HTTP_200_OK)
     
 

@@ -137,14 +137,12 @@ class LikesToUsersSerializer(serializers.ModelSerializer):
         fields = ["id", "favorited_user", "date_created"]
 
 
-class RateSerializer(serializers.ModelSerializer):
+class RatesFromUsersSerializer(serializers.ModelSerializer):
     rating_user = LikeToUserSerializer()
-    rated_user = LikeToUserSerializer()
 
     class Meta:
         model = Rate_User
-        fields = '__all__'
-        depth = 1
+        fields = ["id", "rating_user", "rate_number", "description", "image", "date_created"]
 
 
 class RateOfUserSerializer(serializers.ModelSerializer):
