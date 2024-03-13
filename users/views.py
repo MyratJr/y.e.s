@@ -186,9 +186,7 @@ class RatesFromUsersView(APIView):
     def get(self, request):
         rated_users = Rate_User.objects.filter(rated_user=request.user)
         rated_serializer = RateSerializer(rated_users, many=True)
-        return Response({
-            "rated": rated_serializer.data,
-        }, status=status.HTTP_200_OK)
+        return Response(rated_serializer.data, status=status.HTTP_200_OK)
     
 
 class RatesToUsersView(APIView):
@@ -197,9 +195,7 @@ class RatesToUsersView(APIView):
     def get(self, request):
         rating_users = Rate_User.objects.filter(rating_user=request.user)
         rating_serializer = RateOfUserSerializer(rating_users, many=True)
-        return Response({
-            "rating": rating_serializer.data,
-        }, status=status.HTTP_200_OK)
+        return Response(rating_serializer.data, status=status.HTTP_200_OK)
     
 
 class ServiceLikesFromUsersView(APIView):
@@ -208,9 +204,7 @@ class ServiceLikesFromUsersView(APIView):
     def get(self, request):
         my_liked_services = Like_Service.objects.filter(service__user=request.user).select_related("user", "service")
         my_liked_sevices_serializer = LikedServiceSerializer(my_liked_services, many=True)
-        return Response({
-            "my_liked_services": my_liked_sevices_serializer.data,
-        }, status=status.HTTP_200_OK)
+        return Response(my_liked_sevices_serializer.data, status=status.HTTP_200_OK)
     
 
 class LikesToServiceView(APIView):
@@ -219,6 +213,4 @@ class LikesToServiceView(APIView):
     def get(self, request):
         my_liking_services = Like_Service.objects.filter(user=request.user).select_related("user", "service")
         my_liking_sevices_serializer = LikedServiceSerializer(my_liking_services, many=True)
-        return Response({
-            "my_liking_services": my_liking_sevices_serializer.data,
-        }, status=status.HTTP_200_OK)
+        return Response(my_liking_sevices_serializer.data, status=status.HTTP_200_OK)
