@@ -101,7 +101,7 @@ class LoginAPI(APIView):
 
 class UpdateUserAPIView(GenericAPIView):
     queryset = User.objects.all()
-    serializer_class = UpdateUserSerializer
+    serializer_class = UpdateUserOrGetListOfUsersSerializer
     parser_classes = [MultiPartParser,FormParser]
     permission_classes = [permissions.IsAuthenticated]
 
@@ -118,18 +118,16 @@ class UpdateUserAPIView(GenericAPIView):
     def perform_update(self, serializer):
         serializer.save() 
 
-class GetUsersAPIView(mixins.ListModelMixin,
-                    generics.GenericAPIView
-                    ):
+class ListUsersView(mixins.ListModelMixin,generics.GenericAPIView):
     queryset = User.objects.all()
-    serializer_class = GetUsersSerializer
+    serializer_class = UpdateUserOrGetListOfUsersSerializer
     permission_classes = [permissions.AllowAny]
 
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
 
 
-class User_CategoriesAPIView(mixins.RetrieveModelMixin, generics.GenericAPIView):
+class UserProfileView(mixins.RetrieveModelMixin, generics.GenericAPIView):
     queryset = User.objects.all()
     serializer_class = UserViewSerializers
     permission_classes = [permissions.AllowAny]
@@ -150,7 +148,7 @@ class User_CategoriesAPIView(mixins.RetrieveModelMixin, generics.GenericAPIView)
     
 
 
-class LikeUserAPIView(APIView):
+class LikeUserView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, pk):
@@ -160,10 +158,11 @@ class LikeUserAPIView(APIView):
         if created:
             liked_user.like_counter += 1
             liked_user.save()
-        return Response({"success": True, "likes": liked_user.like_counter})
+            return Response({"success": True, "likes": liked_user.like_counter})
+        return Response({"success": True, "likes": 0})
 
 
-class LikeToUserView(APIView):
+class LikeToUsersView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
@@ -180,7 +179,7 @@ class LikeToUserView(APIView):
         }, status=status.HTTP_200_OK)
     
 
-class LikeOfUserView(APIView):
+class LikeFromUsersView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):

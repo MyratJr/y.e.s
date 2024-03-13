@@ -12,16 +12,10 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ['id', 'username', 'phone', 'email']
 
 
-class UpdateUserSerializer(serializers.ModelSerializer):
+class UpdateUserOrGetListOfUsersSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['avatar', 'banner_image', 'username', 'email', 'experience', 'address', 'summary', 'web', 'tiktok', 'instagram', 'imo', 'first_name', "last_name", 'phone']
-
-
-class GetUsersSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = "__all__"
 
     
 class RegisterSerializer(serializers.ModelSerializer):
