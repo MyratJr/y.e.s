@@ -211,6 +211,6 @@ class LikesToServiceView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        my_liking_services = Like_Service.objects.filter(user=request.user).select_related("user", "service")
+        my_liking_services = Like_Service.objects.filter(user=request.user)
         my_liking_sevices_serializer = LikedServiceSerializer(my_liking_services, many=True)
         return Response(my_liking_sevices_serializer.data, status=status.HTTP_200_OK)
