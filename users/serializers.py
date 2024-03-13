@@ -131,7 +131,7 @@ class LikedUsersSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Like_User
-        fields = "__all__"
+        fields = ["id", "favorited_user", "date_created"]
         # depth = 1
 
 
