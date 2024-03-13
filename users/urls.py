@@ -13,8 +13,6 @@ urlpatterns = [
     path('like-user/<int:pk>', LikeUserView.as_view(), name='like-user'),
     path('likes-to', LikesToUsersView.as_view(), name='likes_to'),
     path('likes-from', LikesFromUsersView.as_view(), name='likes_from'),
-    path('rates-to', RatesToUsersView.as_view(), name='rates_to'),
-    path('rates-from', RatesFromUsersView.as_view(), name='rates_from'),
     path('likes-to-service', LikesToServiceView.as_view(), name='likes_to_service'),
     path('service-likes-from', ServiceLikesFromUsersView.as_view(), name='service_likes_from'),
 ]

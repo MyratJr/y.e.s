@@ -1,7 +1,7 @@
 from rest_framework.generics import GenericAPIView
 from rest_framework import generics, permissions, mixins, viewsets
 from services.serializers import HomeServicesSerializers
-from ratings.models import Like_User, View_User, Rate_User
+from ratings.models import Like_User, View_User
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser, FormParser
 from services.models import Service
@@ -178,24 +178,6 @@ class LikesToUsersView(APIView):
         liking_users = Like_User.objects.filter(favoriting_user=request.user)
         liking_serializer = LikesToUsersSerializer(liking_users, many=True)
         return Response(liking_serializer.data, status=status.HTTP_200_OK)
-    
-
-class RatesFromUsersView(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def get(self, request):
-        rated_users = Rate_User.objects.filter(rated_user=request.user)
-        rated_serializer = RatesFromUsersSerializer(rated_users, many=True)
-        return Response(rated_serializer.data, status=status.HTTP_200_OK)
-    
-
-class RatesToUsersView(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def get(self, request):
-        rating_users = Rate_User.objects.filter(rating_user=request.user)
-        rating_serializer = RateOfUserSerializer(rating_users, many=True)
-        return Response(rating_serializer.data, status=status.HTTP_200_OK)
     
 
 class ServiceLikesFromUsersView(APIView):

@@ -5,6 +5,7 @@ from users.models import User
 from .models import Rate_User
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 
 class RateUserView(mixins.CreateModelMixin, generics.GenericAPIView):
@@ -28,10 +29,20 @@ class RateUserView(mixins.CreateModelMixin, generics.GenericAPIView):
     def perform_create(self, serializer):
         serializer.save(rating_user=self.request.user)
 
-        # Rate_User.objects.create(
-        #     rating_user=request.user,
-        #     rated_user=rated_user,
-        #     rate_number=rate_number,
-        #     description=serializer.validated_data.get('description'),
-        #     image=serializer.validated_data.get('image')
-        # )
+
+class RatesFromUsersView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        rated_users = Rate_User.objects.filter(rated_user=request.user)
+        rated_serializer = RatesFromUsersSerializer(rated_users, many=True)
+        return Response(rated_serializer.data, status=status.HTTP_200_OK)
+    
+
+class RatesToUsersView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        rating_users = Rate_User.objects.filter(rating_user=request.user)
+        rating_serializer = RateOfUserSerializer(rating_users, many=True)
+        return Response(rating_serializer.data, status=status.HTTP_200_OK)

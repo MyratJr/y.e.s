@@ -1,5 +1,5 @@
 from .models import User
-from ratings.models import Like_Service, Like_User, Rate_User
+from ratings.models import Like_Service, Like_User
 from django.contrib.auth import authenticate
 from rest_framework import serializers
 from django.http import Http404
@@ -136,21 +136,6 @@ class LikesToUsersSerializer(serializers.ModelSerializer):
         model = Like_User
         fields = ["id", "favorited_user", "date_created"]
 
-
-class RatesFromUsersSerializer(serializers.ModelSerializer):
-    rating_user = LikeToUserSerializer()
-
-    class Meta:
-        model = Rate_User
-        fields = ["id", "rating_user", "rate_number", "description", "image", "date_created"]
-
-
-class RateOfUserSerializer(serializers.ModelSerializer):
-    rated_user = LikeToUserSerializer()
-
-    class Meta:
-        model = Rate_User
-        fields = ["id", "rated_user", "rate_number", "description", "image", "date_created"]
 
 class LikeToServiceSerializer(serializers.ModelSerializer):
     user = LikeToUserSerializer()
