@@ -162,35 +162,73 @@ class LikeUserView(APIView):
         return Response({"success": True, "likes": 0})
 
 
-class LikeFromUsersView(APIView):
+class LikesFromUsersView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        rated_objects = Rate_User.objects.filter(rated_user=request.user)
-        liked_objects = Like_User.objects.filter(favorited_user=request.user)
-        liked_services = Like_Service.objects.filter(service__user=request.user).select_related("user", "service")
-        rated_serializer = RateSerializer(rated_objects, many=True)
-        liked_serializer = LikedUsersSerializer(liked_objects, many=True)
-        liked_sevices_serializer = LikedServiceSerializer(liked_services, many=True)
+        liked_users = Like_User.objects.filter(favorited_user=request.user)
+        my_liked_services = Like_Service.objects.filter(service__user=request.user).select_related("user", "service")
+        liked_serializer = LikedUsersSerializer(liked_users, many=True)
+        my_liked_sevices_serializer = LikedServiceSerializer(my_liked_services, many=True)
         return Response({
-            "rated": rated_serializer.data,
             "liked": liked_serializer.data,
-            "liked_services": liked_sevices_serializer.data,
+            "my_liked_services": my_liked_sevices_serializer.data,
         }, status=status.HTTP_200_OK)
     
 
-class LikeToUsersView(APIView):
+class LikesToUsersView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        rated_objects = Rate_User.objects.filter(rating_user=request.user)
-        liked_objects = Like_User.objects.filter(favoriting_user=request.user)
-        liked_services = Like_Service.objects.filter(user=request.user).select_related("user", "service")
-        rated_serializer = RateOfUserSerializer(rated_objects, many=True)
-        liked_serializer = LikedUsersSerializer(liked_objects, many=True)
-        liked_sevices_serializer = LikedServiceSerializer(liked_services, many=True)
+        liking_users = Like_User.objects.filter(favoriting_user=request.user)
+        my_liking_services = Like_Service.objects.filter(user=request.user).select_related("user", "service")
+        liking_serializer = LikedUsersSerializer(liking_users, many=True)
+        my_liking_sevices_serializer = LikedServiceSerializer(my_liking_services, many=True)
+        return Response({
+            "liking": liking_serializer.data,
+            "my_liking_services": my_liking_sevices_serializer.data,
+        }, status=status.HTTP_200_OK)
+    
+
+class RatesFromUsersView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        rated_users = Rate_User.objects.filter(rated_user=request.user)
+        rated_serializer = RateSerializer(rated_users, many=True)
         return Response({
             "rated": rated_serializer.data,
-            "liked": liked_serializer.data,
-            "liked_services": liked_sevices_serializer.data,
+        }, status=status.HTTP_200_OK)
+    
+
+class RatesToUsersView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        rating_users = Rate_User.objects.filter(rating_user=request.user)
+        rating_serializer = RateOfUserSerializer(rating_users, many=True)
+        return Response({
+            "rating": rating_serializer.data,
+        }, status=status.HTTP_200_OK)
+    
+
+class ServiceLikesFromUsersView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        my_liked_services = Like_Service.objects.filter(service__user=request.user).select_related("user", "service")
+        my_liked_sevices_serializer = LikedServiceSerializer(my_liked_services, many=True)
+        return Response({
+            "my_liked_services": my_liked_sevices_serializer.data,
+        }, status=status.HTTP_200_OK)
+    
+
+class LikesToServiceView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        my_liking_services = Like_Service.objects.filter(user=request.user).select_related("user", "service")
+        my_liking_sevices_serializer = LikedServiceSerializer(my_liking_services, many=True)
+        return Response({
+            "my_liking_services": my_liking_sevices_serializer.data,
         }, status=status.HTTP_200_OK)
