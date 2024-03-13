@@ -1,3 +1,4 @@
+from rest_framework.generics import GenericAPIView
 from rest_framework import generics, permissions, mixins, viewsets
 from services.serializers import HomeServicesSerializers
 from ratings.models import Like_User, View_User, Rate_User
@@ -98,33 +99,21 @@ class LoginAPI(APIView):
         })
     
 
-class UpdateUserAPIView(mixins.UpdateModelMixin,
-                        generics.GenericAPIView
-                        ):
+class UpdateUserAPIView(GenericAPIView):
     queryset = User.objects.all()
     serializer_class = UpdateUserSerializer
     parser_classes = [MultiPartParser,FormParser]
     permission_classes = [permissions.IsAuthenticated]
 
-    # def put(self, request, *args, **kwargs):
-        # return self.update(request, *args, **kwargs)
-    def update(self, request, *args, **kwargs):
-        partial = kwargs.pop('partial', False)
-        self.object = self.get_object()
-        serializer = self.get_serializer(self.object, data=request.data, partial=partial)
-        serializer.is_valid(raise_exception=True)
-        self.perform_update(serializer)
-    
-        if getattr(self.object, '_prefetched_objects_cache', None):
-            self.object._prefetched_objects_cache = {}
-
-        return Response(serializer.data)    
-
-    def perform_update(self, serializer):
-        serializer.save(user=self.request.user)
+    def get_object(self):
+        return self.request.user
 
     def patch(self, request, *args, **kwargs):
-        return self.update(request, *args, **kwargs)
+        user = self.get_object()
+        serializer = self.get_serializer(user, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        return Response(serializer.data)
 
 
 class GetUsersAPIView(mixins.ListModelMixin,
