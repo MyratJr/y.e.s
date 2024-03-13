@@ -12,5 +12,5 @@ urlpatterns = [
     path('user/<int:pk>', UserProfileView.as_view(), name='user'),
     path('like-user/<int:pk>', LikeUserView.as_view(), name='like-user'),
     path('likes-to', LikeToUsersView.as_view(), name='likes_to'),
-    path('likes-from/', LikeFromUsersView.as_view(), name='likes_from'),
+    path('likes-from', LikeFromUsersView.as_view(), name='likes_from'),
 ]

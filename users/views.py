@@ -162,7 +162,7 @@ class LikeUserView(APIView):
         return Response({"success": True, "likes": 0})
 
 
-class LikeToUsersView(APIView):
+class LikeFromUsersView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
@@ -179,7 +179,7 @@ class LikeToUsersView(APIView):
         }, status=status.HTTP_200_OK)
     
 
-class LikeFromUsersView(APIView):
+class LikeToUsersView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
