@@ -106,9 +106,22 @@ class UpdateUserAPIView(mixins.UpdateModelMixin,
     parser_classes = [MultiPartParser,FormParser]
     permission_classes = [permissions.IsAuthenticated]
 
-    def put(self, request, *args, **kwargs):
-        return self.update(request, *args, **kwargs)
-    
+    # def put(self, request, *args, **kwargs):
+        # return self.update(request, *args, **kwargs)
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        self.object = self.get_object()
+        serializer = self.get_serializer(self.object, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+
+        if getattr(self.object, '_prefetched_objects_cache', None):
+            # If 'prefetch_related' has been applied to a queryset, we need to
+            # forcibly invalidate the prefetch cache on the instance.
+            self.object._prefetched_objects_cache = {}
+
+        return Response(serializer.data)    
+
     def patch(self, request, *args, **kwargs):
         return self.update(request, *args, **kwargs)
 
