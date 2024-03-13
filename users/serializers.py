@@ -124,16 +124,15 @@ class LikeFromUserSerializer(serializers.ModelSerializer):
 class LikeToUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('avatar',)
+        fields = ('username', 'avatar',)
 
 class LikedUsersSerializer(serializers.ModelSerializer):
-    favoriting_user = LikeFromUserSerializer()
     favorited_user = LikeToUserSerializer()
     
     class Meta:
         model = Like_User
-        fields = "__all__"
-        depth = 1
+        fields = ["id", "favorited_user"]
+        # depth = 1
 
 
 class RateSerializer(serializers.ModelSerializer):
