@@ -163,12 +163,20 @@ class LikeToServiceSerializer(serializers.ModelSerializer):
         fields = ('user', 'name', 'primary_image')
 
 
-class LikedServiceSerializer(serializers.ModelSerializer):
+class LikesToServiceSerializer(serializers.ModelSerializer):
     service = LikeToServiceSerializer()
 
     class Meta:
         model = Like_Service
         fields = ["id", "service", "date_created"]
+
+
+class ServiceLikesFromUsersSerializer(serializers.ModelSerializer):
+    user = LikeToUserSerializer
+
+    class Meta:
+        model = Like_Service
+        fields = ["user", "date_created"]
 
 
 class ChangePasswordSerializer(serializers.Serializer):
