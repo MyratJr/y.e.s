@@ -114,7 +114,9 @@ class UpdateUserAPIView(GenericAPIView):
         serializer.is_valid(raise_exception=True)
         self.perform_update(serializer)
         return Response(serializer.data)
-
+    
+    def perform_update(self, serializer):
+        serializer.save() 
 
 class GetUsersAPIView(mixins.ListModelMixin,
                     generics.GenericAPIView
