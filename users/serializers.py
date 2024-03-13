@@ -149,7 +149,7 @@ class RateSerializer(serializers.ModelSerializer):
 
 class RateOfUserSerializer(serializers.ModelSerializer):
     rating_user = LikeToUserSerializer()
-    rated_user = LikeFromUserSerializer()
+    rated_user = LikesFromUsersSerializer()
 
     class Meta:
         model = Rate_User
@@ -163,7 +163,7 @@ class LikeToServiceSerializer(serializers.ModelSerializer):
 
 
 class LikedServiceSerializer(serializers.ModelSerializer):
-    user = LikeFromUserSerializer()
+    user = LikesFromUsersSerializer()
     service = LikeToServiceSerializer()
 
     class Meta:
