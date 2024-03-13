@@ -177,7 +177,7 @@ class LikesToUsersView(APIView):
     def get(self, request):
         liking_users = Like_User.objects.filter(favoriting_user=request.user)
         liking_serializer = LikedUsersSerializer(liking_users, many=True)
-        return Response({"liking": liking_serializer.data,}, status=status.HTTP_200_OK)
+        return Response({liking_serializer.data,}, status=status.HTTP_200_OK)
     
 
 class RatesFromUsersView(APIView):
