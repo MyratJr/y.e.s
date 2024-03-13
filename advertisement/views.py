@@ -1,14 +1,6 @@
-import datetime
 from django.core.validators import RegexValidator
-from django.core.exceptions import ValidationError
 from django.core.files.images import get_image_dimensions
-
-
-def check_advertisement_time(data):
-    for i in data:
-        if i.expired_date < datetime.date.today():
-            i.is_active = False
-            i.save()
+from django.core.exceptions import ValidationError
 
 
 phone_regex = RegexValidator(

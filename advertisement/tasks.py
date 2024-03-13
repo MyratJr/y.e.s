@@ -1,8 +1,8 @@
 from ehyzmat.celery import app
-import time
 from services.models import Service
 from advertisement.models import Advertisement
 from datetime import date
+
 
 @app.task
 def advertisement_vip_task():

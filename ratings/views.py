@@ -1,25 +1,10 @@
-from .serializers import *
-from rest_framework.response import Response
-from rest_framework.views import APIView
-from .models import Rate_User
-from users.models import User
-from django.http import Http404
 from rest_framework import mixins, generics, permissions, status
 from rest_framework.parsers import MultiPartParser, FormParser
+from .serializers import *
+from users.models import User
+from .models import Rate_User
 from django.shortcuts import get_object_or_404
-
-class RatesFromView(APIView):
-    permission_classes = [permissions.AllowAny]
-    
-    def get(self, request, pk, format=None):
-        try:
-            user = User.objects.get(pk=pk)
-        except User.DoesNotExist:
-            raise Http404()
-        rates = Rate_User.objects.filter(rated_user=user)
-        rates_serialized = FromRateSerializer(rates, many=True)
-        rated_user_serialized = RatedUserSerializer(user)
-        return Response([rated_user_serialized.data, rates_serialized.data])
+from rest_framework.response import Response
 
 
 class RateUserView(mixins.CreateModelMixin, generics.GenericAPIView):
@@ -37,11 +22,16 @@ class RateUserView(mixins.CreateModelMixin, generics.GenericAPIView):
         rated_user.rate_point_total += rate_number
         rated_user.rate_point = rated_user.rate_point_total / rated_user.point_counter
         rated_user.save()
-        Rate_User.objects.create(
-            rating_user=request.user,
-            rated_user=rated_user,
-            rate_number=rate_number,
-            description=serializer.validated_data.get('description'),
-            image=serializer.validated_data.get('image')
-        )
+        self.perform_create(serializer)
+
+    def perform_create(self, serializer):
+        serializer.save(rating_user=self.request.user)
+
+        # Rate_User.objects.create(
+        #     rating_user=request.user,
+        #     rated_user=rated_user,
+        #     rate_number=rate_number,
+        #     description=serializer.validated_data.get('description'),
+        #     image=serializer.validated_data.get('image')
+        # )
         return Response("Rate created successfully", status=status.HTTP_201_CREATED)
