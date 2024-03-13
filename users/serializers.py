@@ -129,7 +129,7 @@ class LikesFromUsersSerializer(serializers.ModelSerializer):
         # depth = 1
 
 
-class LikesFromUsersSerializer(serializers.ModelSerializer):
+class LikesToUsersSerializer(serializers.ModelSerializer):
     favorited_user = LikeToUserSerializer()
     
     class Meta:
