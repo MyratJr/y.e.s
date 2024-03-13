@@ -103,7 +103,7 @@ class UpdateUserAPIView(mixins.UpdateModelMixin,
                         ):
     queryset = User.objects.all()
     serializer_class = UpdateUserSerializer
-    # parser_classes = [MultiPartParser,FormParser]
+    parser_classes = [MultiPartParser,FormParser]
     permission_classes = [permissions.IsAuthenticated]
 
     def put(self, request, *args, **kwargs):
