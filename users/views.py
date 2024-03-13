@@ -167,12 +167,9 @@ class LikesFromUsersView(APIView):
 
     def get(self, request):
         liked_users = Like_User.objects.filter(favorited_user=request.user)
-        my_liked_services = Like_Service.objects.filter(service__user=request.user).select_related("user", "service")
         liked_serializer = LikedUsersSerializer(liked_users, many=True)
-        my_liked_sevices_serializer = LikedServiceSerializer(my_liked_services, many=True)
         return Response({
             "liked": liked_serializer.data,
-            "my_liked_services": my_liked_sevices_serializer.data,
         }, status=status.HTTP_200_OK)
     
 
@@ -181,12 +178,9 @@ class LikesToUsersView(APIView):
 
     def get(self, request):
         liking_users = Like_User.objects.filter(favoriting_user=request.user)
-        my_liking_services = Like_Service.objects.filter(user=request.user).select_related("user", "service")
         liking_serializer = LikedUsersSerializer(liking_users, many=True)
-        my_liking_sevices_serializer = LikedServiceSerializer(my_liking_services, many=True)
         return Response({
             "liking": liking_serializer.data,
-            "my_liking_services": my_liking_sevices_serializer.data,
         }, status=status.HTTP_200_OK)
     
 
