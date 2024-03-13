@@ -157,13 +157,13 @@ class RateOfUserSerializer(serializers.ModelSerializer):
         depth = 1
 
 class LikeToServiceSerializer(serializers.ModelSerializer):
+    user = LikeToUserSerializer
     class Meta:
         model = Service
-        fields = ('name', 'primary_image')
+        fields = ('user', 'name', 'primary_image')
 
 
 class LikedServiceSerializer(serializers.ModelSerializer):
-    service__user = LikeToUserSerializer()
     service = LikeToServiceSerializer()
 
     class Meta:
