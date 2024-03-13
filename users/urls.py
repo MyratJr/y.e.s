@@ -6,7 +6,7 @@ from .views import *
 urlpatterns = [
     path('api/register', RegisterAPI.as_view(), name='register'),
     path('get-users', GetUsersAPIView.as_view(), name='get_users'),
-    path('update-user/<int:pk>', UpdateUserAPIView.as_view(), name='update_user'),
+    path('update-user', UpdateUserAPIView.as_view(), name='update_user'),
     path('api/login', LoginAPI.as_view(), name='login'),
     path('change-password/', ChangePasswordView.as_view(), name='change_password'),
     path('change-forgot-password', ChangeForgotPassword.as_view({'patch': 'partial_update'}), name='change_forgot_password'),
