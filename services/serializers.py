@@ -57,11 +57,7 @@ class ServicesSerializers(serializers.ModelSerializer):
         for field, value in validated_data.items():
             setattr(instance, field, value)
         instance.save()
-        string = str(uploaded_images_id)
-        inner_string = string[2:-2]
-        uploaded_images_id = eval(inner_string)  
-        for image_id in uploaded_images_id:
-            relating_image = ServiceGalleryImage.objects.get(id=image_id)
+        for relating_image in ServiceGalleryImage.objects.filter(id__in=eval(uploaded_images_id[0])):
             relating_image.product = instance
             relating_image.save()
         return instance

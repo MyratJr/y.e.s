@@ -49,7 +49,7 @@ class Services_View(viewsets.ModelViewSet):
         serializer.save(user=self.request.user)
 
 
-class Service_Gallery_ImagesAPIView(mixins.ListModelMixin,mixins.CreateModelMixin,generics.GenericAPIView):
+class Service_Gallery_ImagesAPIView(mixins.ListModelMixin,mixins.CreateModelMixin,generics.GenericAPIView,mixins.DestroyModelMixin):
     permission_classes = [IsAuthenticated]
     parser_classes = [MultiPartParser,FormParser]
     queryset = ServiceGalleryImage.objects.all()
@@ -60,6 +60,9 @@ class Service_Gallery_ImagesAPIView(mixins.ListModelMixin,mixins.CreateModelMixi
 
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
+
+    def destroy(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
 
 
 class HomeDataView(APIView):
