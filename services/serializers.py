@@ -23,7 +23,7 @@ class ServicesSerializers(serializers.ModelSerializer):
     image_ids = serializers.SerializerMethodField(read_only=True)
 
     def get_image_ids(self, obj):
-        return [image.image for image in obj.images.all()]
+        return [i.image for i in obj.images.all()]
     # like_counter = serializers.SerializerMethodField(read_only=True)
     # view_counter = serializers.SerializerMethodField(read_only=True)
     # rate_point = serializers.DecimalField(source='user.rate_point', read_only=True,  max_digits=3, decimal_places=2)
