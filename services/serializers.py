@@ -17,13 +17,30 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ("id", "first_name", "last_name", "avatar", "rate_point", "phone", "email", "web", "imo", "instagram", "tiktok") 
 
+from django.core.files.storage import default_storage
+class ServiceGalleryImageSerializer(serializers.ModelSerializer):
+    image_url = serializers.SerializerMethodField()
+
+    def get_image_url(self, obj):
+        if obj.image:
+            request = self.context.get('request')
+            if request is not None:
+                image_url = default_storage.url(obj.image.name)
+                return request.build_absolute_uri(image_url)
+        return None  # Return None if no image is present
+
+    class Meta:
+        model = ServiceGalleryImage
+        fields = ('id', 'image_url') 
+
 
 class ServicesSerializers(serializers.ModelSerializer):
     uploaded_images = serializers.ListField(write_only=True)
-    image_ids = serializers.SerializerMethodField(read_only=True)
+    image_ids = ServiceGalleryImageSerializer(many=True, read_only=True)
+    # image_ids = serializers.SerializerMethodField(read_only=True)
 
-    def get_image_ids(self, obj):
-        return [i.image for i in obj.images.all()]
+    # def get_image_ids(self, obj):
+        # return [i.image for i in obj.images.all()]
     # like_counter = serializers.SerializerMethodField(read_only=True)
     # view_counter = serializers.SerializerMethodField(read_only=True)
     # rate_point = serializers.DecimalField(source='user.rate_point', read_only=True,  max_digits=3, decimal_places=2)
