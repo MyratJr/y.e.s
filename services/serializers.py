@@ -49,7 +49,7 @@ class ServicesSerializers(serializers.ModelSerializer):
                   "description", 
                   "primary_image", 
                   "image_ids",
-                  "uploaded_imges",
+                  "uploaded_images",
                   "view_counter",
                   "like_counter",
                 ]
