@@ -61,14 +61,16 @@ class Service_Gallery_ImagesAPIView(mixins.ListModelMixin,mixins.CreateModelMixi
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
 
-
-class Service_Gallery_DestroyView(mixins.DestroyModelMixin, generics.GenericAPIView):
-    permission_classes = [IsAuthenticated]
-    parser_classes = [MultiPartParser,FormParser]
-    queryset = ServiceGalleryImage.objects.all()
-
-    def destroy(self, request, *args, **kwargs):
+    def delete(self, request, *args, **kwargs):
         return self.destroy(request, *args, **kwargs)
+
+# class Service_Gallery_DestroyView(mixins.DestroyModelMixin, generics.GenericAPIView):
+#     permission_classes = [IsAuthenticated]
+#     parser_classes = [MultiPartParser,FormParser]
+#     queryset = ServiceGalleryImage.objects.all()
+
+#     def delete(self, request, *args, **kwargs):
+#         return self.destroy(request, *args, **kwargs)
 
 
 class HomeDataView(APIView):
