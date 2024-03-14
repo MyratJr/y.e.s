@@ -24,6 +24,7 @@ class ServicesSerializers(serializers.ModelSerializer):
 
     def get_image_ids(self, obj):
         uploaded_image_ids = self.context.get('uploaded_image_ids', [])
+        print(uploaded_image_ids)
         images = ServiceGalleryImage.objects.filter(id__in=uploaded_image_ids)
         return [[image.id, image.image] for image in images]
     # like_counter = serializers.SerializerMethodField(read_only=True)
