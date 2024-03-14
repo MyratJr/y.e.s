@@ -20,23 +20,11 @@ class UserSerializer(serializers.ModelSerializer):
 
 class ServicesSerializers(serializers.ModelSerializer):
     uploaded_images = serializers.ListField(write_only=True)
-    image_ids = serializers.SerializerMethodField(read_only=True)
+    gallery_images = serializers.SerializerMethodField(read_only=True)
 
-    def get_image_ids(self, obj):
+    def get_gallery_images(self, obj):
         uploaded_images = [image.id for image in obj.images.all()]
         return [[i.id, str(i.image)] for i in ServiceGalleryImage.objects.filter(id__in=uploaded_images)]
-    # like_counter = serializers.SerializerMethodField(read_only=True)
-    # view_counter = serializers.SerializerMethodField(read_only=True)
-    # rate_point = serializers.DecimalField(source='user.rate_point', read_only=True,  max_digits=3, decimal_places=2)
-    # user = UserSerializer(read_only=True)
-
-    # @staticmethod
-    # def get_like_counter(instance):
-    #     return Like_Service.objects.filter(service=instance).count()
-
-    # @staticmethod
-    # def get_view_counter(instance):
-    #     return View_Service.objects.filter(service=instance).count()
     
     class Meta:
         model = Service
@@ -49,7 +37,7 @@ class ServicesSerializers(serializers.ModelSerializer):
                   "experience", 
                   "description", 
                   "primary_image", 
-                  "image_ids",
+                  "gallery_images",
                   "uploaded_images",
                   "view_counter",
                   "like_counter",
