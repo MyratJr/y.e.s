@@ -23,7 +23,7 @@ class ServicesSerializers(serializers.ModelSerializer):
     image_ids = serializers.SerializerMethodField(read_only=True)
 
     def get_image_ids(self, obj):
-        uploaded_image_ids = self.context.get('uploaded_images', [])
+        uploaded_image_ids = self.context.get('uploaded_images')
         print(uploaded_image_ids)
         images = ServiceGalleryImage.objects.filter(id__in=uploaded_image_ids)
         return [[image.id, image.image] for image in images]
