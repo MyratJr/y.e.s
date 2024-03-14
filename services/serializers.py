@@ -8,7 +8,7 @@ class ServiceGalleryImageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ServiceGalleryImage
-        fields = ["image"]
+        fields = ["id", "image"]
 
 
 class UserSerializer(serializers.ModelSerializer):
