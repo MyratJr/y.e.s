@@ -19,8 +19,8 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class ServicesSerializers(serializers.ModelSerializer):
-    # uploaded_images = serializers.ListField()
-    image_ids = serializers.SerializerMethodField()
+    uploaded_images = serializers.ListField(write_only=True)
+    image_ids = serializers.SerializerMethodField(read_only=True)
 
     def get_image_ids(self, obj):
         return [image.id for image in obj.images.all()]
@@ -49,6 +49,7 @@ class ServicesSerializers(serializers.ModelSerializer):
                   "description", 
                   "primary_image", 
                   "image_ids",
+                  "uploaded_imges",
                   "view_counter",
                   "like_counter",
                 ]
