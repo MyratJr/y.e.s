@@ -13,7 +13,7 @@ from rest_framework import status
 from .serializers import *
 
 
-class ServicesListAPIView(viewsets.ModelViewSet):
+class Services_View(viewsets.ModelViewSet):
     queryset = Service.objects.all()
     serializer_class = ServicesSerializers
     permission_classes = [IsAuthenticatedOrReadOnly]

@@ -4,11 +4,11 @@ from rest_framework.routers import DefaultRouter
 
 
 router=DefaultRouter()
-router.register('service', views.ServicesListAPIView, basename='service-categories-list')
+router.register('services-view', views.Services_View, basename='services_view')
 
 
 urlpatterns = [
-    path('service-categories/', include(router.urls)),
+    path('', include(router.urls)),
     path('service_gallery_image/', views.Service_Gallery_ImagesAPIView.as_view(), name='service-gallery-images'),
     path('home/', views.HomeDataView.as_view(), name='home-datas'),
     path('categories_list/', views.All_CategoriesAPIView.as_view(), name='categories'),
