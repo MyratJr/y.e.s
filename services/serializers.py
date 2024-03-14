@@ -19,7 +19,11 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class ServicesSerializers(serializers.ModelSerializer):
-    # uploaded_images = serializers.ListField(write_only=True)
+    # uploaded_images = serializers.ListField()
+    image_ids = serializers.SerializerMethodField()
+
+    def get_image_ids(self, obj):
+        return [image.id for image in obj.images.all()]
     # like_counter = serializers.SerializerMethodField(read_only=True)
     # view_counter = serializers.SerializerMethodField(read_only=True)
     # rate_point = serializers.DecimalField(source='user.rate_point', read_only=True,  max_digits=3, decimal_places=2)
@@ -44,7 +48,7 @@ class ServicesSerializers(serializers.ModelSerializer):
                   "experience", 
                   "description", 
                   "primary_image", 
-                  "uploaded_images",
+                  "image_ids",
                   "view_counter",
                   "like_counter",
                 ]
