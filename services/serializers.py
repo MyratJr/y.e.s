@@ -47,9 +47,10 @@ class ServicesSerializers(serializers.ModelSerializer):
     def create(self, validated_data):
         uploaded_images_id = validated_data.pop("uploaded_images")
         new_service = Service.objects.create(**validated_data)
-        string = str(uploaded_images_id)
-        inner_string = string[2:-2]
-        uploaded_images_id = eval(inner_string)  
+        print(uploaded_images_id)
+        # string = str(uploaded_images_id)
+        # inner_string = string[2:-2]
+        # uploaded_images_id = eval(inner_string)  
         for image_id in uploaded_images_id:
             relating_image = ServiceGalleryImage.objects.get(id=image_id)
             relating_image.product = new_service
