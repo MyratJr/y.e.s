@@ -43,6 +43,6 @@ class ServiceGalleryImage(models.Model):
 
     def __str__(self):
         try:
-            return f"{self.name}'s gallery images"
+            return f"{self.product}'s gallery images"
         except:
             return "Not related image"
