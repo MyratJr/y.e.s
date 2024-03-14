@@ -23,7 +23,9 @@ class ServicesSerializers(serializers.ModelSerializer):
     image_ids = serializers.SerializerMethodField(read_only=True)
 
     def get_image_ids(self, obj):
-        return [[image.id, image.image] for image in ServiceGalleryImage.objects.filter(id__in=self.uploaded_images)]
+        uploaded_image_ids = self.context.get('uploaded_image_ids', [])
+        images = ServiceGalleryImage.objects.filter(id__in=uploaded_image_ids)
+        return [[image.id, image.image] for image in images]
     # like_counter = serializers.SerializerMethodField(read_only=True)
     # view_counter = serializers.SerializerMethodField(read_only=True)
     # rate_point = serializers.DecimalField(source='user.rate_point', read_only=True,  max_digits=3, decimal_places=2)
