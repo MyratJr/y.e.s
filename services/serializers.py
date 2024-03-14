@@ -19,19 +19,19 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class ServicesSerializers(serializers.ModelSerializer):
-    uploaded_images = serializers.ListField(write_only=True)
-    like_counter = serializers.SerializerMethodField(read_only=True)
-    view_counter = serializers.SerializerMethodField(read_only=True)
+    # uploaded_images = serializers.ListField(write_only=True)
+    # like_counter = serializers.SerializerMethodField(read_only=True)
+    # view_counter = serializers.SerializerMethodField(read_only=True)
     # rate_point = serializers.DecimalField(source='user.rate_point', read_only=True,  max_digits=3, decimal_places=2)
-    user = UserSerializer(read_only=True)
+    # user = UserSerializer(read_only=True)
 
-    @staticmethod
-    def get_like_counter(instance):
-        return Like_Service.objects.filter(service=instance).count()
+    # @staticmethod
+    # def get_like_counter(instance):
+    #     return Like_Service.objects.filter(service=instance).count()
 
-    @staticmethod
-    def get_view_counter(instance):
-        return View_Service.objects.filter(service=instance).count()
+    # @staticmethod
+    # def get_view_counter(instance):
+    #     return View_Service.objects.filter(service=instance).count()
     
     class Meta:
         model = Service
