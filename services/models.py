@@ -19,6 +19,7 @@ class Service(models.Model):
     place = models.ForeignKey("places.Districts", on_delete=models.CASCADE, related_name='service_district')
     experience = models.IntegerField()
     description = models.TextField(validators=[MaxLengthValidator(250)])
+    public = models.BooleanField(default=False)
     vip_date = models.DateField(blank=True, null=True)
     vip_is_active = models.BooleanField(default=False)
     primary_image = models.ImageField(upload_to='service/service_images/%Y/%m/', max_length=255)
