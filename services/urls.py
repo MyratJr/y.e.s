@@ -16,5 +16,4 @@ urlpatterns = [
     path('filter-service', views.FilterServiceList.as_view(), name='filter_service'),
     path('home-services', views.HomeServicesView.as_view({'get': 'list'}), name='home_services'),
     path('home-service-categories', views.HomeServiceCategoriesView.as_view({'get': 'list'}), name='home_service_categories'),
-    path('home-advertisement', views.HomeAdvertisementView.as_view({'get': 'list'}), name='home_advertisements')
 ]
