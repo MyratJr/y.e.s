@@ -5,7 +5,6 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from django_filters.rest_framework import DjangoFilterBackend
 from ratings.models import View_Service, Like_Service
 from rest_framework import viewsets, mixins, generics
-from advertisement.models import Advertisement
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -90,22 +89,6 @@ class HomeServicesView(mixins.ListModelMixin,viewsets.GenericViewSet):
 class HomeServiceCategoriesView(mixins.ListModelMixin,viewsets.GenericViewSet):
     queryset = Service_Category.objects.all()
     serializer_class = HomeCategoriesSerializers
-    permission_classes = [AllowAny]
-    parser_classes = [MultiPartParser,FormParser]
-    
-    def list(self, request, *args, **kwargs):
-        queryset = self.filter_queryset(self.get_queryset())
-        page = self.paginate_queryset(queryset)
-        if page is not None:
-            serializer = self.get_serializer(page, many=True)
-            return self.get_paginated_response(serializer.data)
-        serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)
-    
-
-class HomeAdvertisementView(mixins.ListModelMixin,viewsets.GenericViewSet):
-    queryset = Advertisement.objects.filter(is_active=True)
-    serializer_class = HomeAdvertisementsSerializers
     permission_classes = [AllowAny]
     parser_classes = [MultiPartParser,FormParser]
     

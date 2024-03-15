@@ -82,9 +82,3 @@ class HomeCategoriesSerializers(serializers.ModelSerializer):
     class Meta:
         model = Service_Category
         fields = ['id', 'name']
-
-
-class HomeAdvertisementsSerializers(serializers.ModelSerializer):
-    class Meta:
-        model = Advertisement
-        fields = '__all__'
