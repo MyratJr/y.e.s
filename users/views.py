@@ -148,15 +148,12 @@ class UserProfileView(mixins.RetrieveModelMixin, generics.GenericAPIView):
         return Response(new_data)
 
 
-class UserProfilServicesView(generics.RetrieveAPIView):
+class PurchaseList(generics.ListAPIView):
     serializer_class = HomeServicesSerializers
-    permission_classes = [permissions.AllowAny]
-    filter_backends = [OrderingFilter]
-    ordering_fields = ["user__rate_point", "experience"]
 
     def get_queryset(self):
-        queryset = Service.objects.filter(user=self.kwargs['pk'])
-        return queryset
+        username = self.kwargs['username']
+        return Service.objects.filter(purchaser__username=username)
 
 
 class LikeUserView(APIView):
