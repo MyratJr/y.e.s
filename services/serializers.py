@@ -44,7 +44,6 @@ class ServicesSerializers(serializers.ModelSerializer):
                   "like_counter",
                 ]
     
-
     def create(self, validated_data):
         uploaded_images_id = validated_data.pop("uploaded_images")
         new_service = Service.objects.create(**validated_data)
@@ -65,23 +64,14 @@ class ServicesSerializers(serializers.ModelSerializer):
     
 
 class HomeServicesSerializers(serializers.ModelSerializer):
-    # liked_count = serializers.SerializerMethodField()
-    # viewed_count = serializers.SerializerMethodField()
-
-    # @staticmethod
-    # def get_liked_count(instance):
-    #     return Like_Service.objects.filter(service=instance).count()
-
-    # @staticmethod
-    # def get_viewed_count(instance):
-    #     return View_Service.objects.filter(service=instance).count()
-    
+        
     class Meta:
         model = Service
         fields = '__all__'
 
 
 class HomeCategoriesSerializers(serializers.ModelSerializer):
+    
     class Meta:
         model = Service_Category
         fields = '__all__'

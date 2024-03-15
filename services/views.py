@@ -49,7 +49,7 @@ class Services_View(viewsets.ModelViewSet):
         serializer.save(user=self.request.user)
 
 
-class Service_Gallery_ImagesAPIView(mixins.ListModelMixin,mixins.CreateModelMixin,generics.GenericAPIView,mixins.DestroyModelMixin):
+class Service_Gallery_ImagesView(mixins.ListModelMixin,mixins.CreateModelMixin,generics.GenericAPIView,mixins.DestroyModelMixin):
     permission_classes = [IsAuthenticated]
     parser_classes = [MultiPartParser,FormParser]
     queryset = ServiceGalleryImage.objects.all()
@@ -71,19 +71,53 @@ class Service_Gallery_DestroyView(mixins.DestroyModelMixin, generics.GenericAPIV
         return self.destroy(request, *args, **kwargs)
 
 
-class HomeDataView(APIView):
-    permission_classes= [AllowAny]
-
-    def get(self, request):
-        services = Service.objects.all(vip_is_active=True)
-        categories = Service_Category.objects.all()
-        advertisements = Advertisement.objects.filter(is_active=True)
-        services_serializer = HomeServicesSerializers(services, many=True, context={'request': request})
-        categories_serializer = HomeCategoriesSerializers(categories, many=True, context={'request': request})
-        advertisement_serializer = HomeAdvertisementsSerializers(advertisements, many=True, context={'request': request})
-        data = [advertisement_serializer.data, categories_serializer.data, services_serializer.data]
-        return Response(data, status=status.HTTP_200_OK)
+class HomeServicesView(mixins.ListModelMixin,viewsets.GenericViewSet):
+    queryset = Service.objects.filter(vip_is_active=True)
+    serializer_class = ServicesSerializers
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    parser_classes = [MultiPartParser,FormParser]
     
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset().select_related('user', "category", "place"))
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
+
+class HomeServiceCategoriesView(mixins.ListModelMixin,viewsets.GenericViewSet):
+    queryset = Service_Category.objects.all()
+    serializer_class = HomeCategoriesSerializers
+    permission_classes = [AllowAny]
+    parser_classes = [MultiPartParser,FormParser]
+    
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+    
+
+class HomeAdvertisementView(mixins.ListModelMixin,viewsets.GenericViewSet):
+    queryset = Advertisement.objects.all(is_active=True)
+    serializer_class = HomeAdvertisementsSerializers
+    permission_classes = [AllowAny]
+    parser_classes = [MultiPartParser,FormParser]
+    
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
 
 class All_CategoriesAPIView(mixins.ListModelMixin, generics.GenericAPIView):
     queryset = Service_Category.objects.all()
