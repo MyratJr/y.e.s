@@ -104,7 +104,7 @@ class HomeServiceCategoriesView(mixins.ListModelMixin,viewsets.GenericViewSet):
     
 
 class HomeAdvertisementView(mixins.ListModelMixin,viewsets.GenericViewSet):
-    queryset = Advertisement.objects.all(is_active=True)
+    queryset = Advertisement.objects.filter(is_active=True)
     serializer_class = HomeAdvertisementsSerializers
     permission_classes = [AllowAny]
     parser_classes = [MultiPartParser,FormParser]
