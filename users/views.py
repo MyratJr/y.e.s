@@ -152,8 +152,8 @@ class PurchaseList(generics.ListAPIView):
     serializer_class = HomeServicesSerializers
 
     def get_queryset(self):
-        username = self.kwargs['pk']
-        return Service.objects.filter(purchaser__username=username)
+        user_id = self.kwargs['pk']
+        return Service.objects.filter(user=user_id)
 
 
 class LikeUserView(APIView):
