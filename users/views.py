@@ -148,8 +148,10 @@ class UserProfileView(mixins.RetrieveModelMixin, generics.GenericAPIView):
         return Response(new_data)
 
 
-class PurchaseList(generics.ListAPIView):
+class UserServicesView(generics.ListAPIView):
     serializer_class = HomeServicesSerializers
+    filter_backends = [OrderingFilter]
+    ordering_fields = ["experience"]
 
     def get_queryset(self):
         user_id = self.kwargs['pk']
