@@ -3,10 +3,8 @@ from .views import *
 
 
 urlpatterns = [
-    path('register', RegisterAPI.as_view(), name='register'),
     path('users-list', ListUsersView.as_view(), name='users_list'),
     path('update-user', UpdateUserAPIView.as_view(), name='update_user'),
-    path('login', LoginAPI.as_view(), name='login'),
     path('change-password', ChangePasswordView.as_view(), name='change_password'),
     path('change-forgot-password', ChangeForgotPassword.as_view({'patch': 'partial_update'}), name='change_forgot_password'),
     path('user/<int:pk>', UserProfileView.as_view(), name='user'),
