@@ -1,4 +1,3 @@
-from django.conf import settings
 from rest_framework import serializers
 from .models import Service, ServiceGalleryImage, Service_Category
 from advertisement.models import Advertisement
@@ -25,12 +24,7 @@ class ServicesSerializers(serializers.ModelSerializer):
 
     def get_gallery_images(self, obj):
         uploaded_images = [image.id for image in obj.images.all()]
-        gallery_images_data = []
-        for image in ServiceGalleryImage.objects.filter(id__in=uploaded_images):
-            image_url = f"{image.image.url}"
-            gallery_images_data.append({'id': image.id, 'url': image_url})
-
-        return gallery_images_data
+        return [[i.id, str(i.image.url)] for i in ServiceGalleryImage.objects.filter(id__in=uploaded_images)]
     
     class Meta:
         model = Service
