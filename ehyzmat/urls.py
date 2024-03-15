@@ -34,8 +34,8 @@ urlpatterns = [
     path('auth/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('auth/register/', RegisterAPI.as_view(), name='register'),
     path('auth/login/', LoginAPI.as_view(), name='login'),
-    path('auth/google/', include('google_auth.urls'))
-    path('logout/', TokenBlacklistView.as_view(), name='token_blacklist'),
+    path('auth/google/', include('google_auth.urls')),
+    path('auth/logout/', TokenBlacklistView.as_view(), name='token_blacklist'),
 
 ]
 
