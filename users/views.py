@@ -155,7 +155,7 @@ class UserProfilServicesView(generics.RetrieveAPIView):
     ordering_fields = ["user__rate_point", "experience"]
 
     def get_queryset(self):
-        queryset = Service.objects.filter(user=self.kwargs['user_id'])
+        queryset = Service.objects.filter(user=self.kwargs['pk'])
         return queryset
 
 
