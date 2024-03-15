@@ -148,7 +148,7 @@ class UserProfileView(mixins.RetrieveModelMixin, generics.GenericAPIView):
         return Response(new_data)
 
 
-class UserProfilServicesView(generics.ListCreateAPIView):
+class UserProfilServicesView(generics.RetrieveAPIView):
     serializer_class = HomeServicesSerializers
     permission_classes = [permissions.AllowAny]
     filter_backends = [OrderingFilter]
