@@ -4,7 +4,7 @@ from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from django.conf import settings
-from rest_framework_simplejwt.views import TokenRefreshView
+from rest_framework_simplejwt.views import TokenRefreshView, TokenBlacklistView
 from users.views import RegisterAPI, LoginAPI
 
 
@@ -22,8 +22,7 @@ from django.conf.urls.static import static
 
 
 urlpatterns = [
-    path('api/swaggersalam', schema_view.with_ui('swagger', cache_timeout=0),
-         name='schema-swagger-ui'),
+    path('api/swaggersalam/', schema_view.with_ui('swagger', cache_timeout=0),name='schema-swagger-ui'),
     path('admin/', admin.site.urls),
     path('user/', include('users.urls')),
     path('region/', include('places.urls')),
@@ -32,11 +31,12 @@ urlpatterns = [
     path('otp/', include('otp.urls')),
     # path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
     # path('api/token/', TokenObtainPairView.as_view(), name='token_obtain'),
-    path('auth/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('auth/register', RegisterAPI.as_view(), name='register'),
-    path('auth/login', LoginAPI.as_view(), name='login'),
-    # path('api/token/blacklist/', TokenBlacklistView.as_view(), name='token_blacklist'),
-    path('google_oauth2/', include('google_auth.urls'))
+    path('auth/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('auth/register/', RegisterAPI.as_view(), name='register'),
+    path('auth/login/', LoginAPI.as_view(), name='login'),
+    path('auth/google/', include('google_auth.urls'))
+    path('logout/', TokenBlacklistView.as_view(), name='token_blacklist'),
+
 ]
 
 if settings.DEBUG:
