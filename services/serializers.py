@@ -20,9 +20,9 @@ class UserSerializer(serializers.ModelSerializer):
 
 class ServicesSerializers(serializers.ModelSerializer):
     uploaded_images = serializers.ListField(write_only=True)
-    gallery_images = serializers.SerializerMethodField(read_only=True)
+    image_url = serializers.SerializerMethodField('get_image_url', read_only=True)
 
-    def get_gallery_images(self, obj):
+    def get_image_url(self, obj):
         uploaded_images = [image.id for image in obj.images.all()]
         return [[i.id, str(i.image.url)] for i in ServiceGalleryImage.objects.filter(id__in=uploaded_images)]
     
@@ -37,7 +37,7 @@ class ServicesSerializers(serializers.ModelSerializer):
                   "experience", 
                   "description", 
                   "primary_image", 
-                  "gallery_images",
+                  "image_url",
                   "uploaded_images",
                   "view_counter",
                   "like_counter",
