@@ -14,7 +14,7 @@ urlpatterns = [
     path('categories_list/', views.All_CategoriesAPIView.as_view(), name='categories'),
     path('like_service/<int:pk>', views.LikeServiceAPIView.as_view(), name='like-user'),
     path('filter-service', views.FilterServiceList.as_view(), name='filter_service'),
-    path('home-services', views.HomeServicesView.as_view(), name='home_services'),
-    path('home-service-categories', views.HomeServiceCategoriesView.as_view(), name='home_service_categories'),
-    path('home-advertisement', views.HomeAdvertisementView.as_view(), name='home_advertisements')
+    path('home-services', views.HomeServicesView.as_view({'get': 'list'}), name='home_services'),
+    path('home-service-categories', views.HomeServiceCategoriesView.as_view({'get': 'list'}), name='home_service_categories'),
+    path('home-advertisement', views.HomeAdvertisementView.as_view({'get': 'list'}), name='home_advertisements')
 ]
