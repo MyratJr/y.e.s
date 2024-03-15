@@ -70,11 +70,18 @@ class HomeServicesSerializers(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class HomeCategoriesSerializers(serializers.ModelSerializer):
+class CategoriesSerializers(serializers.ModelSerializer):
     
     class Meta:
         model = Service_Category
         fields = '__all__'
+
+    
+class HomeCategoriesSerializers(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Service_Category
+        fields = ['id', 'name']
 
 
 class HomeAdvertisementsSerializers(serializers.ModelSerializer):

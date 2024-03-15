@@ -11,7 +11,7 @@ urlpatterns = [
     path('', include(router.urls)),
     path('service-gallery/', views.Service_Gallery_ImagesView.as_view(), name='service_gallery'),
     path('service_gallery_destroy/<int:pk>/', views.Service_Gallery_DestroyView.as_view(), name='service-gallery-destroy'),
-    path('categories_list/', views.All_CategoriesAPIView.as_view(), name='categories'),
+    path('service-categories/', views.All_CategoriesAPIView.as_view(), name='service_categories'),
     path('like_service/<int:pk>', views.LikeServiceAPIView.as_view(), name='like-user'),
     path('filter-service', views.FilterServiceList.as_view(), name='filter_service'),
     path('home-services', views.HomeServicesView.as_view({'get': 'list'}), name='home_services'),

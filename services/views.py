@@ -121,8 +121,8 @@ class HomeAdvertisementView(mixins.ListModelMixin,viewsets.GenericViewSet):
 
 class All_CategoriesAPIView(mixins.ListModelMixin, generics.GenericAPIView):
     queryset = Service_Category.objects.all()
-    serializer_class = HomeCategoriesSerializers
-    permission_classes = [AllowAny]
+    serializer_class = CategoriesSerializers
+    permission_classes = [IsAuthenticated]
 
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
@@ -144,6 +144,6 @@ class FilterServiceList(generics.ListAPIView):
     queryset = Service.objects.all()
     serializer_class = ServicesSerializers
     filter_backends = [SearchFilter, OrderingFilter, DjangoFilterBackend]
-    search_fields = ['user__username', 'user__firs_tname', 'name', 'category__name']
+    search_fields = ['user__username', 'user__first_name', 'name', 'category__name']
     ordering_fields = ["user__rate_point", "experience"]
     filterset_fields = ['category', 'place']
