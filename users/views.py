@@ -13,6 +13,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework import status
 from ehyzmat.settings import redis_cache
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.filters import OrderingFilter
 
 
 class RegisterAPI(generics.GenericAPIView):
@@ -135,7 +136,7 @@ class UserProfileView(mixins.RetrieveModelMixin, generics.GenericAPIView):
     def get(self, request, *args, **kwargs):
         instance = self.get_object()
         serializer = self.get_serializer(instance)
-        services = Service.objects.filter(user=instance)
+        services = Service.objects.filter(user=instance, public=True)
         if request.user and request.user.is_authenticated:
             service, created = View_User.objects.get_or_create(viewing_user=request.user, viewed_user=instance)
             if created:
@@ -145,7 +146,17 @@ class UserProfileView(mixins.RetrieveModelMixin, generics.GenericAPIView):
                     "User_services": HomeServicesSerializers(services, many=True).data,
                     }]
         return Response(new_data)
-    
+
+
+class UserProfilServicesView(generics.ListCreateAPIView):
+    serializer_class = HomeServicesSerializers
+    permission_classes = [permissions.AllowAny]
+    filter_backends = [OrderingFilter]
+    ordering_fields = ["user__rate_point", "experience"]
+
+    def get_queryset(self):
+        queryset = Service.objects.filter(user=self.kwargs['post_id'])
+        return queryset
 
 
 class LikeUserView(APIView):
@@ -153,7 +164,6 @@ class LikeUserView(APIView):
 
     def post(self, request, pk):
         liked_user = get_object_or_404(User, pk=pk)
-        print(request.user.username)
         user, created = Like_User.objects.get_or_create(favoriting_user=request.user,favorited_user=liked_user)
         if created:
             liked_user.like_counter += 1

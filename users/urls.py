@@ -15,4 +15,5 @@ urlpatterns = [
     path('likes-from', LikesFromUsersView.as_view(), name='likes_from'),
     path('likes-to-service', LikesToServiceView.as_view(), name='likes_to_service'),
     path('service-likes-from', ServiceLikesFromUsersView.as_view(), name='service_likes_from'),
+    path('user-services', UserProfilServicesView, name='user_services')
 ]
