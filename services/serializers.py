@@ -27,7 +27,7 @@ class ServicesSerializers(serializers.ModelSerializer):
         uploaded_images = [image.id for image in obj.images.all()]
         gallery_images_data = []
         for image in ServiceGalleryImage.objects.filter(id__in=uploaded_images):
-            image_url = f"{settings.MEDIA_URL}{image.image.url}"
+            image_url = f"{image.image.url}"
             gallery_images_data.append({'id': image.id, 'url': image_url})
 
         return gallery_images_data
