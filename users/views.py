@@ -137,15 +137,12 @@ class UserProfileView(mixins.RetrieveModelMixin, generics.GenericAPIView):
     def get(self, request, *args, **kwargs):
         instance = self.get_object()
         serializer = self.get_serializer(instance)
-        services = Service.objects.filter(user=instance, public=True)
         if request.user and request.user.is_authenticated:
             service, created = View_User.objects.get_or_create(viewing_user=request.user, viewed_user=instance)
             if created:
                 instance.view_counter = instance.view_counter + 1
                 instance.save()
-        new_data = [{"User_data": serializer.data}, {
-                    "User_services": HomeServicesSerializers(services, many=True).data,
-                    }]
+        new_data = [serializer.data]
         return Response(new_data)
 
 
@@ -156,7 +153,7 @@ class UserServicesView(generics.ListAPIView):
 
     def get_queryset(self):
         user_id = self.kwargs['pk']
-        return Service.objects.filter(user=user_id)
+        return Service.objects.filter(user=user_id, public=True)
 
 
 class LikeUserView(APIView):
