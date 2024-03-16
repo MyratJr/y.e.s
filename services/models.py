@@ -10,7 +10,7 @@ class Service_Category(models.Model):
     image = models.ImageField(upload_to='categories/%Y/%m/%d/', max_length=255)
 
     def __str__(self):
-        return f'{self.id} and {self.id}'
+        return f'{self.name} and {self.id}'
 
 
 class Service(models.Model):
