@@ -155,15 +155,15 @@ class UserServicesView(generics.ListAPIView):
     ordering_fields = ["experience"]
 
     def get_queryset(self):
-        user_id = self.kwargs['pk']
+        user_id = self.kwargs['id']
         return Service.objects.filter(user=user_id)
 
 
 class LikeUserView(APIView):
     permission_classes = [IsAuthenticated]
 
-    def post(self, request, pk):
-        liked_user = get_object_or_404(User, pk=pk)
+    def post(self, request, id):
+        liked_user = get_object_or_404(User, id=id)
         user, created = Like_User.objects.get_or_create(favoriting_user=request.user,favorited_user=liked_user)
         if created:
             liked_user.like_counter += 1

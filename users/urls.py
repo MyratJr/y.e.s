@@ -8,8 +8,8 @@ urlpatterns = [
     path('change-password/', views.ChangePasswordView.as_view(), name='change_password'),
     path('change-forgot-password/', views.ChangeForgotPassword.as_view({'patch': 'partial_update'}), name='change_forgot_password'),
     path('user/<int:id>/', views.UserProfileView.as_view(), name='user'),
-    path('like-user/<int:pk>/', views.LikeUserView.as_view(), name='like_user'),
+    path('like-user/<int:id>/', views.LikeUserView.as_view(), name='like_user'),
     path('likes-to/', views.LikesToUsersView.as_view(), name='likes_to'),
     path('likes-from/', views.LikesFromUsersView.as_view(), name='likes_from'),
-    re_path('^user-services/(?P<pk>.+)/$', views.UserServicesView.as_view()),
+    re_path('^user-services/(?P<id>.+)/$', views.UserServicesView.as_view()),
 ]

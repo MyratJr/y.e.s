@@ -17,7 +17,7 @@ class RateUserView(mixins.CreateModelMixin, generics.GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         rated_user = serializer.validated_data.get('rated_user')
-        rated_user = get_object_or_404(User, pk=rated_user.id)
+        rated_user = get_object_or_404(User, id=rated_user.id)
         rated_user.point_counter += 1
         rate_number = serializer.validated_data.get('rate_number')
         rated_user.rate_point_total += rate_number
