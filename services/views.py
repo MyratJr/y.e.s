@@ -48,14 +48,11 @@ class Services_View(viewsets.ModelViewSet):
         serializer.save(user=self.request.user)
 
 
-class Service_Gallery_ImagesView(mixins.ListModelMixin,mixins.CreateModelMixin,generics.GenericAPIView,mixins.DestroyModelMixin):
+class Service_Gallery_ImagesView(mixins.CreateModelMixin,generics.GenericAPIView,mixins.DestroyModelMixin):
     permission_classes = [IsAuthenticated]
     parser_classes = [MultiPartParser,FormParser]
     queryset = ServiceGalleryImage.objects.all()
     serializer_class = ServiceGalleryImageSerializer
-
-    def get(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
