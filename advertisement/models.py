@@ -9,4 +9,4 @@ class Advertisement(models.Model):
     expired_date = models.DateField()
 
     def __str__(self):
-        return self.title
+        return f'{self.title} and {self.id}'

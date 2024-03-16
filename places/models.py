@@ -6,7 +6,7 @@ class Regions(models.Model):
     name = models.CharField(max_length=16)
 
     def __str__(self):
-        return self.name
+        return f'{self.name} and {self.id}'
 
 
 class Districts(models.Model):
@@ -15,4 +15,4 @@ class Districts(models.Model):
     district = models.CharField(max_length=50)
 
     def __str__(self):
-        return str(self.id)
+        return f'{self.district} and {self.id}'
