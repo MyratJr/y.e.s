@@ -2,11 +2,12 @@ from django.db import models
 from django.utils import timezone
 import uuid
 
+
 class Like_Service(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey("users.User", on_delete=models.CASCADE)
     service = models.ForeignKey("services.Service", on_delete=models.CASCADE)
-    date_created = models.DateTimeField(default=timezone.now)
+    date_created = models.DateTimeField(auto_now_add=True)
 
 
 class View_Service(models.Model):
@@ -19,7 +20,7 @@ class Like_User(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     favoriting_user = models.ForeignKey("users.User", on_delete=models.CASCADE, related_name="favoriting_user")
     favorited_user = models.ForeignKey("users.User", on_delete=models.CASCADE, related_name="favorited_user")
-    date_created = models.DateTimeField(default=timezone.now)
+    date_created = models.DateTimeField(auto_now_add=True)
 
 
 class View_User(models.Model):

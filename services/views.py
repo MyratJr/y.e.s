@@ -130,3 +130,21 @@ class FilterServiceList(generics.ListAPIView):
     search_fields = ['user__username', 'user__first_name', 'name', 'category__name']
     ordering_fields = ["user__rate_point", "experience"]
     filterset_fields = ['category', 'place']
+
+
+class ServiceLikesFromUsersView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        my_liked_services = Like_Service.objects.filter(service__user=request.user).select_related("user", "service")
+        my_liked_sevices_serializer = ServiceLikesFromUsersSerializer(my_liked_services, many=True)
+        return Response(my_liked_sevices_serializer.data, status=status.HTTP_200_OK)
+    
+
+class LikesToServiceView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        my_liking_services = Like_Service.objects.filter(user=request.user)
+        my_liking_sevices_serializer = LikesToServiceSerializer(my_liking_services, many=True)
+        return Response(my_liking_sevices_serializer.data, status=status.HTTP_200_OK)

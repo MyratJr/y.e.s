@@ -3,5 +3,5 @@ from . import views
 
 
 urlpatterns = [
-    path('regions/', views.SnippetList.as_view(), name='regions-list'),
+    path('regions/', views.SnippetList.as_view(), name='regions'),
 ]

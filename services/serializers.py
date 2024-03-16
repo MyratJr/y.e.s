@@ -1,8 +1,9 @@
 from rest_framework import serializers
 from .models import Service, ServiceGalleryImage, Service_Category
-from advertisement.models import Advertisement
-from ratings.models import Like_Service, View_Service
+from ratings.models import Like_Service
 from users.models import User
+from users.serializers import LikeToUserSerializer
+
 
 class ServiceGalleryImageSerializer(serializers.ModelSerializer):
 
@@ -82,3 +83,27 @@ class HomeCategoriesSerializers(serializers.ModelSerializer):
     class Meta:
         model = Service_Category
         fields = ['id', 'name']
+
+
+class ServiceLikesFromUsersSerializer(serializers.ModelSerializer):
+    user = LikeToUserSerializer()
+
+    class Meta:
+        model = Like_Service
+        fields = ["user", "date_created"]
+
+
+class LikeToServiceSerializer(serializers.ModelSerializer):
+    user = LikeToUserSerializer()
+    
+    class Meta:
+        model = Service
+        fields = ('user', 'name', 'primary_image')
+
+
+class LikesToServiceSerializer(serializers.ModelSerializer):
+    service = LikeToServiceSerializer()
+
+    class Meta:
+        model = Like_Service
+        fields = ["id", "service", "date_created"]

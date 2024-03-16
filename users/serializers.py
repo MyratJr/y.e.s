@@ -1,9 +1,8 @@
 from .models import User
-from ratings.models import Like_Service, Like_User
+from ratings.models import Like_User
 from django.contrib.auth import authenticate
 from rest_framework import serializers
 from django.http import Http404
-from services.models import Service
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -20,10 +19,12 @@ class UpdateUserOrGetListOfUsersSerializer(serializers.ModelSerializer):
     
 class RegisterSerializer(serializers.ModelSerializer):
     otp = serializers.IntegerField(write_only=True)
+
     class Meta:
         model = User
         fields = ['id', 'username', 'phone', 'email', 'password', 'otp']
         extra_kwargs = {'password': {'write_only': True}}
+
     def create(self, validated_data):
         user = User.objects.create_user(
             validated_data['username'],
@@ -36,6 +37,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 class ChangeForgotPasswordSerializer(serializers.ModelSerializer):
     otp = serializers.CharField(max_length=4, write_only=True)
+
     class Meta:
         model = User
         fields = ['phone', 'password', 'otp']
@@ -43,6 +45,7 @@ class ChangeForgotPasswordSerializer(serializers.ModelSerializer):
         
 
 class UserViewSerializers(serializers.ModelSerializer):
+
     class Meta:
         model = User
         fields = [
@@ -116,9 +119,11 @@ class AuthTokenSerializer(serializers.Serializer):
 
 
 class LikeToUserSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = User
         fields = ('username', 'avatar',)
+
 
 class LikesFromUsersSerializer(serializers.ModelSerializer):
     favoriting_user = LikeToUserSerializer()
@@ -126,7 +131,6 @@ class LikesFromUsersSerializer(serializers.ModelSerializer):
     class Meta:
         model = Like_User
         fields = ["id", "favoriting_user", "date_created"]
-        # depth = 1
 
 
 class LikesToUsersSerializer(serializers.ModelSerializer):
@@ -135,29 +139,6 @@ class LikesToUsersSerializer(serializers.ModelSerializer):
     class Meta:
         model = Like_User
         fields = ["id", "favorited_user", "date_created"]
-
-
-class LikeToServiceSerializer(serializers.ModelSerializer):
-    user = LikeToUserSerializer()
-    class Meta:
-        model = Service
-        fields = ('user', 'name', 'primary_image')
-
-
-class LikesToServiceSerializer(serializers.ModelSerializer):
-    service = LikeToServiceSerializer()
-
-    class Meta:
-        model = Like_Service
-        fields = ["id", "service", "date_created"]
-
-
-class ServiceLikesFromUsersSerializer(serializers.ModelSerializer):
-    user = LikeToUserSerializer()
-
-    class Meta:
-        model = Like_Service
-        fields = ["user", "date_created"]
 
 
 class ChangePasswordSerializer(serializers.Serializer):
