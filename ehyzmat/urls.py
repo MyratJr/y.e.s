@@ -6,23 +6,22 @@ from drf_yasg import openapi
 from django.conf import settings
 from rest_framework_simplejwt.views import TokenRefreshView, TokenBlacklistView
 from users.views import RegisterAPI, LoginAPI
+from django.conf.urls.static import static
 
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="Django Sample Application API",
+        title="Y.E.S API",
         default_version='v1',
-        description="Welcome to the Django Sample Application API documentation",
+        description="Welcome to the Y.E.S API documentation",
     ),
     public=True,
     permission_classes=(permissions.AllowAny,),
 )
 
-from django.conf.urls.static import static
-
 
 urlpatterns = [
-    path('api/swaggersalam/', schema_view.with_ui('swagger', cache_timeout=0),name='schema-swagger-ui'),
+    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0),name='schema-swagger-ui'),
     path('admin/', admin.site.urls),
     path('user/', include('users.urls')),
     path('region/', include('places.urls')),
@@ -30,15 +29,13 @@ urlpatterns = [
     path('advertisement/', include('advertisement.urls')),
     path('ratings/', include('ratings.urls')),
     path('otp/', include('otp.urls')),
-    # path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
-    # path('api/token/', TokenObtainPairView.as_view(), name='token_obtain'),
     path('auth/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('auth/register/', RegisterAPI.as_view(), name='register'),
     path('auth/login/', LoginAPI.as_view(), name='login'),
     path('auth/', include('google_auth.urls')),
     path('auth/logout/', TokenBlacklistView.as_view(), name='token_blacklist'),
-
 ]
+
 
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

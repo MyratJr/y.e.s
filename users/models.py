@@ -2,9 +2,10 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from advertisement.views import validate_image, phone_regex
 from rest_framework_simplejwt.tokens import RefreshToken
-
+import uuid
 
 class User(AbstractUser):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     avatar = models.ImageField(upload_to="user/avatar_images", default="user/avatar_images/8380015.jpg")
     REGISTRATION_CHOICES = {
         'email':'Email',
