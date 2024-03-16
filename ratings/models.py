@@ -3,33 +3,33 @@ from django.utils import timezone
 import uuid
 
 class Like_Service(models.Model):
-    uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    # uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey("users.User", on_delete=models.CASCADE)
     service = models.ForeignKey("services.Service", on_delete=models.CASCADE)
     date_created = models.DateTimeField(default=timezone.now)
 
 
 class View_Service(models.Model):
-    uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    # uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey("users.User", on_delete=models.CASCADE)
     service = models.ForeignKey("services.Service", on_delete=models.CASCADE)
 
 
 class Like_User(models.Model):
-    uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    # uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     favoriting_user = models.ForeignKey("users.User", on_delete=models.CASCADE, related_name="favoriting_user")
     favorited_user = models.ForeignKey("users.User", on_delete=models.CASCADE, related_name="favorited_user")
     date_created = models.DateTimeField(default=timezone.now)
 
 
 class View_User(models.Model):
-    uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    # uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     viewing_user = models.ForeignKey("users.User", on_delete=models.CASCADE, related_name="viewing_user")
     viewed_user = models.ForeignKey("users.User", on_delete=models.CASCADE, related_name="viewed_user")
 
 
 class Rate_User(models.Model):
-    uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    # uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     rating_user = models.ForeignKey("users.User", on_delete=models.CASCADE, related_name="rating_user")
     rated_user = models.ForeignKey("users.User", on_delete=models.CASCADE, related_name="rated_user")
     rate_number = models.IntegerField()
