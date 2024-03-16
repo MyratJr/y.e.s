@@ -5,7 +5,7 @@ import uuid
 
 
 class Service_Category(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=35)
     image = models.ImageField(upload_to='categories/%Y/%m/%d/', max_length=255)
 
@@ -14,7 +14,7 @@ class Service_Category(models.Model):
 
 
 class Service(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey("users.User", on_delete=models.CASCADE, related_name='service_user', null=True)
     name = models.CharField(max_length=25)
     price = models.DecimalField(max_digits=7, decimal_places=2)
@@ -42,7 +42,7 @@ class Service(models.Model):
     
 
 class ServiceGalleryImage(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     product = models.ForeignKey(Service, on_delete=models.CASCADE, related_name="images", blank=True, null=True)
     image = models.ImageField(upload_to='service/service_gallery_images/%Y/%m/', max_length=255)
 
