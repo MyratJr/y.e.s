@@ -111,8 +111,8 @@ class All_CategoriesAPIView(mixins.ListModelMixin, generics.GenericAPIView):
 class LikeServiceAPIView(APIView):
     permission_classes = [IsAuthenticated]
 
-    def post(self, request, id):
-        liked_service = get_object_or_404(Service, id=id, public=True)
+    def post(self, request, pk):
+        liked_service = get_object_or_404(Service, pk=pk, public=True)
         user, created = Like_Service.objects.get_or_create(user=request.user,service=liked_service)
         if created:
             liked_service.like_counter += 1
