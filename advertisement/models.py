@@ -12,3 +12,7 @@ class Advertisement(models.Model):
 
     def __str__(self):
         return f'{self.title} and {self.id}'
+    
+    class Meta:
+        verbose_name = 'Mahabat'
+        verbose_name_plural = 'Mahabatlar'
