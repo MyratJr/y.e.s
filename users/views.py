@@ -40,12 +40,13 @@ class RegisterAPI(generics.GenericAPIView):
 class ChangePasswordView(generics.UpdateAPIView):
     serializer_class = ChangePasswordSerializer
     permission_classes = [IsAuthenticated]
+    allowed_methods = ['PATCH']
 
     def get_object(self):
         obj = self.request.user
         return obj
     
-    def patch(self, request, *args, **kwargs):
+    def update(self, request, *args, **kwargs):
         self.object = self.get_object()
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
