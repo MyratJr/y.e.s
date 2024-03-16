@@ -8,5 +8,5 @@ class SnippetList(APIView):
     
     def get(self):
         snippets = Regions.objects.all()
-        serializer = RegionsSerializer(snippets, many=True)
+        serializer = RegionsSerializer(snippets)
         return Response(serializer.data)
