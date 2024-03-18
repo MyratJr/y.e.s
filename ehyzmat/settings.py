@@ -157,7 +157,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'tk'
 
 
 TIME_ZONE = 'Asia/Ashgabat'
