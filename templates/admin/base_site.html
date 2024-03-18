@@ -1,12 +1,11 @@
 {% extends "admin/base.html" %}
-
-{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
-
-{% block branding %}
-<div id="site-name"><a href="{% url 'admin:index' %}">{{ site_header|default:'gfjdghsdfjkghsdfjkghlsk' }}</a></div>
-{% if user.is_anonymous %}
-  {% include "admin/color_theme_toggle.html" %}
-{% endif %}
+{% load i18n %}
+{% load static %}
+{% block title %}{{ title }} | {% trans "Administration" %}{% endblock %}
+{% block extrastyle %}
+    <link rel="stylesheet" type="text/css" href="{% static "admin/admin_color.css" %}"/>
 {% endblock %}
-
+{% block branding %}
+    <h1 id="site-name">{% trans "Administration" %}</h1>
+{% endblock %}
 {% block nav-global %}{% endblock %}
