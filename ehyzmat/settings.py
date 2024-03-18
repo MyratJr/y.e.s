@@ -169,12 +169,6 @@ USE_I18N = True
 USE_TZ = True
 
 
-LOCALE_PATHS = [
-    os.path.join(BASE_DIR, 'locale'),
-]
-print(12)
-
-
 STATIC_URL = '/staticfiles/'
 
 
