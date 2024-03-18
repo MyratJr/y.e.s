@@ -89,9 +89,6 @@ TEMPLATES = [
 ]
 
 
-SITE_HEADER = "Y.E.S administrasiýa"
-
-
 WSGI_APPLICATION = 'ehyzmat.wsgi.application'
 
 
