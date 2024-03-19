@@ -14,6 +14,8 @@ from rest_framework import status
 from ehyzmat.settings import redis_cache
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.filters import OrderingFilter
+from otp.models import Otp
+from random import randint
 
 
 class RegisterAPI(generics.GenericAPIView):
@@ -23,18 +25,23 @@ class RegisterAPI(generics.GenericAPIView):
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
+        serializer.save()
         phone = serializer.validated_data["phone"]
-        otp = str(serializer.validated_data["otp"])
-        temporary_otp = redis_cache.get(phone)
-        if temporary_otp and temporary_otp.decode() == otp:
-            redis_cache.delete(phone)
-            user = serializer.save()
-            refresh = RefreshToken.for_user(User.objects.get(id=user.id))
-            return Response({
-                'refresh': str(refresh),
-                'access': str(refresh.access_token)
-            })
-        return Response("OTP is wrong or has expired", status=status.HTTP_400_BAD_REQUEST)
+        otp = randint(10000,99999)
+        redis_cache.set(phone, otp, ex=60)
+        Otp.objects.create(
+            phone=phone,
+            message=f"Siziň barlag koduňyz: {otp}"
+        )
+        # if temporary_otp and temporary_otp.decode() == otp:
+            # redis_cache.delete(phone)
+        return Response(status=status.HTTP_201_CREATED)
+            # refresh = RefreshToken.for_user(User.objects.get(id=user.id))
+            # return Response({
+            #     'refresh': str(refresh),
+            #     'access': str(refresh.access_token)
+            # })
+        # return Response("OTP is wrong or has expired", status=status.HTTP_400_BAD_REQUEST)
 
 
 class ChangePasswordView(generics.UpdateAPIView):

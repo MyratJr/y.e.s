@@ -5,6 +5,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from django.core.validators import RegexValidator
 from django.core.exceptions import ValidationError
 from django.core.files.images import get_image_dimensions
+from django.utils.translation import gettext_lazy as _
 
 
 phone_regex = RegexValidator(
@@ -29,6 +30,14 @@ def validate_image(image):
 
 class User(AbstractUser):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    is_active = models.BooleanField(
+        _("active"),
+        default=False,
+        help_text=_(
+            "Designates whether this user should be treated as active. "
+            "Unselect this instead of deleting accounts."
+        ),
+    )
     avatar = models.ImageField(upload_to="user/avatar_images", 
                                default="user/avatar_images/8380015.jpg"
     )

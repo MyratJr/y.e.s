@@ -18,11 +18,11 @@ class UpdateUserOrGetListOfUsersSerializer(serializers.ModelSerializer):
 
     
 class RegisterSerializer(serializers.ModelSerializer):
-    otp = serializers.IntegerField(write_only=True)
+    # otp = serializers.IntegerField(write_only=True)
 
     class Meta:
         model = User
-        fields = ['id', 'username', 'phone', 'email', 'password', 'otp']
+        fields = ['id', 'username', 'phone', 'email', 'password']
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
