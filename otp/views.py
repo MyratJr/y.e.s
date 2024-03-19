@@ -54,4 +54,4 @@ class ListPhoneNumbersView(APIView):
                 phoneswithotp[key.decode("utf-8")]=redis_cache.get(key).decode("utf-8")
             return Response(phoneswithotp, status=status.HTTP_200_OK)
         else:
-            return Response(detail="Telefon belgi tapylmady", status=status.HTTP_404_NOT_FOUND)
+            return Response("Telefon belgi tapylmady", status=status.HTTP_404_NOT_FOUND)
