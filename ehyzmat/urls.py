@@ -6,6 +6,7 @@ from django.conf import settings
 from rest_framework_simplejwt.views import TokenRefreshView, TokenBlacklistView
 from users.views import RegisterAPI, LoginAPI
 from django.conf.urls.static import static
+from drf_yasg.views import get_schema_view
 
 
 urlpatterns1 = [
@@ -15,6 +16,7 @@ urlpatterns1 = [
     path('service/', include('services.urls')),
     path('advertisement/', include('advertisement.urls')),
     path('ratings/', include('ratings.urls')),
+    path('otp/', include('otp.urls'), name="otp_view"),
     path('auth/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('auth/register/', RegisterAPI.as_view(), name='register'),
     path('auth/login/', LoginAPI.as_view(), name='login'),
@@ -25,8 +27,6 @@ urlpatterns1 = [
 
 if settings.DEBUG:
     urlpatterns1 += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-
-from drf_yasg.views import get_schema_view
 
 
 schema_view = get_schema_view(
@@ -43,5 +43,4 @@ schema_view = get_schema_view(
 
 urlpatterns = urlpatterns1 + [
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0),name='schema-swagger-ui'),
-    path('otp/', include('otp.urls'), name="otp_view"),
 ]
