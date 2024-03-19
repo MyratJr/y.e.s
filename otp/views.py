@@ -43,7 +43,7 @@ class ForgotPasswordView(mixins.CreateModelMixin, generics.GenericAPIView):
     
 
 class ListPhoneNumbersView(APIView):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
 
     def get(self, request, *args, **kwargs):
         phone_numbers = []
