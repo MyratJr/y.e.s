@@ -10,7 +10,7 @@ from ehyzmat.settings import redis_cache
 from rest_framework.views import APIView
 import json
 from otp.models import Otp, SMSStatuses
-from datetime import timezone
+from django.utils import timezone
 from rest_framework_simplejwt.tokens import RefreshToken
 
 
