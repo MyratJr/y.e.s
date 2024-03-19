@@ -67,7 +67,7 @@ class SMSPhoneView(APIView):
     def post(self, request):
         phone = request.data.get("phone", "")
         phone = str(phone)
-        self.queryset.filter(phone=phone, status=SMSStatuses.SENT) \
+        Otp.objects.filter(phone=phone, status=SMSStatuses.SENT) \
             .update(status=SMSStatuses.DELIVERED)
         return Response({})
     
