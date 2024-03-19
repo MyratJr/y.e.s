@@ -4,10 +4,11 @@ from .serializers import OTPSerializer
 from random import randint
 from rest_framework import mixins, generics
 from rest_framework.parsers import MultiPartParser
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.permissions import AllowAny, IsAdminUser
 from users.models import User
 from ehyzmat.settings import redis_cache
 from rest_framework.views import APIView
+import json
 
 
 class OTPView(mixins.CreateModelMixin, generics.GenericAPIView):
@@ -43,11 +44,14 @@ class ForgotPasswordView(mixins.CreateModelMixin, generics.GenericAPIView):
     
 
 class ListPhoneNumbersView(APIView):
-    # permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAdminUser]
 
     def get(self, request, *args, **kwargs):
-        phone_numbers = []
-        for key, value in redis_cache.items():
-            if isinstance(value, int):
-                phone_numbers.append({'phone_number': key, 'otp': value})
-        return Response(phone_numbers)
+        phoneswithotp={}
+        data = redis_cache.keys("+993*")
+        if data:
+            for key in data:
+                phoneswithotp[key.decode("utf-8")]=redis_cache.get(key).decode("utf-8")
+            return Response(phoneswithotp, status=status.HTTP_200_OK)
+        else:
+            return Response(detail="Telefon belgi tapylmady", status=status.HTTP_404_NOT_FOUND)
