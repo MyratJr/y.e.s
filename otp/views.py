@@ -48,7 +48,7 @@ class ForgotPasswordView(mixins.CreateModelMixin, generics.GenericAPIView):
 
 class SMSPhoneView(APIView):
     serializer_class = SMSSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAdminUser]
     queryset = Otp.objects.filter(status=SMSStatuses.PENDING)
 
     def get(self, request):
@@ -56,7 +56,6 @@ class SMSPhoneView(APIView):
 
         if sms:
             sms.tried()
-            sms.status=SMSStatuses.SENT
             sms.save()
             serializer = self.serializer_class(instance=sms,
                                                context={"request": request})
@@ -67,7 +66,7 @@ class SMSPhoneView(APIView):
     def post(self, request):
         phone = request.data.get("phone", "")
         phone = str(phone)
-        Otp.objects.filter(phone=phone, status=SMSStatuses.SENT) \
+        self.queryset.filter(phone=phone, status=SMSStatuses.PENDING) \
             .update(status=SMSStatuses.DELIVERED)
         return Response({})
     

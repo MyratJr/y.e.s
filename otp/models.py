@@ -4,7 +4,6 @@ from users.models import phone_regex
 
 class SMSStatuses:
     PENDING = "pending"
-    SENT = "sent"
     DELIVERED = "delivered"
     ACTIVATED = "activated"
     FAILED = "failed"
@@ -23,6 +22,6 @@ class Otp(models.Model):
     def tried(self):
         self.counter+=1
 
-        if self.counter >=3:
+        if self.counter >=2:
             self.status=SMSStatuses.FAILED
             self.save()
