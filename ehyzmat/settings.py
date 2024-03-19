@@ -118,7 +118,8 @@ SWAGGER_SETTINGS = {
         'Basic': {
             'type': 'basic'
         }
-    }
+    },
+    'URLCONF': 'otp.urls'
  }
 
 
