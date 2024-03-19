@@ -119,8 +119,8 @@ SWAGGER_SETTINGS = {
             'type': 'basic'
         }
     },
-    'URLCONF': 'otp.otp'
- }
+    "exclude_namespaces": ["otp_view"]
+}
 
 
 # DATABASES = {
