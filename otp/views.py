@@ -84,23 +84,23 @@ class ActivateUserAPIView(APIView):
                             status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            sms = Otp.objects.filter(phone=phone).latest('date_created')
+            sms = Otp.objects.filter(phone=phone, status=SMSStatuses.DELIVERED).latest('date_created')
         except Otp.DoesNotExist:
             return Response({'error': 'Bu nomera degişli kod ýok'},
                             status=status.HTTP_404_NOT_FOUND)
 
-        print(redis_cache.get(phone))
         if otp != redis_cache.get(phone).decode("utf-8"):
             return Response({'error': 'Ýalňyş kod'},
                             status=status.HTTP_400_BAD_REQUEST)
 
         try:
             user = User.objects.get(phone=phone)
-            user.is_verified = True
+            user.is_active = True
             user.last_login = timezone.now()
             user.save()
 
-            sms.status = SMSStatuses.DELIVERED
+            sms.status = SMSStatuses.ACTIVATED
+            sms.message = "Y.E.S platformasyna hoş geldiňiz!"
             sms.save()
 
             refresh = RefreshToken.for_user(User.objects.get(id=user.id))

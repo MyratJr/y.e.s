@@ -6,6 +6,7 @@ class SMSStatuses:
     PENDING = "pending"
     SENT = "sent"
     DELIVERED = "delivered"
+    ACTIVATED = "activated"
     FAILED = "failed"
 
 
