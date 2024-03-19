@@ -28,7 +28,7 @@ urlpatterns = [
     path('service/', include('services.urls')),
     path('advertisement/', include('advertisement.urls')),
     path('ratings/', include('ratings.urls')),
-    path('otp/', include('otp.urls'), namespace="otp_view"),
+    path('otp/', include('otp.urls', namespace="otp_view")),
     path('auth/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('auth/register/', RegisterAPI.as_view(), name='register'),
     path('auth/login/', LoginAPI.as_view(), name='login'),
