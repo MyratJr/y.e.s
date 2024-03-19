@@ -28,7 +28,7 @@ class RegisterAPI(generics.GenericAPIView):
         serializer.save()
         phone = serializer.validated_data["phone"]
         otp = randint(10000,99999)
-        redis_cache.set(phone, otp, ex=60)
+        redis_cache.set(phone, otp, ex=600)
         Otp.objects.create(
             phone=phone,
             message=f"Siziň barlag koduňyz: {otp}"
