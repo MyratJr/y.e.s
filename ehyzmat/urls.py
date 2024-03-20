@@ -40,8 +40,9 @@ if settings.DEBUG:
 #     permission_classes=(permissions.AllowAny,),
 # )
 
-from drf_spectacular.views import SpectacularSwaggerView
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 urlpatterns = urlpatterns1 + [
-    path('swagger/', SpectacularSwaggerView.as_view(), name='swagger-ui'),
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('swagger/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
 ]
