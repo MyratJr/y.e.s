@@ -67,6 +67,7 @@ class SMSPhoneView(APIView):
             return Response(serializer.data)
         return Response({"id": 0})
     @swagger_auto_schema(
+        operation_description='OTP-nyň telefon belgä baranlygyny tassyklamak üçin telefon belgi ugradyň.',
         request_body=openapi.Schema(
             type=openapi.TYPE_OBJECT,
             required=['phone'],
@@ -87,6 +88,7 @@ class ActivateUserAPIView(APIView):
     permission_classes = [AllowAny]
 
     @swagger_auto_schema(
+        operation_description='Ulanyjyny aktiwasiýa etmek üçin dogry otp iberiň.',
         request_body=openapi.Schema(
             type=openapi.TYPE_OBJECT,
             required=['phone'],
