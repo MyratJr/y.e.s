@@ -101,17 +101,15 @@ class LoginAPI(APIView):
     permission_classes = [permissions.AllowAny]
 
     @swagger_auto_schema(
-            manual_parameters=[
-                openapi.Parameter('username', 
-                                  openapi.IN_BODY, 
-                                  type=openapi.TYPE_STRING, 
-                                ),
-                openapi.Parameter('password', 
-                                  openapi.IN_BODY, 
-                                  type=openapi.FORMAT_PASSWORD, 
-                                )
-            ]
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            required=['username', 'password'],
+            properties={
+                'username': openapi.Schema(type=openapi.TYPE_STRING, description='Username for login'),
+                'password': openapi.Schema(type=openapi.TYPE_STRING, format=openapi.FORMAT_PASSWORD, description='Password for login')
+            }
         )
+    )
     def post(self, request, format=None):
         serializer = AuthTokenSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
