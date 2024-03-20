@@ -16,9 +16,8 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.filters import OrderingFilter
 from otp.models import Otp
 from random import randint
-from drf_yasg.utils import swagger_auto_schema
-from drf_yasg import openapi
 from drf_spectacular.utils import extend_schema
+from rest_framework.authentication import BaseAuthentication
 
 
 class RegisterAPI(generics.GenericAPIView):
@@ -91,6 +90,7 @@ class ChangeForgotPassword(mixins.UpdateModelMixin, viewsets.GenericViewSet):
 
 class LoginAPI(APIView):
     permission_classes = [permissions.AllowAny]
+    authentication_classes = [BaseAuthentication]
 
     @extend_schema(
         request=AuthTokenSerializer,
