@@ -17,7 +17,7 @@ from rest_framework.filters import OrderingFilter
 from otp.models import Otp
 from random import randint
 from drf_spectacular.utils import extend_schema
-from rest_framework.authentication import BaseAuthentication
+from rest_framework import authentication
 
 
 class RegisterAPI(generics.GenericAPIView):
@@ -178,7 +178,7 @@ class UserServicesView(generics.ListAPIView):
 
 class LikeUserView(APIView):
     permission_classes = [IsAuthenticated]
-    authentication_classes = [BaseAuthentication]
+    authentication_classes = [authentication.get_authorization_header]
 
     def post(self, request, pk):
         liked_user = get_object_or_404(User, pk=pk)
