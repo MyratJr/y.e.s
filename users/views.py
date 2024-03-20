@@ -16,7 +16,6 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.filters import OrderingFilter
 from otp.models import Otp
 from random import randint
-from rest_framework.decorators import api_view, permission_classes
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 
@@ -36,17 +35,9 @@ class RegisterAPI(generics.GenericAPIView):
             phone=phone,
             message=f"Siziň barlag koduňyz: {otp}"
         )
-        # if temporary_otp and temporary_otp.decode() == otp:
-            # redis_cache.delete(phone)
         return Response(status=status.HTTP_201_CREATED)
-            # refresh = RefreshToken.for_user(User.objects.get(id=user.id))
-            # return Response({
-            #     'refresh': str(refresh),
-            #     'access': str(refresh.access_token)
-            # })
-        # return Response("OTP is wrong or has expired", status=status.HTTP_400_BAD_REQUEST)
-
-
+         
+         
 class ChangePasswordView(generics.UpdateAPIView):
     serializer_class = ChangePasswordSerializer
     permission_classes = [IsAuthenticated]

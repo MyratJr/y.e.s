@@ -3,17 +3,32 @@ from rest_framework.response import Response
 from .serializers import OTPSerializer, SMSSerializer
 from random import randint
 from rest_framework import mixins, generics
-from rest_framework.parsers import MultiPartParser
 from rest_framework.permissions import AllowAny, IsAdminUser
 from users.models import User
 from ehyzmat.settings import redis_cache
 from rest_framework.views import APIView
-import json
-from otp.models import Otp, SMSStatuses
+from .models import Otp, SMSStatuses
 from django.utils import timezone
 from rest_framework_simplejwt.tokens import RefreshToken
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
+
+
+class ResendOTPView(mixins.CreateModelMixin, generics.GenericAPIView):
+    permission_classes = [AllowAny]
+    serializer_class = OTPSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        phone = serializer.validated_data['phone']
+        otp = randint(1000,9999)
+        redis_cache.set(phone, otp)
+        phone = Otp.objects.get_or_create(phone=phone)
+        phone.message = f"Siziň barlag koduňyz: {otp}"
+        phone.status = SMSStatuses.PENDING
+        phone.save()
+        return Response(status=status.HTTP_201_CREATED)
     
 
 class ForgotPasswordView(mixins.CreateModelMixin, generics.GenericAPIView):
