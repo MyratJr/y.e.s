@@ -16,7 +16,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.filters import OrderingFilter
 from otp.models import Otp
 from random import randint
-from drf_yasg.utils import swagger_auto_schema
+from rest_framework.decorators import api_view, permission_classes
 
 
 class RegisterAPI(generics.GenericAPIView):
@@ -95,30 +95,34 @@ class ChangeForgotPassword(mixins.UpdateModelMixin, viewsets.GenericViewSet):
         raise serializers.ValidationError({"detail":"Your OTP is wrong or has expired"})
 
 
-class LoginAPI(APIView):
-    permission_classes = [permissions.AllowAny]
-    @swagger_auto_schema(
-        request={
-            'type': 'object',
-            'properties': {
-                'username': {'type': 'string', 'required': True},
-                'password': {'type': 'string', 'required': True},
-            }
-        },
-        response={
-            200: {'type': 'object', 'properties': {'refresh': {'type': 'string'}, 'access': {'type': 'string'}}},
-        }
-    )
-    def post(self, request, format=None):
-        serializer = AuthTokenSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user = serializer.validated_data["user"]
+# class LoginAPI(APIView):
+#     permission_classes = [permissions.AllowAny]
+
+#     def post(self, request, format=None):
+#         serializer = AuthTokenSerializer(data=request.data)
+#         serializer.is_valid(raise_exception=True)
+#         user = serializer.validated_data["user"]
+#         refresh = RefreshToken.for_user(User.objects.get(id=user.id))
+#         return Response({
+#             'refresh': str(refresh),
+#             'access': str(refresh.access_token)
+#         })
+    
+
+@api_view(['POST'])
+@permission_classes([permissions.AllowAny])
+def LoginAPI(request):
+    serializer = AuthTokenSerializer(data=request.data)
+    if serializer.is_valid():
+        user = serializer.validated_data['user']
         refresh = RefreshToken.for_user(User.objects.get(id=user.id))
         return Response({
             'refresh': str(refresh),
             'access': str(refresh.access_token)
         })
-    
+    else:
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class UpdateUserAPIView(GenericAPIView):
     queryset = User.objects.all()
