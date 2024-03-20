@@ -114,6 +114,7 @@ class ChangeForgotPassword(mixins.UpdateModelMixin, viewsets.GenericViewSet):
 @api_view(['POST'])
 @permission_classes([permissions.AllowAny])
 def LoginAPI(request):
+    parser_classes = [MultiPartParser, FormParser]
     serializer = AuthTokenSerializer(data=request.data)
     if serializer.is_valid():
         user = serializer.validated_data['user']
