@@ -43,5 +43,5 @@ if settings.DEBUG:
 from drf_spectacular.views import SpectacularSwaggerView
 
 urlpatterns = urlpatterns1 + [
-    path('swagger/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    path('swagger/', SpectacularSwaggerView.as_view(), name='swagger-ui'),
 ]
