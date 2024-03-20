@@ -99,28 +99,21 @@ class ChangeForgotPassword(mixins.UpdateModelMixin, viewsets.GenericViewSet):
 
 class LoginAPI(APIView):
     permission_classes = [permissions.AllowAny]
-    parser_classes = [MultiPartParser]
+    # parser_classes = [MultiPartParser]
 
     @swagger_auto_schema(
             operation_id='Create a document',
             operation_description='Create a document by providing file and s3_key',
             manual_parameters=[
-                openapi.Parameter('username', openapi.IN_FORM, type=openapi.TYPE_STRING, description='Document to be uploaded'),
-                openapi.Parameter('password', openapi.IN_FORM, type=openapi.FORMAT_PASSWORD, description='S3 Key of the Document '
-                                                                                                   '(folders along with name)')
-            ],
-            responses={
-                status.HTTP_200_OK: openapi.Response(
-                    'Tokens generated successfully',
-                    schema=openapi.Schema(
-                        type=openapi.TYPE_OBJECT,
-                        properties={
-                            'refresh': openapi.Schema(type=openapi.TYPE_STRING, description='Refresh token'),
-                            'access': openapi.Schema(type=openapi.TYPE_STRING, description='Access token')
-                        }
-                    )
-                )
-            }
+                openapi.Parameter('username', 
+                                  openapi.IN_FORM, 
+                                  type=openapi.TYPE_STRING, 
+                                ),
+                openapi.Parameter('password', 
+                                  openapi.IN_FORM, 
+                                  type=openapi.FORMAT_PASSWORD, 
+                                )
+            ]
         )
     def post(self, request, format=None):
         serializer = AuthTokenSerializer(data=request.data)
