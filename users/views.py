@@ -109,15 +109,18 @@ class LoginAPI(APIView):
                 openapi.Parameter('password', openapi.IN_FORM, type=openapi.FORMAT_PASSWORD, description='S3 Key of the Document '
                                                                                                    '(folders along with name)')
             ],
-            # responses={
-            #     status.HTTP_200_OK: openapi.Response(
-            #         'Success', schema=openapi.Schema(type=openapi.TYPE_OBJECT, properties={
-            #             'doc_id': openapi.Schema(type=openapi.TYPE_STRING, description='Document ID'),
-            #             'mime_type': openapi.Schema(type=openapi.TYPE_STRING, description='Mime Type of the Document'),
-            #             'version_id': openapi.Schema(type=openapi.TYPE_STRING, description='S3 version ID of the document')
-            #         })
-            #     )
-            # }
+            responses={
+                status.HTTP_200_OK: openapi.Response(
+                    'Tokens generated successfully',
+                    schema=openapi.Schema(
+                        type=openapi.TYPE_OBJECT,
+                        properties={
+                            'refresh': openapi.Schema(type=openapi.TYPE_STRING, description='Refresh token'),
+                            'access': openapi.Schema(type=openapi.TYPE_STRING, description='Access token')
+                        }
+                    )
+                )
+            }
         )
     def post(self, request, format=None):
         serializer = AuthTokenSerializer(data=request.data)
