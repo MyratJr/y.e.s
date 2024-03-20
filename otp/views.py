@@ -64,7 +64,15 @@ class SMSPhoneView(APIView):
 
             return Response(serializer.data)
         return Response({"id": 0})
-
+    @swagger_auto_schema(
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            required=['phone'],
+            properties={
+                'phone': openapi.Schema(type=openapi.TYPE_STRING),
+            }
+        )
+    )
     def post(self, request):
         phone = request.data.get("phone", "")
         phone = str(phone)
