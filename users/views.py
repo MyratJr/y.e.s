@@ -99,7 +99,7 @@ class ChangeForgotPassword(mixins.UpdateModelMixin, viewsets.GenericViewSet):
 
 class LoginAPI(APIView):
     permission_classes = [permissions.AllowAny]
-    # parser_classes = [MultiPartParser]
+    parser_classes = [MultiPartParser]
 
     @swagger_auto_schema(
             operation_id='Create a document',
