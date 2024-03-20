@@ -14,20 +14,6 @@ from django.utils import timezone
 from rest_framework_simplejwt.tokens import RefreshToken
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
-
-
-class OTPView(mixins.CreateModelMixin, generics.GenericAPIView):
-    permission_classes = [AllowAny]
-    serializer_class = OTPSerializer
-    parser_classes = [MultiPartParser]
-
-    def post(self, request, *args, **kwargs):
-        serializer = self.serializer_class(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        phone = serializer.validated_data['phone']
-        otp = randint(1000,9999)
-        redis_cache.set(phone, otp, ex=60)
-        return Response(status=status.HTTP_201_CREATED)
     
 
 class ForgotPasswordView(mixins.CreateModelMixin, generics.GenericAPIView):
