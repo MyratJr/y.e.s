@@ -102,8 +102,6 @@ class LoginAPI(APIView):
     parser_classes = [MultiPartParser]
 
     @swagger_auto_schema(
-            operation_id='Create a document',
-            operation_description='Create a document by providing file and s3_key',
             manual_parameters=[
                 openapi.Parameter('username', 
                                   openapi.IN_FORM, 
