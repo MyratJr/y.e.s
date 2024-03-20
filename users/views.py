@@ -3,7 +3,7 @@ from rest_framework import generics, permissions, mixins, viewsets
 from services.serializers import HomeServicesSerializers
 from ratings.models import Like_User, View_User
 from rest_framework.response import Response
-from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from services.models import Service
 from .serializers import *
 from .models import User
@@ -99,13 +99,16 @@ class ChangeForgotPassword(mixins.UpdateModelMixin, viewsets.GenericViewSet):
 
 class LoginAPI(APIView):
     permission_classes = [permissions.AllowAny]
+    parser_classes = [JSONParser]
 
     @swagger_auto_schema(
             manual_parameters=[
                 openapi.Parameter('username', 
+                                  openapi.IN_FORM, 
                                   type=openapi.TYPE_STRING, 
                                 ),
                 openapi.Parameter('password', 
+                                  openapi.IN_FORM, 
                                   type=openapi.FORMAT_PASSWORD, 
                                 )
             ]
