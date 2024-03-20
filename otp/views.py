@@ -12,6 +12,8 @@ import json
 from otp.models import Otp, SMSStatuses
 from django.utils import timezone
 from rest_framework_simplejwt.tokens import RefreshToken
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
 
 
 class OTPView(mixins.CreateModelMixin, generics.GenericAPIView):
@@ -74,6 +76,15 @@ class SMSPhoneView(APIView):
 class ActivateUserAPIView(APIView):
     permission_classes = [AllowAny]
 
+    @swagger_auto_schema(
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            required=['phone'],
+            properties={
+                'phone': openapi.Schema(type=openapi.TYPE_STRING, description='Phone for activate user'),
+            }
+        )
+    )
     def post(self, request):
         otp = request.data.get("otp", "")
         phone = request.data.get('phone', "")
