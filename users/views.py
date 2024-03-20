@@ -17,6 +17,7 @@ from rest_framework.filters import OrderingFilter
 from otp.models import Otp
 from random import randint
 from rest_framework.decorators import api_view, permission_classes
+from drf_yasg.utils import swagger_auto_schema
 
 
 class RegisterAPI(generics.GenericAPIView):
@@ -109,6 +110,7 @@ class ChangeForgotPassword(mixins.UpdateModelMixin, viewsets.GenericViewSet):
 #         })
     
 
+@swagger_auto_schema(methods=['post'], request_body=UserSerializer)
 @api_view(['POST'])
 @permission_classes([permissions.AllowAny])
 def LoginAPI(request):
