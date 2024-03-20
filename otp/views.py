@@ -5,6 +5,7 @@ from random import randint
 from rest_framework import mixins, generics
 from rest_framework.permissions import AllowAny, IsAdminUser
 from users.models import User
+from rest_framework.parsers import MultiPartParser
 from ehyzmat.settings import redis_cache
 from rest_framework.views import APIView
 from .models import Otp, SMSStatuses
