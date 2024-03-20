@@ -16,6 +16,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.filters import OrderingFilter
 from otp.models import Otp
 from random import randint
+from drf_yasg.utils import swagger_auto_schema
 
 
 class RegisterAPI(generics.GenericAPIView):
@@ -96,6 +97,7 @@ class ChangeForgotPassword(mixins.UpdateModelMixin, viewsets.GenericViewSet):
 
 class LoginAPI(APIView):
     permission_classes = [permissions.AllowAny]
+    @swagger_auto_schema(responses={})
 
     def post(self, request, format=None):
         serializer = AuthTokenSerializer(data=request.data)
