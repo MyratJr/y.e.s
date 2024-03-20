@@ -1,12 +1,10 @@
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework import permissions
-from drf_yasg import openapi
 from django.conf import settings
 from rest_framework_simplejwt.views import TokenRefreshView, TokenBlacklistView
 from users.views import RegisterAPI, LoginAPI
 from django.conf.urls.static import static
-from drf_yasg.views import get_schema_view
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 
 urlpatterns1 = [
@@ -28,19 +26,6 @@ urlpatterns1 = [
 if settings.DEBUG:
     urlpatterns1 += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
-
-# schema_view = get_schema_view(
-#     openapi.Info(
-#         title="Y.E.S API",
-#         default_version='v1',
-#         description="Welcome to the Y.E.S API documentation",
-#     ),
-#     patterns=urlpatterns1,
-#     public=True,
-#     permission_classes=(permissions.AllowAny,),
-# )
-
-from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 urlpatterns = urlpatterns1 + [
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),

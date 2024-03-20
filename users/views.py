@@ -18,6 +18,7 @@ from otp.models import Otp
 from random import randint
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
+from drf_spectacular.utils import extend_schema
 
 
 class RegisterAPI(generics.GenericAPIView):
@@ -91,15 +92,8 @@ class ChangeForgotPassword(mixins.UpdateModelMixin, viewsets.GenericViewSet):
 class LoginAPI(APIView):
     permission_classes = [permissions.AllowAny]
 
-    @swagger_auto_schema(
-        request_body=openapi.Schema(
-            type=openapi.TYPE_OBJECT,
-            required=['username', 'password'],
-            properties={
-                'username': openapi.Schema(type=openapi.TYPE_STRING, description='Username for login'),
-                'password': openapi.Schema(type=openapi.TYPE_STRING, format=openapi.FORMAT_PASSWORD, description='Password for login')
-            }
-        )
+    @extend_schema(
+        request=AuthTokenSerializer,
     )
     def post(self, request, format=None):
         serializer = AuthTokenSerializer(data=request.data)
