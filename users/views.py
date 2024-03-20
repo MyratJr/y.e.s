@@ -18,6 +18,7 @@ from otp.models import Otp
 from random import randint
 from rest_framework.decorators import api_view, permission_classes
 from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
 
 
 class RegisterAPI(generics.GenericAPIView):
@@ -96,35 +97,53 @@ class ChangeForgotPassword(mixins.UpdateModelMixin, viewsets.GenericViewSet):
         raise serializers.ValidationError({"detail":"Your OTP is wrong or has expired"})
 
 
-# class LoginAPI(APIView):
-#     permission_classes = [permissions.AllowAny]
+class LoginAPI(APIView):
+    permission_classes = [permissions.AllowAny]
+    parser_classes = [MultiPartParser]
 
-#     def post(self, request, format=None):
-#         serializer = AuthTokenSerializer(data=request.data)
-#         serializer.is_valid(raise_exception=True)
-#         user = serializer.validated_data["user"]
-#         refresh = RefreshToken.for_user(User.objects.get(id=user.id))
-#         return Response({
-#             'refresh': str(refresh),
-#             'access': str(refresh.access_token)
-#         })
-    
-
-@swagger_auto_schema(methods=['post'], request_body=AuthTokenSerializer)
-@api_view(['POST'])
-@permission_classes([permissions.AllowAny])
-def LoginAPI(request):
-    parser_classes = [MultiPartParser, FormParser]
-    serializer = AuthTokenSerializer(data=request.data)
-    if serializer.is_valid():
-        user = serializer.validated_data['user']
+    @swagger_auto_schema(
+            operation_id='Create a document',
+            operation_description='Create a document by providing file and s3_key',
+            manual_parameters=[
+                openapi.Parameter('username', openapi.IN_FORM, type=openapi.TYPE_STRING, description='Document to be uploaded'),
+                openapi.Parameter('password', openapi.IN_FORM, type=openapi.FORMAT_PASSWORD, description='S3 Key of the Document '
+                                                                                                   '(folders along with name)')
+            ],
+            # responses={
+            #     status.HTTP_200_OK: openapi.Response(
+            #         'Success', schema=openapi.Schema(type=openapi.TYPE_OBJECT, properties={
+            #             'doc_id': openapi.Schema(type=openapi.TYPE_STRING, description='Document ID'),
+            #             'mime_type': openapi.Schema(type=openapi.TYPE_STRING, description='Mime Type of the Document'),
+            #             'version_id': openapi.Schema(type=openapi.TYPE_STRING, description='S3 version ID of the document')
+            #         })
+            #     )
+            # }
+        )
+    def post(self, request, format=None):
+        serializer = AuthTokenSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data["user"]
         refresh = RefreshToken.for_user(User.objects.get(id=user.id))
         return Response({
             'refresh': str(refresh),
             'access': str(refresh.access_token)
         })
-    else:
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+# @swagger_auto_schema(methods=['post'], request_body=AuthTokenSerializer)
+# @api_view(['POST'])
+# @permission_classes([permissions.AllowAny])
+# def LoginAPI(request):
+#     serializer = AuthTokenSerializer(data=request.data)
+#     if serializer.is_valid():
+#         user = serializer.validated_data['user']
+#         refresh = RefreshToken.for_user(User.objects.get(id=user.id))
+#         return Response({
+#             'refresh': str(refresh),
+#             'access': str(refresh.access_token)
+#         })
+#     else:
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class UpdateUserAPIView(GenericAPIView):

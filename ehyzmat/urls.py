@@ -19,7 +19,7 @@ urlpatterns1 = [
     path('otp/', include('otp.urls'), name="otp_view"),
     path('auth/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('auth/register/', RegisterAPI.as_view(), name='register'),
-    path('auth/login/', LoginAPI, name='login'),
+    path('auth/login/', LoginAPI.as_view(), name='login'),
     path('auth/', include('google_auth.urls')),
     path('auth/logout/', TokenBlacklistView.as_view(), name='token_blacklist'),
 ]
