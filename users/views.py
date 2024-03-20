@@ -90,7 +90,6 @@ class ChangeForgotPassword(mixins.UpdateModelMixin, viewsets.GenericViewSet):
 
 class LoginAPI(APIView):
     permission_classes = [permissions.AllowAny]
-    authentication_classes = [BaseAuthentication]
 
     @extend_schema(
         request=AuthTokenSerializer,
@@ -179,7 +178,7 @@ class UserServicesView(generics.ListAPIView):
 
 class LikeUserView(APIView):
     permission_classes = [IsAuthenticated]
-    authentication_classes = []
+    authentication_classes = [BaseAuthentication]
 
     def post(self, request, pk):
         liked_user = get_object_or_404(User, pk=pk)
