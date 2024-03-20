@@ -99,16 +99,15 @@ class ChangeForgotPassword(mixins.UpdateModelMixin, viewsets.GenericViewSet):
 
 class LoginAPI(APIView):
     permission_classes = [permissions.AllowAny]
-    parser_classes = [JSONParser]
 
     @swagger_auto_schema(
             manual_parameters=[
                 openapi.Parameter('username', 
-                                  openapi.IN_FORM, 
+                                  openapi.IN_BODY, 
                                   type=openapi.TYPE_STRING, 
                                 ),
                 openapi.Parameter('password', 
-                                  openapi.IN_FORM, 
+                                  openapi.IN_BODY, 
                                   type=openapi.FORMAT_PASSWORD, 
                                 )
             ]
