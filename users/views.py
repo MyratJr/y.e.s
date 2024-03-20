@@ -97,8 +97,18 @@ class ChangeForgotPassword(mixins.UpdateModelMixin, viewsets.GenericViewSet):
 
 class LoginAPI(APIView):
     permission_classes = [permissions.AllowAny]
-    @swagger_auto_schema(methods=['post'], request_body=AuthTokenSerializer)
-
+    @swagger_auto_schema(
+        request={
+            'type': 'object',
+            'properties': {
+                'username': {'type': 'string', 'required': True},
+                'password': {'type': 'string', 'required': True},
+            }
+        },
+        response={
+            200: {'type': 'object', 'properties': {'refresh': {'type': 'string'}, 'access': {'type': 'string'}}},
+        }
+    )
     def post(self, request, format=None):
         serializer = AuthTokenSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
