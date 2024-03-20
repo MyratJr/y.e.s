@@ -178,7 +178,8 @@ class UserServicesView(generics.ListAPIView):
 
 class LikeUserView(APIView):
     permission_classes = [IsAuthenticated]
-    authentication_classes = []
+    # authentication_classes = []
+    parser_classes = [MultiPartParser]
 
     def post(self, request, pk):
         liked_user = get_object_or_404(User, pk=pk)
