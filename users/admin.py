@@ -39,6 +39,6 @@ class UserAdmin(BaseUserAdmin):
 
     def get_queryset(self, request):
         if not request.user.is_superuser:
-            # self.fieldsets.pop(4)
+            self.fieldsets.pop(4)
             return super().get_queryset(request).filter(id=request.user.id)
         return super().get_queryset(request)
