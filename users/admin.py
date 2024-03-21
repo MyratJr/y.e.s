@@ -35,7 +35,7 @@ class UserAdmin(BaseUserAdmin):
         ),
         (("Şahsy maglumat"), {"fields": ("email", "phone")}),
     )
-    def has_view_permission(self, request, obj=None):
-        if request.user.is_superuser:
-            return True
-        return request.user == obj
+    def get_queryset(self, request):
+        if not request.user.is_superuser:
+            return super().get_queryset(request).filter(id=request.user.id)
+        return super().get_queryset(request)
