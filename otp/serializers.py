@@ -10,3 +10,8 @@ class SMSSerializer(serializers.ModelSerializer):
     class Meta:
         model = Otp
         fields = ["phone", "message"]
+
+
+class OTPVerifySerializer(serializers.Serializer):
+    phone = serializers.CharField()
+    otp = serializers.CharField()

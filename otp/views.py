@@ -1,18 +1,16 @@
 from rest_framework import status
 from rest_framework.response import Response
-from .serializers import OTPSerializer, SMSSerializer
+from .serializers import OTPSerializer, SMSSerializer, OTPVerifySerializer
 from random import randint
 from rest_framework import mixins, generics
 from rest_framework.permissions import AllowAny, IsAdminUser
 from users.models import User
-from rest_framework.parsers import MultiPartParser
 from ehyzmat.settings import redis_cache
 from rest_framework.views import APIView
 from .models import Otp, SMSStatuses
 from django.utils import timezone
 from rest_framework_simplejwt.tokens import RefreshToken
-from drf_yasg.utils import swagger_auto_schema
-from drf_yasg import openapi
+from drf_spectacular.utils import extend_schema
 
 
 class ResendOTPView(mixins.CreateModelMixin, generics.GenericAPIView):
@@ -32,22 +30,43 @@ class ResendOTPView(mixins.CreateModelMixin, generics.GenericAPIView):
         return Response(status=status.HTTP_201_CREATED)
     
 
-class ForgotPasswordView(mixins.CreateModelMixin, generics.GenericAPIView):
+class VerifyOtpView(mixins.CreateModelMixin, generics.GenericAPIView):
     permission_classes = [AllowAny]
-    serializer_class = OTPSerializer
-    parser_classes = [MultiPartParser]
+    serializer_class = OTPVerifySerializer
 
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         phone = serializer.validated_data['phone']
-        try: 
-            User.objects.get(phone=phone)
-        except:
-            return Response({"No user found with this phone!"})
-        otp = randint(1000,9999)
-        redis_cache.set(phone, otp, ex=300)
-        return Response(status=status.HTTP_201_CREATED)
+        otp = serializer.validated_data['otp']
+        if redis_cache.get(phone) is None:
+            return Response("Bagyşlaň, siziň telefon belgiňize degişli kod ýok ýa-da möhleti doldy.")
+        if otp != redis_cache.get(phone).decode("utf-8"):
+            return Response({'error': 'Ýalňyş kod'},
+                            status=status.HTTP_400_BAD_REQUEST)
+        phone = Otp.objects.get(phone=phone, status=SMSStatuses.PENDING)
+        phone.status = SMSStatuses.VERIFIED
+        phone.message = "Y.E.S platformasyna hoş geldiňiz!"
+        phone.save()
+
+
+
+# class ForgotPasswordView(mixins.CreateModelMixin, generics.GenericAPIView):
+#     permission_classes = [AllowAny]
+#     serializer_class = OTPSerializer
+#     parser_classes = [MultiPartParser]
+
+#     def post(self, request, *args, **kwargs):
+#         serializer = self.serializer_class(data=request.data)
+#         serializer.is_valid(raise_exception=True)
+#         phone = serializer.validated_data['phone']
+#         try: 
+#             User.objects.get(phone=phone)
+#         except:
+#             return Response({"No user found with this phone!"})
+#         otp = randint(1000,9999)
+#         redis_cache.set(phone, otp, ex=300)
+#         return Response(status=status.HTTP_201_CREATED)
     
 
 class SMSPhoneView(APIView):
@@ -66,15 +85,8 @@ class SMSPhoneView(APIView):
 
             return Response(serializer.data)
         return Response({"id": 0})
-    @swagger_auto_schema(
-        operation_description='OTP-nyň telefon belgä baranlygyny tassyklamak üçin telefon belgi ugradyň.',
-        request_body=openapi.Schema(
-            type=openapi.TYPE_OBJECT,
-            required=['phone'],
-            properties={
-                'phone': openapi.Schema(type=openapi.TYPE_STRING),
-            }
-        )
+    @extend_schema(
+        request=SMSSerializer,
     )
     def post(self, request):
         phone = request.data.get("phone", "")
@@ -87,15 +99,8 @@ class SMSPhoneView(APIView):
 class ActivateUserAPIView(APIView):
     permission_classes = [AllowAny]
 
-    @swagger_auto_schema(
-        operation_description='Ulanyjyny aktiwasiýa etmek üçin dogry otp iberiň.',
-        request_body=openapi.Schema(
-            type=openapi.TYPE_OBJECT,
-            required=['phone'],
-            properties={
-                'phone': openapi.Schema(type=openapi.TYPE_STRING, description='Phone for activate user'),
-            }
-        )
+    @extend_schema(
+        request=OTPVerifySerializer,
     )
     def post(self, request):
         otp = request.data.get("otp", "")

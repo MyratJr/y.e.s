@@ -3,7 +3,7 @@ from rest_framework import generics, permissions, mixins, viewsets
 from services.serializers import HomeServicesSerializers
 from ratings.models import Like_User, View_User
 from rest_framework.response import Response
-from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
+from rest_framework.parsers import MultiPartParser, FormParser
 from services.models import Service
 from .serializers import *
 from .models import User
@@ -17,7 +17,6 @@ from rest_framework.filters import OrderingFilter
 from otp.models import Otp
 from random import randint
 from drf_spectacular.utils import extend_schema
-from rest_framework import authentication
 
 
 class RegisterAPI(generics.GenericAPIView):
@@ -178,8 +177,6 @@ class UserServicesView(generics.ListAPIView):
 
 class LikeUserView(APIView):
     permission_classes = [IsAuthenticated]
-    # authentication_classes = []
-    parser_classes = [MultiPartParser]
 
     def post(self, request, pk):
         liked_user = get_object_or_404(User, pk=pk)

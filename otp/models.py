@@ -7,6 +7,7 @@ class SMSStatuses:
     DELIVERED = "delivered"
     ACTIVATED = "activated"
     FAILED = "failed"
+    VERIFIED = "verified"
 
 
 class Otp(models.Model):

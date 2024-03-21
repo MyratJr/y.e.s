@@ -36,7 +36,6 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 
 class ChangeForgotPasswordSerializer(serializers.ModelSerializer):
-    otp = serializers.CharField(max_length=4, write_only=True)
 
     class Meta:
         model = User
