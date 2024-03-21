@@ -24,9 +24,10 @@ class ResendOTPORForgotPasswordView(mixins.CreateModelMixin, generics.GenericAPI
         otp = randint(1000,9999)
         redis_cache.set(phone, otp, ex=300)
         phone_obj, created = Otp.objects.get_or_create(phone=phone)
-        phone_obj.message = f"Siziň barlag koduňyz: {otp}"
+        phone_obj.message = f"Siziň Y.E.S barlag koduňyz: {otp}"
         phone_obj.status = SMSStatuses.PENDING
-        phone_obj.counter = 0
+        phone_obj.each_counter = 0
+        phone_obj.all_counter = 0
         phone_obj.save()
         return Response(status=status.HTTP_201_CREATED)
     
