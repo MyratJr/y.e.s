@@ -35,7 +35,18 @@ class UserAdmin(BaseUserAdmin):
         ),
         (("Şahsy maglumat"), {"fields": ("email", "phone")}),
     )
+
+
     def get_queryset(self, request):
         if not request.user.is_superuser:
             return super().get_queryset(request).filter(id=request.user.id)
         return super().get_queryset(request)
+    
+
+    def get_fieldsets(self, request):
+        if request.user.is_superuser:
+            return self.fieldsets
+        else:
+            filtered_fieldsets = list(self.fieldsets)
+            filtered_fieldsets.pop(4)
+            return filtered_fieldsets
