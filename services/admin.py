@@ -11,7 +11,7 @@ admin.site.register(Service_Category)
 
 @admin.register(Service)
 class CarAdmin(admin.ModelAdmin):
-    list_display = ('get_new_icon')
+    list_display = ['get_new_icon']
     inlines = [PropertyVideoInline]
     def get_new_icon(self, obj):
         if obj.is_new:  # Check if 'is_new' field exists (optional)
