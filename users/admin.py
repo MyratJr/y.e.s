@@ -20,6 +20,7 @@ class UserAdmin(BaseUserAdmin):
                     "groups",
                     "user_permissions",
                 ),
+                "condition": lambda request: request.user.is_superuser,
             },
         ),
         (("Möhüm seneler"), {"fields": ("last_login", "date_joined")}),
@@ -43,10 +44,10 @@ class UserAdmin(BaseUserAdmin):
         return super().get_queryset(request)
     
 
-    def get_fieldsets(self, request):
-        if request.user.is_superuser:
-            return self.fieldsets
-        else:
-            filtered_fieldsets = list(self.fieldsets)
-            filtered_fieldsets.pop(4)
-            return filtered_fieldsets
+    # def get_fieldsets(self, request):
+    #     if request.user.is_superuser:
+    #         return self.fieldsets
+    #     else:
+    #         filtered_fieldsets = list(self.fieldsets)
+    #         filtered_fieldsets.pop(4)
+    #         return filtered_fieldsets
