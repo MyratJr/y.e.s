@@ -29,6 +29,7 @@ class Service(models.Model):
     view_counter = models.IntegerField(default=0)
     like_counter = models.IntegerField(default=0)
     date_created = models.DateTimeField(auto_now_add=True)
+    is_new = models.BooleanField(default=True)
 
     def clean(self):
         if not self.vip_date and self.vip_is_active:
