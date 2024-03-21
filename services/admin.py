@@ -16,6 +16,6 @@ class CarAdmin(admin.ModelAdmin):
     inlines = [PropertyVideoInline]
     def get_new_icon(self, obj):
         if obj.is_new:
-            return format_html('<img src="{}" width="45" height="45" style="position:fixed; text-align:right; display:flex; flex:1; padding:5px">'.format(MEDIA_URL + 'service/service_images/new.png'))
+            return format_html('<img src="{}" width="45" height="45" style="position:fixed; float:right; display:flex; flex:1; padding:5px">'.format(MEDIA_URL + 'service/service_images/new.png'))
         else:
             return ''
