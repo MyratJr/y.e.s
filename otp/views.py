@@ -5,14 +5,12 @@ from random import randint
 from rest_framework import mixins, generics
 from rest_framework.permissions import AllowAny, IsAdminUser
 from users.models import User
-from rest_framework.parsers import MultiPartParser
 from ehyzmat.settings import redis_cache
 from rest_framework.views import APIView
 from .models import Otp, SMSStatuses
 from django.utils import timezone
 from rest_framework_simplejwt.tokens import RefreshToken
-from drf_yasg.utils import swagger_auto_schema
-from drf_yasg import openapi
+from drf_spectacular.utils import extend_schema
 
 
 class ResendOTPView(mixins.CreateModelMixin, generics.GenericAPIView):
@@ -87,15 +85,8 @@ class SMSPhoneView(APIView):
 
             return Response(serializer.data)
         return Response({"id": 0})
-    @swagger_auto_schema(
-        operation_description='OTP-nyň telefon belgä baranlygyny tassyklamak üçin telefon belgi ugradyň.',
-        request_body=openapi.Schema(
-            type=openapi.TYPE_OBJECT,
-            required=['phone'],
-            properties={
-                'phone': openapi.Schema(type=openapi.TYPE_STRING),
-            }
-        )
+    @extend_schema(
+        request=SMSSerializer,
     )
     def post(self, request):
         phone = request.data.get("phone", "")
@@ -108,19 +99,12 @@ class SMSPhoneView(APIView):
 class ActivateUserAPIView(APIView):
     permission_classes = [AllowAny]
 
-    @swagger_auto_schema(
-        operation_description='Ulanyjyny aktiwasiýa etmek üçin dogry otp iberiň.',
-        request_body=openapi.Schema(
-            type=openapi.TYPE_OBJECT,
-            required=['phone'],
-            properties={
-                'phone': openapi.Schema(type=openapi.TYPE_STRING, description='Phone for activate user'),
-            }
-        )
+    @extend_schema(
+        request=OTPVerifySerializer,
     )
     def post(self, request):
-        otp = request.data.get("otp", "")
-        phone = request.data.get('phone', "")
+        otp = request.data.get("otp")
+        phone = request.data.get('phone')
 
         if otp == '':
             return Response({'error': 'Kody giriziň'},

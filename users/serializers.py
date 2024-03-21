@@ -39,7 +39,7 @@ class ChangeForgotPasswordSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['phone', 'password', 'otp']
+        fields = ['phone', 'password']
         extra_kwargs = {'password': {'write_only': True}}
         
 
