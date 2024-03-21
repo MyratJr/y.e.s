@@ -35,3 +35,7 @@ class UserAdmin(BaseUserAdmin):
         ),
         (("Şahsy maglumat"), {"fields": ("email", "phone")}),
     )
+    def has_view_permission(self, request, obj=None):
+        if request.user.is_superuser:
+            return True
+        return request.user == obj
