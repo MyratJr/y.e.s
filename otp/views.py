@@ -34,7 +34,7 @@ class ResendOTPORForgotPasswordView(mixins.CreateModelMixin, generics.GenericAPI
 class SMSPhoneView(APIView):
     serializer_class = SMSSerializer
     permission_classes = [IsAdminUser]
-    queryset = Otp.objects.filter(status=SMSStatuses.PENDING)
+    queryset = Otp.objects.filter(each_counter=0, status=SMSStatuses.PENDING)
 
     def get(self, request):
         sms = self.queryset.first()
@@ -48,13 +48,20 @@ class SMSPhoneView(APIView):
             return Response(serializer.data)
         return Response({"id": 0})
     @extend_schema(
+        description="Eger Telefon belgä sms giden bolsa message forumy 1 bilen iberiň, eger gitmedik bolsa 0 bilen iberiň.",
         request=SMSSerializer,
     )
     def post(self, request):
-        phone = request.data.get("phone", "")
+        phone = request.data.get("phone")
+        status = request.data.get("message")
         phone = str(phone)
-        self.queryset.filter(phone=phone, status=SMSStatuses.PENDING) \
-            .update(status=SMSStatuses.DELIVERED)
+        status = int(status)
+        if status == 1:
+            self.queryset.filter(phone=phone, status=SMSStatuses.PENDING) \
+                .update(status=SMSStatuses.DELIVERED)
+        elif status == 0:
+            self.queryset.filter(phone=phone, status=SMSStatuses.PENDING) \
+                            .update(each_counter=0)
         return Response({})
     
 
