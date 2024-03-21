@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import *
-
+from django.utils.html import format_html
 
 class PropertyVideoInline(admin.StackedInline):
     model = ServiceGalleryImage
@@ -15,6 +15,6 @@ class CarAdmin(admin.ModelAdmin):
     inlines = [PropertyVideoInline]
     def get_new_icon(self, obj):
         if obj.is_new:
-            return '<span style="color: green;">&#128187;</span>'
+            return format_html('<img src="{}">', "/home/t30/yourendlessservice/y.e.s/otp/new.png")
         else:
             return ''
