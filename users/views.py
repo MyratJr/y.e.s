@@ -63,30 +63,6 @@ class ChangePasswordView(generics.UpdateAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-# class ChangeForgotPassword(mixins.UpdateModelMixin, viewsets.GenericViewSet):
-#     serializer_class = ChangeForgotPasswordSerializer
-#     permission_classes = [permissions.AllowAny]
-#     parser_classes = [MultiPartParser]
-#     queryset = User.objects.all()
-
-#     def partial_update(self, request, *args, **kwargs):
-#         kwargs['partial'] = True
-#         serializer = self.get_serializer(data=request.data)
-#         serializer.is_valid(raise_exception=True)
-#         data = serializer.validated_data
-#         otp = data.get("otp")
-#         phone = data.get("phone")
-#         password = data.get("password")
-#         temporary_otp = redis_cache.get(phone)
-#         if temporary_otp and temporary_otp.decode() == otp:
-#             redis_cache.delete(phone)
-#             user_change_password = User.objects.get(phone=phone)
-#             user_change_password.set_password(password)
-#             user_change_password.save()
-#             return Response({"success"})
-#         raise serializers.ValidationError({"detail":"Your OTP is wrong or has expired"})
-
-
 class LoginAPI(APIView):
     permission_classes = [permissions.AllowAny]
 
@@ -102,22 +78,6 @@ class LoginAPI(APIView):
             'refresh': str(refresh),
             'access': str(refresh.access_token)
         })
-    
-
-# @swagger_auto_schema(methods=['post'], request_body=AuthTokenSerializer)
-# @api_view(['POST'])
-# @permission_classes([permissions.AllowAny])
-# def LoginAPI(request):
-#     serializer = AuthTokenSerializer(data=request.data)
-#     if serializer.is_valid():
-#         user = serializer.validated_data['user']
-#         refresh = RefreshToken.for_user(User.objects.get(id=user.id))
-#         return Response({
-#             'refresh': str(refresh),
-#             'access': str(refresh.access_token)
-#         })
-#     else:
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class UpdateUserAPIView(GenericAPIView):

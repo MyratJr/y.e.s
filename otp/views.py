@@ -13,7 +13,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from drf_spectacular.utils import extend_schema
 
 
-class ResendOTPView(mixins.CreateModelMixin, generics.GenericAPIView):
+class ResendOTPORForgotPasswordView(mixins.CreateModelMixin, generics.GenericAPIView):
     permission_classes = [AllowAny]
     serializer_class = OTPSerializer
 
@@ -28,45 +28,6 @@ class ResendOTPView(mixins.CreateModelMixin, generics.GenericAPIView):
         phone.status = SMSStatuses.PENDING
         phone.save()
         return Response(status=status.HTTP_201_CREATED)
-    
-
-class VerifyOtpView(mixins.CreateModelMixin, generics.GenericAPIView):
-    permission_classes = [AllowAny]
-    serializer_class = OTPVerifySerializer
-
-    def post(self, request, *args, **kwargs):
-        serializer = self.serializer_class(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        phone = serializer.validated_data['phone']
-        otp = serializer.validated_data['otp']
-        if redis_cache.get(phone) is None:
-            return Response("Bagyşlaň, siziň telefon belgiňize degişli kod ýok ýa-da möhleti doldy.")
-        if otp != redis_cache.get(phone).decode("utf-8"):
-            return Response({'error': 'Ýalňyş kod'},
-                            status=status.HTTP_400_BAD_REQUEST)
-        phone = Otp.objects.get(phone=phone, status=SMSStatuses.PENDING)
-        phone.status = SMSStatuses.VERIFIED
-        phone.message = "Y.E.S platformasyna hoş geldiňiz!"
-        phone.save()
-
-
-
-# class ForgotPasswordView(mixins.CreateModelMixin, generics.GenericAPIView):
-#     permission_classes = [AllowAny]
-#     serializer_class = OTPSerializer
-#     parser_classes = [MultiPartParser]
-
-#     def post(self, request, *args, **kwargs):
-#         serializer = self.serializer_class(data=request.data)
-#         serializer.is_valid(raise_exception=True)
-#         phone = serializer.validated_data['phone']
-#         try: 
-#             User.objects.get(phone=phone)
-#         except:
-#             return Response({"No user found with this phone!"})
-#         otp = randint(1000,9999)
-#         redis_cache.set(phone, otp, ex=300)
-#         return Response(status=status.HTTP_201_CREATED)
     
 
 class SMSPhoneView(APIView):
