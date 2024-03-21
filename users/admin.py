@@ -5,7 +5,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
 @admin.register(User)
 class UserAdmin(BaseUserAdmin):
-    fieldsets = (
+    fieldsets = [
         (None, {"fields": ("username", "password")}),
         (("Şahsy maglumat"), {"fields": ("first_name", "last_name", "email", "avatar", "banner_image", "experience", "address", "summary")}),
         (("Kontakt"), {"fields": ("web", "tiktok", "instagram", "imo", "phone")}),
@@ -23,7 +23,7 @@ class UserAdmin(BaseUserAdmin):
             },
         ),
         (("Möhüm seneler"), {"fields": ("last_login", "date_joined")}),
-    )
+    ]
 
     add_fieldsets = (
         (
@@ -39,14 +39,6 @@ class UserAdmin(BaseUserAdmin):
 
     def get_queryset(self, request):
         if not request.user.is_superuser:
+            self.fieldsets.pop(4)
             return super().get_queryset(request).filter(id=request.user.id)
         return super().get_queryset(request)
-    
-
-    def get_fieldsets(self, request):
-        if request.user.is_superuser:
-            return self.fieldsets
-        else:
-            filtered_fieldsets = list(self.fieldsets)
-            filtered_fieldsets.pop(4)
-            return filtered_fieldsets
