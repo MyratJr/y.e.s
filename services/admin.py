@@ -7,7 +7,6 @@ class PropertyVideoInline(admin.StackedInline):
 
 
 admin.site.register(Service_Category)
-admin.site.register(ServiceGalleryImage)
 
 
 @admin.register(Service)
