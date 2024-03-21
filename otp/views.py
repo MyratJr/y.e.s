@@ -103,8 +103,8 @@ class ActivateUserAPIView(APIView):
         request=OTPVerifySerializer,
     )
     def post(self, request):
-        otp = request.data.get("otp", "")
-        phone = request.data.get('phone', "")
+        otp = request.data.get("otp")
+        phone = request.data.get('phone')
 
         if otp == '':
             return Response({'error': 'Kody giriziň'},
