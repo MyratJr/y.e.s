@@ -41,11 +41,9 @@ class Service(models.Model):
     def __str__(self):
         return f'{self.name} and {self.id}'
     
-    @property
-    def is_new_status(self):
-        self.is_new=False
-        self.save()
-        return self.is_new
+    def save_model(self, request, obj, form, change):
+        self.is_new = False
+        super().save_model(request, obj, form, change)
 
 class ServiceGalleryImage(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
