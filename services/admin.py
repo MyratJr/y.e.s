@@ -20,3 +20,9 @@ class CarAdmin(admin.ModelAdmin):
             return format_html('<img src="{}" width="30" height="30" style="position:fixed; margin-top:-0.5%">'.format(MEDIA_URL + 'service/service_images/new.png'))
         else:
             return ''
+        
+    def changeview(self, request, object_id, form_url=None, extra_context=None):
+            service = Service.objects.get(pk=object_id)
+            service.is_new=False
+            service.save()
+            return super().changeview(request, object_id, form_url, extra_context)
