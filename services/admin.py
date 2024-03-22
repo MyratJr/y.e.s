@@ -20,3 +20,10 @@ class CarAdmin(admin.ModelAdmin):
             return format_html('<img src="{}" width="30" height="30" style="position:fixed; margin-top:-0.5%">'.format(MEDIA_URL + 'service/service_images/new.png'))
         else:
             return ''
+        
+from django.dispatch import receiver
+@receiver(psender=CarAdmin)
+def set_service_not_new(sender, request, object, **kwargs):
+    if object:  # Check if object exists (might be None for list view actions)
+        object.is_new = False
+        object.save()

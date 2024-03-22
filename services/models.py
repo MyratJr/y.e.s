@@ -40,11 +40,6 @@ class Service(models.Model):
 
     def __str__(self):
         return f'{self.name} and {self.id}'
-
-    def changeview(self):
-        self.is_new = False
-        self.save()
-        return super().clean()
     
 
 class ServiceGalleryImage(models.Model):
