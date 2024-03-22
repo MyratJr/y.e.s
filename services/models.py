@@ -32,14 +32,15 @@ class Service(models.Model):
     is_new = models.BooleanField(default=True)
 
     def clean(self):
+        self.is_new=False
+        self.save()
         if not self.vip_date and self.vip_is_active:
             raise ValidationError('Can not leave "vip_date" field empty while "vip_is_active" field is True.')
         elif not self.vip_is_active and self.vip_date:
             raise ValidationError('Can not save "vip_date" field with selected date while "vip_is_active" field is False.')
         return super().clean()
 
-    def __str__(self, request):
-        print(request)
+    def __str__(self):
         return f'{self.name} and {self.id}'
     
 
