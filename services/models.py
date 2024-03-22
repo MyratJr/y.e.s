@@ -43,7 +43,8 @@ class Service(models.Model):
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self._is_new = False
+        self.is_new = False
+        self.save()
 
 class ServiceGalleryImage(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
