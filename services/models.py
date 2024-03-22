@@ -41,7 +41,7 @@ class Service(models.Model):
     def __str__(self):
         return f'{self.name} and {self.id}'
     
-    def __init__(self, request, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.is_new = False
 
