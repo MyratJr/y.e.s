@@ -43,7 +43,6 @@ class Service(models.Model):
     
     def __init__(self, *args, **kwargs):
         self.is_new=False
-        self.save()
     
 
 class ServiceGalleryImage(models.Model):
