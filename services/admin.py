@@ -12,11 +12,11 @@ admin.site.register(Service_Category)
 
 @admin.register(Service)
 class CarAdmin(admin.ModelAdmin):
-    list_display = ['name', 'category', 'place', 'public', 'get_new_icon']
+    list_display = ['name', 'category', 'place', 'public', 'is_new']
     inlines = [PropertyVideoInline]
-    def get_new_icon(self, obj):
+    def is_new(self, obj):
         if obj.is_new:
-            return format_html('<img src="{}" width="30" height="30" style="position:fixed; margin-top:-0.5%">'.format(MEDIA_URL + 'service/service_images/new.png'))
+            return format_html('<img src="{}" width="30" height="30" style="position:fixed;margin-left:1%; margin-top:-0.5%">'.format(MEDIA_URL + 'service/service_images/new.png'))
         else:
             return ''
     
