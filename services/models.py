@@ -40,10 +40,13 @@ class Service(models.Model):
 
     def __str__(self):
         return f'{self.name} and {self.id}'
-    
-    def save_model(self, request, obj, form, change):
-        self.is_new = False
-        super().save_model(request, obj, form, change)
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+@receiver(post_save, sender=Service)
+def my_handler(sender, instance, **kwargs):
+    obj = Service.objects.get(id=instance.pk)
+    obj.is_new = False
+    obj.save()
 
 class ServiceGalleryImage(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
