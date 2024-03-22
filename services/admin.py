@@ -16,7 +16,7 @@ class CarAdmin(admin.ModelAdmin):
     inlines = [PropertyVideoInline]
     def new(self, obj):
         if obj.is_new:
-            return format_html('<img src="{}" width="30" height="30" style="position:fixed;margin-left:0.5%; margin-top:-0.5%">'.format(MEDIA_URL + 'service/service_images/new.png'))
+            return format_html('<img src="{}" width="30" height="30" style="position:fixed; margin-top:-0.5%">'.format(MEDIA_URL + 'service/service_images/new.png'))
         else:
             return ''
     
