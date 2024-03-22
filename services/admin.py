@@ -21,8 +21,5 @@ class CarAdmin(admin.ModelAdmin):
         else:
             return ''
         
-    def changeview(self, request, object_id, form_url=None, extra_context=None):
-            service = Service.objects.get(pk=object_id)
-            service.is_new=False
-            service.save()
-            return super().changeview(request, object_id, form_url, extra_context)
+    def get_queryset(self, request):
+        return super().get_queryset(request)
