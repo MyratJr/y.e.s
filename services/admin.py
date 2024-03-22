@@ -14,15 +14,14 @@ admin.site.register(Service_Category)
 class CarAdmin(admin.ModelAdmin):
     list_display = ['name', 'category', 'place', 'public', 'new']
     inlines = [PropertyVideoInline]
+    
     def new(self, obj):
         if obj.is_new:
             return format_html('<img src="{}" width="30" height="30" style="position:fixed; margin-top:-0.5%">'.format(MEDIA_URL + 'service/service_images/new.png'))
         else:
             return ''
     
-    def changeform_view(self, request, object_id=None, form=None, extra_context=None):
-        if object_id:
-            product = Service.objects.get(pk=object_id)
-            product.is_new = True
-            product.save()
-        return super().changeform_view(request, object_id, form, extra_context)
+    def set_service_not_new(self, service_id):
+        service = Service.objects.get(pk=service_id)
+        service.is_new = False
+        service.save()
