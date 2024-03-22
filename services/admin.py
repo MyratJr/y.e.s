@@ -20,6 +20,3 @@ class CarAdmin(admin.ModelAdmin):
             return format_html('<img src="{}" width="30" height="30" style="position:fixed; margin-top:-0.5%">'.format(MEDIA_URL + 'service/service_images/new.png'))
         else:
             return ''
-        
-    def get_queryset(self, request):
-        return super().get_queryset(request)
