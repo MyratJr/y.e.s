@@ -47,6 +47,7 @@ def my_handler(sender, instance, **kwargs):
     obj = Service.objects.get(id=instance.pk)
     obj.is_new = False
     obj.save()
+    return obj
 
 class ServiceGalleryImage(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
