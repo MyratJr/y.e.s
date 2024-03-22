@@ -20,8 +20,3 @@ class CarAdmin(admin.ModelAdmin):
             return format_html('<img src="{}" width="30" height="30" style="position:fixed; margin-top:-0.5%">'.format(MEDIA_URL + 'service/service_images/new.png'))
         else:
             return ''
-    
-    def set_service_not_new(self, service_id):
-        service = Service.objects.get(pk=service_id)
-        service.is_new = False
-        service.save()
