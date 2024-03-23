@@ -1,5 +1,5 @@
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated, AllowAny
-from .models import Service, ServiceGalleryImage, Service_Category
+from .models import Service, ServiceGalleryImage, Service_Category, ServiceVerification
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.parsers import MultiPartParser, FormParser
 from django_filters.rest_framework import DjangoFilterBackend
@@ -13,7 +13,7 @@ from .serializers import *
 
 
 class Services_View(viewsets.ModelViewSet):
-    queryset = Service.objects.filter(status="Accepted")
+    queryset = Service.objects.filter(status=ServiceVerification.Kabul_Edildi)
     serializer_class = ServicesSerializers
     permission_classes = [IsAuthenticatedOrReadOnly]
     parser_classes = [MultiPartParser,FormParser]
