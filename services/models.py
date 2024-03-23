@@ -15,12 +15,6 @@ class Service_Category(models.Model):
 
 
 class ServiceVerification(models.TextChoices):
-    accepted = "Accepted"
-    pending = "Pending"
-    failed = "Failed"
-
-
-class ServiceStatusMessage(models.TextChoices):
     accepted = "Siziň hyzmatyňyz kabul edildi."
     pending = "Häzirki wagtda siziň goýan hyzmatyňyz barlanylýar, biraz garaşmagyňyzy haýyş edýäris."
     failed = """Bagyşlaň, siziň goýan hyzmatyňyz 'Hyzmat goýluş düzgünleri'-e laýyl gelmeýär.
@@ -37,7 +31,6 @@ class Service(models.Model):
     experience = models.IntegerField()
     description = models.TextField(validators=[MaxLengthValidator(250)])
     status = models.CharField(max_length=20, choices=ServiceVerification.choices, default=ServiceVerification.pending)
-    status_message = models.CharField(max_length=500, choices=ServiceStatusMessage, default=ServiceStatusMessage.pending)
     vip_date = models.DateField(blank=True, null=True)
     vip_is_active = models.BooleanField(default=False)
     primary_image = models.ImageField(upload_to='service/service_images/%Y/%m/', max_length=255)
