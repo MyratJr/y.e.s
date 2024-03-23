@@ -12,7 +12,7 @@ admin.site.register(Service_Category)
 
 @admin.register(Service)
 class CarAdmin(admin.ModelAdmin):
-    list_display = ['name', 'category', 'place', "status"]
+    list_display = ['name', 'category', 'place', "statusa"]
     inlines = [PropertyVideoInline]
     
     def status(self, obj):
