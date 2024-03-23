@@ -17,10 +17,10 @@ class CarAdmin(admin.ModelAdmin):
     
     def yagday(self, obj):
         if obj.status==ServiceVerification.Garashylyar:
-            return "Garaşylýar"
+            return ("Garaşylýar")
         elif obj.status==ServiceVerification.Showsyz:
-            return "Şowsuz"
+            return ("Şowsuz")
         elif obj.status==ServiceVerification.Kabul_Edildi:
-            return "Kabul edildi"
+            return ("Kabul edildi")
         else:
             return ''
