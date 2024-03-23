@@ -15,7 +15,7 @@ class CarAdmin(admin.ModelAdmin):
     list_display = ['name', 'category', 'place', "statusa"]
     inlines = [PropertyVideoInline]
     
-    def status(self, obj):
+    def statusa(self, obj):
         if obj.status=="Failed":
             return format_html('<img src="{}" width="30" height="30" style="position:fixed; margin-top:-0.5%">'.format(MEDIA_URL + 'service/service_images/new.png'))
         else:
