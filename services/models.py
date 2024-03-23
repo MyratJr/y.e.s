@@ -2,6 +2,7 @@ from django.db import models
 from django.core.validators import MaxLengthValidator
 from django.core.exceptions import ValidationError
 import uuid
+from enum import Enum
 
 
 class Service_Category(models.Model):
@@ -14,6 +15,10 @@ class Service_Category(models.Model):
 
 
 class Service(models.Model):
+    class ServiceVerification(models.TextChoices):
+        accepted = "Accepted"
+        pending = "Pending"
+        failed = "Failed"
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey("users.User", on_delete=models.CASCADE, related_name='service_user', null=True)
     name = models.CharField(max_length=25)
@@ -22,14 +27,13 @@ class Service(models.Model):
     place = models.ForeignKey("places.Districts", on_delete=models.CASCADE, related_name='service_district')
     experience = models.IntegerField()
     description = models.TextField(validators=[MaxLengthValidator(250)])
-    public = models.BooleanField(default=False)
+    status = models.CharField(max_length=20, choices=ServiceVerification.choices, default=ServiceVerification.failed)
     vip_date = models.DateField(blank=True, null=True)
     vip_is_active = models.BooleanField(default=False)
     primary_image = models.ImageField(upload_to='service/service_images/%Y/%m/', max_length=255)
     view_counter = models.IntegerField(default=0)
     like_counter = models.IntegerField(default=0)
     date_created = models.DateTimeField(auto_now_add=True)
-    is_new = models.BooleanField(default=True)
 
     def clean(self):
         if not self.vip_date and self.vip_is_active:

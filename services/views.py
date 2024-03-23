@@ -13,7 +13,7 @@ from .serializers import *
 
 
 class Services_View(viewsets.ModelViewSet):
-    queryset = Service.objects.filter(public=True)
+    queryset = Service.objects.filter()
     serializer_class = ServicesSerializers
     permission_classes = [IsAuthenticatedOrReadOnly]
     parser_classes = [MultiPartParser,FormParser]
@@ -68,7 +68,7 @@ class Service_Gallery_DestroyView(mixins.DestroyModelMixin, generics.GenericAPIV
 
 
 class HomeServicesView(mixins.ListModelMixin,viewsets.GenericViewSet):
-    queryset = Service.objects.filter(vip_is_active=True, public=True)
+    queryset = Service.objects.filter(vip_is_active=True)
     serializer_class = ServicesSerializers
     permission_classes = [IsAuthenticatedOrReadOnly]
     parser_classes = [MultiPartParser,FormParser]
@@ -121,7 +121,7 @@ class LikeServiceAPIView(APIView):
 
     
 class FilterServiceList(generics.ListAPIView):
-    queryset = Service.objects.filter(public=True)
+    queryset = Service.objects.filter()
     serializer_class = ServicesSerializers
     filter_backends = [SearchFilter, OrderingFilter, DjangoFilterBackend]
     search_fields = ['user__username', 'user__first_name', 'name', 'category__name']
