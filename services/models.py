@@ -15,9 +15,9 @@ class Service_Category(models.Model):
 
 
 class ServiceVerification(models.TextChoices):
-    accepted = "Siziň hyzmatyňyz kabul edildi."
-    pending = "Häzirki wagtda siziň goýan hyzmatyňyz barlanylýar, biraz garaşmagyňyzy haýyş edýäris."
-    failed = """Bagyşlaň, siziň goýan hyzmatyňyz 'Hyzmat goýluş düzgünleri'-e laýyl gelmeýär.
+    Kabul_Edildi = "Siziň hyzmatyňyz kabul edildi."
+    Garashylyar = "Häzirki wagtda siziň goýan hyzmatyňyz barlanylýar, biraz garaşmagyňyzy haýyş edýäris."
+    Showsyz = """Bagyşlaň, siziň goýan hyzmatyňyz 'Hyzmat goýluş düzgünleri'-e laýyl gelmeýär.
                 Hyzmat üçin gerekli maglumatlary talaba laýyk dolduryň we täzeden synanyşyň."""
 
 
@@ -30,7 +30,7 @@ class Service(models.Model):
     place = models.ForeignKey("places.Districts", on_delete=models.CASCADE, related_name='service_district')
     experience = models.IntegerField()
     description = models.TextField(validators=[MaxLengthValidator(250)])
-    status = models.CharField(max_length=500, choices=ServiceVerification.choices, default=ServiceVerification.pending)
+    status = models.CharField(max_length=500, choices=ServiceVerification.choices, default=ServiceVerification.Garashylyar)
     vip_date = models.DateField(blank=True, null=True)
     vip_is_active = models.BooleanField(default=False)
     primary_image = models.ImageField(upload_to='service/service_images/%Y/%m/', max_length=255)
