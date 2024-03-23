@@ -14,11 +14,13 @@ class Service_Category(models.Model):
         return f'{self.name} and {self.id}'
 
 
+class ServiceVerification(models.TextChoices):
+    accepted = "Accepted"
+    pending = "Pending"
+    failed = "Failed"
+
+
 class Service(models.Model):
-    class ServiceVerification(models.TextChoices):
-        accepted = "Accepted"
-        pending = "Pending"
-        failed = "Failed"
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey("users.User", on_delete=models.CASCADE, related_name='service_user', null=True)
     name = models.CharField(max_length=25)
@@ -27,7 +29,7 @@ class Service(models.Model):
     place = models.ForeignKey("places.Districts", on_delete=models.CASCADE, related_name='service_district')
     experience = models.IntegerField()
     description = models.TextField(validators=[MaxLengthValidator(250)])
-    status = models.CharField(max_length=20, choices=ServiceVerification.choices, default=ServiceVerification.failed)
+    status = models.CharField(max_length=20, choices=ServiceVerification.choices, default=ServiceVerification.pending)
     vip_date = models.DateField(blank=True, null=True)
     vip_is_active = models.BooleanField(default=False)
     primary_image = models.ImageField(upload_to='service/service_images/%Y/%m/', max_length=255)
