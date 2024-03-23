@@ -17,6 +17,7 @@ class Services_View(viewsets.ModelViewSet):
     serializer_class = ServicesSerializers
     permission_classes = [IsAuthenticatedOrReadOnly]
     parser_classes = [MultiPartParser,FormParser]
+    lookup_field = 'pk'
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
