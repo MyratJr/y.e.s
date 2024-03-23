@@ -17,6 +17,6 @@ class CarAdmin(admin.ModelAdmin):
     
     def yagday(self, obj):
         if obj.status==ServiceVerification.Garashylyar:
-            return format_html('<h1 style="color:yellow">gjdfhgjsdfhk</h1>')
+            return format_html('<h1 style="color:yellow">{obj.status}</h1>')
         else:
             return ''
