@@ -9,6 +9,7 @@ class PropertyVideoInline(admin.StackedInline):
 # format_html('<img src="{}" width="30" height="30" style="position:fixed; margin-top:-0.5%">'.format(MEDIA_URL + 'service/service_images/new.png'))
 admin.site.register(Service_Category)
 
+from django.utils.translation import gettext_lazy as _
 
 @admin.register(Service)
 class CarAdmin(admin.ModelAdmin):
@@ -17,10 +18,10 @@ class CarAdmin(admin.ModelAdmin):
     
     def yagday(self, obj):
         if obj.status==ServiceVerification.Garashylyar:
-            return ("Garaşylýar")
+            return _("Garaşylýar")
         elif obj.status==ServiceVerification.Showsyz:
-            return ("Şowsuz")
+            return _("Şowsuz")
         elif obj.status==ServiceVerification.Kabul_Edildi:
-            return ("Kabul edildi")
+            return _("Kabul edildi")
         else:
             return ''
