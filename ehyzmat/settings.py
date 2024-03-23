@@ -103,6 +103,7 @@ REST_FRAMEWORK = {
 
 
 SPECTACULAR_SETTINGS = {
+    'COMPONENT_SPLIT_REQUEST': True,
     'TITLE': 'Y.E.S API',
     'DESCRIPTION': 'Your project description',
     'VERSION': '1.0.0',

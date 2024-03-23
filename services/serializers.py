@@ -62,6 +62,7 @@ class ServicesSerializers(serializers.ModelSerializer):
             relating_image.product = instance
             relating_image.save()
         return instance
+    depth=1
     
 
 class HomeServicesSerializers(serializers.ModelSerializer):
