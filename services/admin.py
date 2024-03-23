@@ -12,5 +12,11 @@ admin.site.register(Service_Category)
 
 @admin.register(Service)
 class CarAdmin(admin.ModelAdmin):
-    list_display = ['name', 'category', 'place']
+    list_display = ['name', 'category', 'place', "status"]
     inlines = [PropertyVideoInline]
+    
+    def status(self, obj):
+        if obj.status=="Accepted":
+            return format_html('<img src="{}" width="30" height="30" style="position:fixed; margin-top:-0.5%">'.format(MEDIA_URL + 'service/service_images/new.png'))
+        else:
+            return ''
