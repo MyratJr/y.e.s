@@ -46,7 +46,7 @@ class Service(models.Model):
         return super().clean()
 
     def __str__(self):
-        return f'{self.name}'
+        return f'{self.name} and {self.id}'
 
 
 class ServiceGalleryImage(models.Model):
