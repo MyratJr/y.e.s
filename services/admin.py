@@ -16,7 +16,7 @@ class CarAdmin(admin.ModelAdmin):
     inlines = [PropertyVideoInline]
     
     def status(self, obj):
-        if obj.status=="Accepted":
+        if obj.status=="Failed":
             return format_html('<img src="{}" width="30" height="30" style="position:fixed; margin-top:-0.5%">'.format(MEDIA_URL + 'service/service_images/new.png'))
         else:
             return ''
