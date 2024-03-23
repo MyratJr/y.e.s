@@ -12,10 +12,10 @@ admin.site.register(Service_Category)
 
 @admin.register(Service)
 class CarAdmin(admin.ModelAdmin):
-    list_display = ['name', 'category', 'place', "status"]
+    list_display = ['name', 'category', 'place', "yagday"]
     inlines = [PropertyVideoInline]
     
-    def status(self, obj):
+    def yagday(self, obj):
         if obj.status==ServiceVerification.Garashylyar:
             return "Garaşylýar"
         elif obj.status==ServiceVerification.Showsyz:
