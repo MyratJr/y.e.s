@@ -40,14 +40,6 @@ class Service(models.Model):
 
     def __str__(self):
         return f'{self.name} and {self.id}'
-    
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-@receiver(post_save, sender=Service)
-def product_added(sender, instance, created, **kwargs):
-    if created:
-        pass 
-
 
 
 class ServiceGalleryImage(models.Model):

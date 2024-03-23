@@ -22,6 +22,9 @@ class UserSerializer(serializers.ModelSerializer):
 class ServicesSerializers(serializers.ModelSerializer):
     uploaded_images = serializers.ListField(write_only=True)
     gallery_images = serializers.SerializerMethodField(read_only=True)
+    user = serializers.SerializerMethodField(read_only=True)
+    view_counter = serializers.IntegerField(read_only=True)
+    like_counter = serializers.IntegerField(read_only=True)
 
     def get_gallery_images(self, obj):
         request = self.context["request"]
@@ -62,7 +65,6 @@ class ServicesSerializers(serializers.ModelSerializer):
             relating_image.product = instance
             relating_image.save()
         return instance
-    # depth=1
     
 
 class HomeServicesSerializers(serializers.ModelSerializer):
