@@ -69,7 +69,7 @@ class Service_Gallery_DestroyView(mixins.DestroyModelMixin, generics.GenericAPIV
 
 
 class HomeServicesView(mixins.ListModelMixin,viewsets.GenericViewSet):
-    queryset = Service.objects.filter(vip_is_active=True, status="Accepted")
+    queryset = Service.objects.filter(vip_is_active=True, status=ServiceVerification.Kabul_Edildi)
     serializer_class = ServicesSerializers
     permission_classes = [IsAuthenticatedOrReadOnly]
     parser_classes = [MultiPartParser,FormParser]
@@ -113,7 +113,7 @@ class LikeServiceAPIView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, pk):
-        liked_service = get_object_or_404(Service, pk=pk, status="Accepted")
+        liked_service = get_object_or_404(Service, pk=pk, status=ServiceVerification.Kabul_Edildi)
         user, created = Like_Service.objects.get_or_create(user=request.user,service=liked_service)
         if created:
             liked_service.like_counter += 1
@@ -122,7 +122,7 @@ class LikeServiceAPIView(APIView):
 
     
 class FilterServiceList(generics.ListAPIView):
-    queryset = Service.objects.filter(status="Accepted")
+    queryset = Service.objects.filter(status=ServiceVerification.Kabul_Edildi)
     serializer_class = ServicesSerializers
     filter_backends = [SearchFilter, OrderingFilter, DjangoFilterBackend]
     search_fields = ['user__username', 'user__first_name', 'name', 'category__name']
