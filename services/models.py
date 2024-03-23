@@ -38,12 +38,9 @@ class Service(models.Model):
             raise ValidationError('Can not save "vip_date" field with selected date while "vip_is_active" field is False.')
         return super().clean()
 
-    def __str__(self, request):
+    def __str__(self):
         return f'{self.name} and {self.id}'
     
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.is_new = False
 
 class ServiceGalleryImage(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
