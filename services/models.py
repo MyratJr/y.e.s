@@ -7,8 +7,8 @@ from enum import Enum
 
 class Service_Category(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    name = models.CharField(max_length=35)
-    image = models.ImageField(upload_to='categories/%Y/%m/%d/', max_length=255)
+    name = models.CharField(max_length=35, verbose_name = 'Ady')
+    image = models.ImageField(upload_to='categories/%Y/%m/%d/', max_length=255, verbose_name="Suraty")
 
     def __str__(self):
         return f'{self.name} and {self.id}'
