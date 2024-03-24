@@ -25,7 +25,11 @@ class ServicesSerializers(serializers.ModelSerializer):
     user = serializers.SerializerMethodField(read_only=True)
     view_counter = serializers.IntegerField(read_only=True)
     like_counter = serializers.IntegerField(read_only=True)
-    category = serializers.SerializerMethodField()
+    category = serializers.SerializerMethodField(write_only=True)
+    place = serializers.SerializerMethodField(write_only=True)
+    category_get = serializers.SerializerMethodField(read_only=True)
+    place_get = serializers.SerializerMethodField(read_only=True)
+
 
     def get_user(self, obj):
         request = self.context["request"]
@@ -34,12 +38,6 @@ class ServicesSerializers(serializers.ModelSerializer):
             'username': obj.user.username,
             'avatar': request.build_absolute_uri(obj.user.avatar.url)
         }
-    def get_category(self, obj):
-        return {
-            "id": obj.category.id,
-            'name': obj.category.name,
-        }
-
 
     def get_gallery_images(self, obj):
         request = self.context["request"]
@@ -53,7 +51,9 @@ class ServicesSerializers(serializers.ModelSerializer):
                   "name", 
                   "price", 
                   "category", 
-                  "place",  
+                  "place", 
+                  "category_get__name", 
+                  "place_get__district", 
                   "experience", 
                   "description", 
                   "status", 
