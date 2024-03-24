@@ -1,4 +1,4 @@
-from advertisement.models import Advertisement
+from advertisement.models import Advertisement, AdvertisementChoises
 from rest_framework import viewsets, mixins
 from rest_framework.permissions import AllowAny
 from rest_framework.parsers import MultiPartParser, FormParser
@@ -7,7 +7,7 @@ from rest_framework.response import Response
     
 
 class HomeAdvertisementView(mixins.ListModelMixin,viewsets.GenericViewSet):
-    queryset = Advertisement.objects.filter(is_active=True)
+    queryset = Advertisement.objects.filter(status=AdvertisementChoises.Kabul_Edildi)
     serializer_class = HomeAdvertisementsSerializers
     permission_classes = [AllowAny]
     parser_classes = [MultiPartParser,FormParser]

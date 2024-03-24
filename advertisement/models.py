@@ -4,6 +4,7 @@ import uuid
 
 class AdvertisementChoises(models.TextChoices):
     Kabul_Edildi = "Siziň mahabatyňyz kabul edildi."
+    Mohleti_Gutardy = "Siziň mahabatyňyzyň möhleti gutardy."
     Garashylyar = "Häzirki wagtda siziň goýan mahabatyňyz barlanylýar, biraz garaşmagyňyzy haýyş edýäris."
     Showsyz = """Bagyşlaň, siziň goýan mahabatyňyz 'Mahabat goýluş düzgünleri'-e laýyl gelmeýär.
                 Mahabat üçin gerekli maglumatlary talaba laýyk dolduryň we täzeden synanyşyň."""
