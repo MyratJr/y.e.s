@@ -28,7 +28,12 @@ class ServicesSerializers(serializers.ModelSerializer):
 
 
     def get_user(self, obj):
-        return obj.user.username
+        request = self.context["request"]
+        return {
+            "id": obj.user.id,
+            'username': obj.user.username,
+            'avatar': request.build_absolute_uri(obj.user.avatar.url)
+        }
 
 
     def get_gallery_images(self, obj):
