@@ -33,6 +33,11 @@ class ServicesSerializers(serializers.ModelSerializer):
             'username': obj.user.username,
             'avatar': request.build_absolute_uri(obj.user.avatar.url)
         }
+    def get_category(self, obj):
+        return {
+            "id": obj.category.id,
+            'name': obj.category.name,
+        }
 
 
     def get_gallery_images(self, obj):
