@@ -33,7 +33,7 @@ class ServicesSerializers(serializers.ModelSerializer):
     user = serializers.SerializerMethodField(read_only=True)
     view_counter = serializers.IntegerField(read_only=True)
     like_counter = serializers.IntegerField(read_only=True)
-    author = serializers.SlugRelatedField(
+    category = serializers.SlugRelatedField(
         slug_field='category',
         queryset=Service_Category.objects.all()
     )
