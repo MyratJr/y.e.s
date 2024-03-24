@@ -27,8 +27,8 @@ class ServicesSerializers(serializers.ModelSerializer):
     like_counter = serializers.IntegerField(read_only=True)
     category = serializers.PrimaryKeyRelatedField(write_only=True)
     place = serializers.PrimaryKeyRelatedField(write_only=True)
-    category_name = serializers.SerializerMethodField()
-    place_name = serializers.SerializerMethodField()
+    category_name = serializers.SerializerMethodField(read_only=True)
+    place_name = serializers.SerializerMethodField(read_only=True)
 
     def get_category_name(self, obj):
         return obj.category.name
