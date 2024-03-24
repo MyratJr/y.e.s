@@ -56,7 +56,7 @@ class ServicesSerializers(serializers.ModelSerializer):
                   "price", 
                   "place",  
                   "category", 
-                  "category_name"
+                  "category_name",
                   "experience", 
                   "description", 
                   "status", 
