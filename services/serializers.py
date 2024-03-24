@@ -33,8 +33,10 @@ class ServicesSerializers(serializers.ModelSerializer):
     user = serializers.SerializerMethodField(read_only=True)
     view_counter = serializers.IntegerField(read_only=True)
     like_counter = serializers.IntegerField(read_only=True)
-    category_name = serializers.ReadOnlyField(source='category.name')
-    category = serializers.SerializerMethodField(read_only=False)
+    category_name = serializers.ReadOnlyField()
+
+    def get_category_name(self, obj):
+        return {"id":ServiceGalleryImage.objects.get(id=obj.category).name}
 
     def get_user(self, obj):
         request = self.context["request"]
