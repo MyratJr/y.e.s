@@ -25,8 +25,6 @@ class ServicesSerializers(serializers.ModelSerializer):
     user = serializers.SerializerMethodField(read_only=True)
     view_counter = serializers.IntegerField(read_only=True)
     like_counter = serializers.IntegerField(read_only=True)
-    category = serializers.CharField(source='category.name')
-    place = serializers.CharField(source='place.district')
 
     def get_user(self, obj):
         request = self.context["request"]
