@@ -19,22 +19,22 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ("id", "first_name", "last_name", "avatar", "rate_point", "phone", "email", "web", "imo", "instagram", "tiktok") 
 
 
+    
+class HomeCategoriesSerializers(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Service_Category
+        fields = ['id', 'name']
+
+
 class ServicesSerializers(serializers.ModelSerializer):
     uploaded_images = serializers.ListField(write_only=True)
     gallery_images = serializers.SerializerMethodField(read_only=True)
     user = serializers.SerializerMethodField(read_only=True)
     view_counter = serializers.IntegerField(read_only=True)
     like_counter = serializers.IntegerField(read_only=True)
-    category = serializers.PrimaryKeyRelatedField(write_only=True)
-    place = serializers.PrimaryKeyRelatedField(write_only=True)
-    category_name = serializers.SerializerMethodField(read_only=True)
-    place_name = serializers.SerializerMethodField(read_only=True)
-
-    def get_category_name(self, obj):
-        return obj.category.name
-    
-    def get_place_name(self, obj):
-        return obj.place.district
+    category_name = HomeCategoriesSerializers(read_only=True)
+    category_uuid = serializers.SlugRelatedField(queryset=Service_Category.objects.all(), slug_field='category_name', write_only=True)
 
     def get_user(self, obj):
         request = self.context["request"]
@@ -58,7 +58,6 @@ class ServicesSerializers(serializers.ModelSerializer):
                   "category", 
                   "place",  
                   "category_name", 
-                  "place_name",  
                   "experience", 
                   "description", 
                   "status", 
@@ -102,13 +101,6 @@ class CategoriesSerializers(serializers.ModelSerializer):
     class Meta:
         model = Service_Category
         fields = '__all__'
-
-    
-class HomeCategoriesSerializers(serializers.ModelSerializer):
-    
-    class Meta:
-        model = Service_Category
-        fields = ['id', 'name']
 
 
 class ServiceLikesFromUsersSerializer(serializers.ModelSerializer):
