@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Service, ServiceGalleryImage, Service_Category
+from .models import Service, ServiceGalleryImage, Service_Category, ServiceVerification
 from ratings.models import Like_Service
 from users.models import User
 from users.serializers import LikeToUserSerializer
@@ -38,6 +38,9 @@ class ServicesSerializers(serializers.ModelSerializer):
     category = serializers.UUIDField(write_only=True)
     place_name = serializers.SerializerMethodField(read_only=True)
     place = serializers.UUIDField(write_only=True)
+    status = serializers.CharField(max_length=500, choices=ServiceVerification.choices, read_only=True)
+    vip_date = serializers.DateField(read_only=True)
+    vip_is_active = serializers.BooleanField(read_only=True)
 
 
     def get_category_name(self, obj):
