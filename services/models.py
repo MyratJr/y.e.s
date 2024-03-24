@@ -57,6 +57,9 @@ class ServiceGalleryImage(models.Model):
     product = models.ForeignKey(Service, on_delete=models.CASCADE, related_name="images", blank=True, null=True)
     image = models.ImageField(upload_to='service/service_gallery_images/%Y/%m/', max_length=255)
 
+    class Meta:
+        verbose_name_plural = 'Hyzmatyň galereýasy'
+
     def __str__(self):
         try:
             return f"{self.product} and {self.id}'s gallery images"
