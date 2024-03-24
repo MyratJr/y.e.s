@@ -34,7 +34,7 @@ class ServicesSerializers(serializers.ModelSerializer):
     def get_gallery_images(self, obj):
         request = self.context["request"]
         uploaded_images = [image.id for image in obj.images.all()]
-        return [[i.id, request.build_absolute_uri(i.image.url)] for i in ServiceGalleryImage.objects.filter(id__in=uploaded_images)]
+        return [{"id":i.id, "image":request.build_absolute_uri(i.image.url)} for i in ServiceGalleryImage.objects.filter(id__in=uploaded_images)]
     
     class Meta:
         model = Service
