@@ -33,7 +33,7 @@ class ServicesSerializers(serializers.ModelSerializer):
     user = serializers.SerializerMethodField(read_only=True)
     view_counter = serializers.IntegerField(read_only=True)
     like_counter = serializers.IntegerField(read_only=True)
-    category_name = serializers.SerializerMethodField(read_only=True)
+    category_name = serializers.CharField(read_only=True)
 
     def get_category_name(self, obj):
         print(obj.category.id)
