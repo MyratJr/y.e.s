@@ -54,8 +54,8 @@ class Service(models.Model):
 
 class ServiceGalleryImage(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    product = models.ForeignKey(Service, on_delete=models.CASCADE, related_name="images", blank=True, null=True)
-    image = models.ImageField(upload_to='service/service_gallery_images/%Y/%m/', max_length=255)
+    service = models.ForeignKey(Service, on_delete=models.CASCADE, related_name="images", verbose_name = 'Hyzmat')
+    image = models.ImageField(upload_to='service/service_gallery_images/%Y/%m/', max_length=255, verbose_name="Suraty")
 
     class Meta:
         verbose_name_plural = 'Hyzmatyň galereýasy'
