@@ -36,7 +36,7 @@ class ServicesSerializers(serializers.ModelSerializer):
     category_name = serializers.SerializerMethodField(read_only=True)
 
     def get_category_name(self, obj):
-        return "salam"
+        return Service_Category.objects.get(id=(obj.category.id))
 
     def get_user(self, obj):
         request = self.context["request"]
