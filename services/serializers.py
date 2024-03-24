@@ -27,8 +27,8 @@ class ServicesSerializers(serializers.ModelSerializer):
     like_counter = serializers.IntegerField(read_only=True)
     category_get = serializers.CharField(source='category.name', read_only=True)
     place_get = serializers.CharField(source='place.district', read_only=True)
-    category = serializers.CharField(write_only=True)
-    place = serializers.CharField(write_only=True)
+    category = serializers.SerializerMethodField(write_only=True)
+    place = serializers.SerializerMethodField(write_only=True)
 
     def get_user(self, obj):
         request = self.context["request"]
