@@ -100,6 +100,12 @@ class ServicesSerializers(serializers.ModelSerializer):
     
     def update(self, instance, validated_data):
         uploaded_images_id = validated_data.pop("uploaded_images")
+        category_uuid = validated_data.pop('category')
+        place_uuid = validated_data.pop('place')
+        category_object = Service_Category.objects.get(pk=category_uuid)
+        place_object = Districts.objects.get(pk=place_uuid)
+        validated_data['category'] = category_object
+        validated_data['place'] = place_object
         for field, value in validated_data.items():
             setattr(instance, field, value)
         instance.save()
