@@ -38,6 +38,9 @@ class Service(models.Model):
     like_counter = models.IntegerField(default=0, verbose_name = 'Halanlary sanaýjy')
     date_created = models.DateTimeField(auto_now_add=True, verbose_name = 'Goýlan senesi')
 
+    class Meta:
+        verbose_name_plural = 'Hyzmat'
+
     def clean(self):
         if not self.vip_date and self.vip_is_active:
             raise ValidationError('"V.I.P ýagdaýy" açyk wagty "V.I.P gutarýan senesi"-ni boş goýup bolmaýar. "V.I.P gutarýan senesi"-ne sene giriziň.')
