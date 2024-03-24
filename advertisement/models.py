@@ -14,7 +14,6 @@ class Advertisement(models.Model):
     title = models.CharField(max_length=20, verbose_name = 'Mahabat ady')
     image = models.ImageField(upload_to='advertisements/%Y/%m/', max_length=255, blank=True, verbose_name = 'Mahabat suraty')
     status = models.CharField(max_length=500, choices=AdvertisementChoises.choices, default=AdvertisementChoises.Garashylyar)
-    is_active = models.BooleanField(default=True, verbose_name = 'Aktiw')
     expired_date = models.DateField(verbose_name = 'Gutarýan möhleti')
     date_created = models.DateTimeField(auto_now_add=True, verbose_name = 'Goýlan wagty')
 
