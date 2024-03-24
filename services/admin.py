@@ -15,7 +15,7 @@ admin.site.register(Service_Category)
 @admin.register(Service)
 class CarAdmin(admin.ModelAdmin):
     list_display = ['name', 'category', 'place', "yagday"]
-    fields = "__all__"
+    # fields = ['user', 'name', 'price', 'category', 'place', 'experience', ]
     readonly_fields = ('date_created',)
     inlines = [PropertyVideoInline]
     
