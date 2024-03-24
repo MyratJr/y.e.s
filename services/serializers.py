@@ -38,7 +38,7 @@ class ServicesSerializers(serializers.ModelSerializer):
     category = serializers.UUIDField(write_only=True)
     place_name = serializers.SerializerMethodField(read_only=True)
     place = serializers.UUIDField(write_only=True)
-    status = serializers.CharField(max_length=500, choices=ServiceVerification.choices, read_only=True)
+    status = serializers.CharField(read_only=True)
     vip_date = serializers.DateField(read_only=True)
     vip_is_active = serializers.BooleanField(read_only=True)
 
