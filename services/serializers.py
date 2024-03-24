@@ -25,8 +25,8 @@ class ServicesSerializers(serializers.ModelSerializer):
     user = serializers.SerializerMethodField(read_only=True)
     view_counter = serializers.IntegerField(read_only=True)
     like_counter = serializers.IntegerField(read_only=True)
-    category = serializers.PrimaryKeyRelatedField(read_only=True)
-    place = serializers.PrimaryKeyRelatedField(read_only=True)
+    category = serializers.PrimaryKeyRelatedField(write_only=True)
+    place = serializers.PrimaryKeyRelatedField(write_only=True)
     category_name = serializers.SerializerMethodField()
     place_name = serializers.SerializerMethodField()
 
