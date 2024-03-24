@@ -40,9 +40,9 @@ class Service(models.Model):
 
     def clean(self):
         if not self.vip_date and self.vip_is_active:
-            raise ValidationError('Can not leave "vip_date" field empty while "vip_is_active" field is True.')
+            raise ValidationError('"V.I.P ýagdaýy" açyk wagty "V.I.P gutarýan senesi"-ni boş goýup bolmaýar. "V.I.P gutarýan senesi"-ne sene giriziň.')
         elif not self.vip_is_active and self.vip_date:
-            raise ValidationError('Can not save "vip_date" field with selected date while "vip_is_active" field is False.')
+            raise ValidationError('"V.I.P ýagdaýy" ýapyk wagty "V.I.P gutarýan senesi"-ne sene girizip bolmaýar. "V.I.P gutarýan senesi"-ne girizen senäňizi aýyryň.')
         return super().clean()
 
     def __str__(self):
