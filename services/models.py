@@ -23,20 +23,20 @@ class ServiceVerification(models.TextChoices):
 
 class Service(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    user = models.ForeignKey("users.User", on_delete=models.CASCADE, related_name='service_user', null=True)
-    name = models.CharField(max_length=25)
-    price = models.DecimalField(max_digits=7, decimal_places=2)
-    category = models.ForeignKey(Service_Category, on_delete=models.CASCADE, related_name='service_category')
-    place = models.ForeignKey("places.Districts", on_delete=models.CASCADE, related_name='service_district')
-    experience = models.IntegerField()
-    description = models.TextField(validators=[MaxLengthValidator(250)])
+    user = models.ForeignKey("users.User", on_delete=models.CASCADE, related_name='service_user', verbose_name = 'Ulanyjy')
+    name = models.CharField(max_length=25, verbose_name = 'Ady')
+    price = models.DecimalField(max_digits=7, decimal_places=2, verbose_name = 'Bahasy')
+    category = models.ForeignKey(Service_Category, on_delete=models.CASCADE, related_name='service_category', verbose_name = 'Kategoriýasy')
+    place = models.ForeignKey("places.Districts", on_delete=models.CASCADE, related_name='service_district', verbose_name = 'Ýerleşýän ýeri')
+    experience = models.IntegerField(verbose_name = 'Tejribäňiz (ýylda)')
+    description = models.TextField(validators=[MaxLengthValidator(250)], verbose_name = 'Barada')
     status = models.CharField(max_length=500, choices=ServiceVerification.choices, default=ServiceVerification.Garashylyar, verbose_name = 'Ýagdaý')
-    vip_date = models.DateField(blank=True, null=True)
-    vip_is_active = models.BooleanField(default=False)
-    primary_image = models.ImageField(upload_to='service/service_images/%Y/%m/', max_length=255)
-    view_counter = models.IntegerField(default=0)
-    like_counter = models.IntegerField(default=0)
-    date_created = models.DateTimeField(auto_now_add=True)
+    vip_date = models.DateField(blank=True, null=True, verbose_name = 'V.I.P gutarýan senesi')
+    vip_is_active = models.BooleanField(default=False, verbose_name = 'V.I.P ýagdaýy')
+    primary_image = models.ImageField(upload_to='service/service_images/%Y/%m/', max_length=255, verbose_name='Suraty')
+    view_counter = models.IntegerField(default=0, verbose_name = 'Görülenleri sanaýjy')
+    like_counter = models.IntegerField(default=0, verbose_name = 'Halanlary sanaýjy')
+    date_created = models.DateTimeField(auto_now_add=True, verbose_name = 'Goýlan senesi')
 
     def clean(self):
         if not self.vip_date and self.vip_is_active:
