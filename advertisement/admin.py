@@ -6,7 +6,6 @@ from django.utils.html import format_html
 @admin.register(Advertisement)
 class AdvertisementAdmin(admin.ModelAdmin):
     list_display = ('title', 'expired_date', 'date_created', 'yagday')
-    fields = ('title', 'image', 'status', 'expired_date', 'date_created')
     readonly_fields = ('date_created',)
 
     def yagday(self, obj):
