@@ -16,7 +16,11 @@ class CarAdmin(admin.ModelAdmin):
     inlines = [PropertyVideoInline]
     
     def yagday(self, obj):
-        if obj.status==ServiceVerification.Garashylyar:
-            return format_html('<h1 style="color:yellow">gjdf</h1>')
+        if obj.status==ServiceVerification.Kabul_Edildi:
+            return format_html('<h1 style="color:green">Kabul edildi</h1>')
+        elif obj.status==ServiceVerification.Showsyz:
+            return format_html('<h1 style="color:red">Şowsuz</h1>')
+        elif obj.status==ServiceVerification.Garashylyar:
+            return format_html('<h1 style="color:yellow">Garaşylýar</h1>')
         else:
             return ''
