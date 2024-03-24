@@ -33,8 +33,8 @@ class ServicesSerializers(serializers.ModelSerializer):
     user = serializers.SerializerMethodField(read_only=True)
     view_counter = serializers.IntegerField(read_only=True)
     like_counter = serializers.IntegerField(read_only=True)
-    category_name = HomeCategoriesSerializers(read_only=True)
-    category = serializers.SlugRelatedField(queryset=Service_Category.objects.all(), slug_field='category_name', write_only=True)
+    category = HomeCategoriesSerializers(read_only=True)
+    category_id = serializers.SlugRelatedField(queryset=Service_Category.objects.all(), slug_field='category_name', write_only=True)
 
     def get_user(self, obj):
         request = self.context["request"]
@@ -57,7 +57,7 @@ class ServicesSerializers(serializers.ModelSerializer):
                   "price", 
                   "category", 
                   "place",  
-                  "category_name", 
+                  "category_id", 
                   "experience", 
                   "description", 
                   "status", 
