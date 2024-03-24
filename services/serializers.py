@@ -34,6 +34,7 @@ class ServicesSerializers(serializers.ModelSerializer):
     view_counter = serializers.IntegerField(read_only=True)
     like_counter = serializers.IntegerField(read_only=True)
     category_name = serializers.SerializerMethodField(read_only=True)
+    category = serializers.UUIDField(write_only=True)
 
     def get_category_name(self, obj):
         return {"da":Service_Category.objects.get(id=(obj.category.id)).name}
