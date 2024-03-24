@@ -3,6 +3,7 @@ from .models import Service, ServiceGalleryImage, Service_Category
 from ratings.models import Like_Service
 from users.models import User
 from users.serializers import LikeToUserSerializer
+from places.models import Districts
 
 
 class ServiceGalleryImageSerializer(serializers.ModelSerializer):
@@ -35,9 +36,15 @@ class ServicesSerializers(serializers.ModelSerializer):
     like_counter = serializers.IntegerField(read_only=True)
     category_name = serializers.SerializerMethodField(read_only=True)
     category = serializers.UUIDField(write_only=True)
+    place_name = serializers.SerializerMethodField(read_only=True)
+    place = serializers.UUIDField(write_only=True)
+
 
     def get_category_name(self, obj):
         return Service_Category.objects.get(id=(obj.category.id)).name
+    
+    def get_place_name(self, obj):
+        return Districts.objects.get(id=(obj.place.id)).district
 
     def get_user(self, obj):
         request = self.context["request"]
@@ -58,7 +65,8 @@ class ServicesSerializers(serializers.ModelSerializer):
                   "user", 
                   "name", 
                   "price", 
-                  "place",  
+                  "place", 
+                  "place_name", 
                   "category", 
                   "category_name",
                   "experience", 
@@ -76,8 +84,11 @@ class ServicesSerializers(serializers.ModelSerializer):
     def create(self, validated_data):
         uploaded_images_id = validated_data.pop("uploaded_images")
         category_uuid = validated_data.pop('category')
+        place_uuid = validated_data.pop('place')
         category_object = Service_Category.objects.get(pk=category_uuid)
+        place_object = Districts.objects.get(pk=place_uuid)
         validated_data['category'] = category_object
+        validated_data['place'] = place_object
         new_service = Service.objects.create(**validated_data)
         for relating_image in ServiceGalleryImage.objects.filter(id__in=eval(uploaded_images_id[0])):
             relating_image.product = new_service
