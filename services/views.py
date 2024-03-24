@@ -17,6 +17,7 @@ class Services_View(viewsets.ModelViewSet):
     serializer_class = ServicesSerializers
     permission_classes = [IsAuthenticatedOrReadOnly]
     parser_classes = [MultiPartParser,FormParser]
+    http_method_names = ['get', 'post', 'put', 'delete']
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
