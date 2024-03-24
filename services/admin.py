@@ -17,10 +17,10 @@ class CarAdmin(admin.ModelAdmin):
     
     def yagday(self, obj):
         if obj.status==ServiceVerification.Kabul_Edildi:
-            return format_html('<h1 style="color:green">Kabul edildi</h1>')
+            return format_html('<b style="color:green;">Kabul edildi</b>')
         elif obj.status==ServiceVerification.Showsyz:
-            return format_html('<h1 style="color:red">Şowsuz</h1>')
+            return format_html('<b style="color:red">Şowsuz</b>')
         elif obj.status==ServiceVerification.Garashylyar:
-            return format_html('<h1 style="color:yellow">Garaşylýar</h1>')
+            return format_html('<b style="color:yellow">Garaşylýar</b>')
         else:
             return ''
