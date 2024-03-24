@@ -37,7 +37,7 @@ class ServicesSerializers(serializers.ModelSerializer):
     category = serializers.UUIDField(write_only=True)
 
     def get_category_name(self, obj):
-        return {"da":Service_Category.objects.get(id=(obj.category.id)).name}
+        return Service_Category.objects.get(id=(obj.category.id)).name
 
     def get_user(self, obj):
         request = self.context["request"]
