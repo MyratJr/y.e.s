@@ -37,7 +37,7 @@ class ServicesSerializers(serializers.ModelSerializer):
 
     def get_category_name(self, obj):
         print(obj.category)
-        return {"id":ServiceGalleryImage.objects.get(id=obj.category).name}
+        return {"id":ServiceGalleryImage.objects.get(id=obj.category.id).name}
 
     def get_user(self, obj):
         request = self.context["request"]
