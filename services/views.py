@@ -10,6 +10,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 from .serializers import *
+from rest_framework.pagination import PageNumberPagination
 
 
 class Services_View(viewsets.ModelViewSet):
@@ -84,12 +85,16 @@ class HomeServicesView(mixins.ListModelMixin,viewsets.GenericViewSet):
         return Response(serializer.data)
 
 
+class BasicSizePagination(PageNumberPagination):
+    page_size = 10
+
+
 class HomeServiceCategoriesView(mixins.ListModelMixin,viewsets.GenericViewSet):
     queryset = Service_Category.objects.all()
     serializer_class = HomeCategoriesSerializers
     permission_classes = [AllowAny]
     parser_classes = [MultiPartParser,FormParser]
-    page_size_query_param = 100
+    pagination_class = BasicSizePagination
     
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
