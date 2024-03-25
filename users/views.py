@@ -4,7 +4,7 @@ from services.serializers import HomeServicesSerializers
 from ratings.models import Like_User, View_User
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser, FormParser
-from services.models import Service
+from services.models import Service, ServiceVerification
 from .serializers import *
 from .models import User
 from rest_framework.views import APIView
@@ -132,7 +132,7 @@ class UserServicesView(generics.ListAPIView):
 
     def get_queryset(self):
         user_id = self.kwargs['pk']
-        return Service.objects.filter(user=user_id, public=True)
+        return Service.objects.filter(user=user_id, status=ServiceVerification.Kabul_Edildi)
 
 
 class LikeUserView(APIView):
