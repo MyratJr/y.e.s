@@ -5,7 +5,7 @@ from .models import Regions, Districts
 class DistrictsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Districts
-        fields = '__all__'
+        fields = ["id", "district"]
 
 
 class RegionsSerializer(serializers.ModelSerializer):
