@@ -96,7 +96,7 @@ class ServicesSerializers(serializers.ModelSerializer):
     
 
 class HomeServicesSerializers(serializers.ModelSerializer):
-    category = serializers.CharField(source="service.name")
+    category = serializers.CharField(source="category.name")
     place = serializers.CharField(source="place.district")
 
     class Meta:
