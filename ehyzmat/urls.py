@@ -20,6 +20,7 @@ urlpatterns1 = [
     path('auth/login/', LoginAPI.as_view(), name='login'),
     path('auth/', include('google_auth.urls')),
     path('auth/logout/', TokenBlacklistView.as_view(), name='token_blacklist'),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
 
 
