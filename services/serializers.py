@@ -99,7 +99,11 @@ class HomeServicesSerializers(serializers.ModelSerializer):
         
     class Meta:
         model = Service
-        fields = '__all__'
+        fields = [
+                  "id", "name", "price", "category__name", "place__district", 
+                  "experience", "description", "status", "vip_date", "vip_is_active", 
+                  "primary_image", "view_counter", "like_counter", "date_created"
+                ]
 
 
 class CategoriesSerializers(serializers.ModelSerializer):
