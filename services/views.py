@@ -85,16 +85,12 @@ class HomeServicesView(mixins.ListModelMixin,viewsets.GenericViewSet):
         return Response(serializer.data)
 
 
-class BasicSizePagination(PageNumberPagination):
-    page_size = 10
-
-
 class HomeServiceCategoriesView(mixins.ListModelMixin,viewsets.GenericViewSet):
     queryset = Service_Category.objects.all()
     serializer_class = HomeCategoriesSerializers
     permission_classes = [AllowAny]
     parser_classes = [MultiPartParser,FormParser]
-    pagination_class = BasicSizePagination
+    PageNumberPagination.page_size = 100 
     
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
