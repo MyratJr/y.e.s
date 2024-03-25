@@ -96,11 +96,13 @@ class ServicesSerializers(serializers.ModelSerializer):
     
 
 class HomeServicesSerializers(serializers.ModelSerializer):
-        
+    category = serializers.CharField(source="service.name")
+    place = serializers.CharField(source="place.district")
+
     class Meta:
         model = Service
         fields = [
-                  "id", "name", "price", "category_name", "place_district", 
+                  "id", "name", "price", "category", "place", 
                   "experience", "description", "status", "vip_date", "vip_is_active", 
                   "primary_image", "view_counter", "like_counter", "date_created"
                 ]
