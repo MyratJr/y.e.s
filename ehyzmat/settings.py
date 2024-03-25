@@ -104,8 +104,8 @@ REST_FRAMEWORK = {
 
 SPECTACULAR_SETTINGS = {
     'COMPONENT_SPLIT_REQUEST': True,
-    'TITLE': 'Y.E.S API',
-    'DESCRIPTION': 'Your project description',
+    'TITLE': 'Y.E.S API Documentation',
+    'DESCRIPTION': '"Y.E.S" stands for "Your Endless Services". It is a program that people can share what service they can.',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
 }
