@@ -45,7 +45,8 @@ class ServicesSerializers(serializers.ModelSerializer):
         return {
             "id": obj.user.id,
             'username': obj.user.username,
-            'avatar': request.build_absolute_uri(obj.user.avatar.url)
+            'avatar': request.build_absolute_uri(obj.user.avatar.url),
+            "user's rate": obj.rate_point,
         }
 
     def get_gallery_images(self, obj):
