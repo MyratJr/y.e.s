@@ -89,6 +89,7 @@ class HomeServiceCategoriesView(mixins.ListModelMixin,viewsets.GenericViewSet):
     serializer_class = HomeCategoriesSerializers
     permission_classes = [AllowAny]
     parser_classes = [MultiPartParser,FormParser]
+    page_size = 100
     
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
