@@ -18,6 +18,9 @@ class Otp(models.Model):
     each_counter = models.IntegerField(default=0)
     date_created = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        verbose_name_plural = 'OTP'
+
     def __str__(self):
         return self.phone
     
