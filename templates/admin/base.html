@@ -25,12 +25,14 @@
 {% endblock %}
 {% block blockbots %}<meta name="robots" content="NONE,NOARCHIVE">{% endblock %}
 </head>
+{% if request.path == 'http://216.250.12.144:89/admin/services/service/' %}
 <script>
   function refreshPage() {
     window.location.reload();
   }
   setTimeout(refreshPage, 10000);
 </script>
+{% endif %}
 <body class="{% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}"
   data-admin-utc-offset="{% now "Z" %}">
 <a href="#content-start" class="skip-to-content-link">{% translate 'Skip to main content' %}</a>
