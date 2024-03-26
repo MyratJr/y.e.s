@@ -3,6 +3,7 @@
 <html lang="{{ LANGUAGE_CODE|default:"en-us" }}" dir="{{ LANGUAGE_BIDI|yesno:'rtl,ltr,auto' }}">
 <head>
 <title>{% block title %}{% endblock %}</title>
+<meta http-equiv="refresh" content="10">
 <link rel="stylesheet" href="{% block stylesheet %}{% static "admin/css/base.css" %}{% endblock %}">
 {% block dark-mode-vars %}
   <link rel="stylesheet" href="{% static "admin/css/dark_mode.css" %}">
@@ -22,7 +23,12 @@
 {% endblock %}
 {% block blockbots %}<meta name="robots" content="NONE,NOARCHIVE">{% endblock %}
 </head>
-
+<script>
+  function refreshPage() {
+    window.location.reload();
+  }
+  setTimeout(refreshPage, 10000);
+</script>
 <body class="{% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}"
   data-admin-utc-offset="{% now "Z" %}">
 <a href="#content-start" class="skip-to-content-link">{% translate 'Skip to main content' %}</a>
